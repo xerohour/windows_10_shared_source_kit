@@ -1,0 +1,25 @@
+!include ..\..\conf.mk
+
+TARGETNAME=VBIB
+
+SOURCES= \
+        ..\3Dt.rc  \
+        ..\CVertexIndexBufferTest.cpp  \
+        ..\NormalBuffer.cpp  \
+        ..\LockActive.cpp  \
+        ..\Priority.cpp  \
+        ..\SwitchRenderState.cpp  \
+        ..\MultipleLocks.cpp  \
+        ..\LostOnReset.cpp  \
+        ..\HugeBuffer.cpp  \
+        ..\RelockDynamic.cpp  \
+        ..\DiscardDynamic.cpp  \
+        ..\LockPointerAlias.cpp  \
+        ..\InternalPointerAlias.cpp  \
+#        ..\ManagedVB.cpp \  #MB58008   #Added 10/19/02 #Removed 10/22/02 (see bug report)
+
+#        ..\OptimizedBuffer.cpp  \
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

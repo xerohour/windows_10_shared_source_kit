@@ -1,0 +1,10 @@
+!include ..\..\conf.mk
+
+TARGETNAME=WLPMultiTexturing
+
+SOURCES=multi.rc \
+        multi.cpp
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

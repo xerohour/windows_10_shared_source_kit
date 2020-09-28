@@ -1,0 +1,11 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D test"
+#define VER_INTERNALNAME_STR        "MVertex"
+#define VER_ORIGINALFILENAME_STR    "mvertex.exe"
+
+#include <common.ver>

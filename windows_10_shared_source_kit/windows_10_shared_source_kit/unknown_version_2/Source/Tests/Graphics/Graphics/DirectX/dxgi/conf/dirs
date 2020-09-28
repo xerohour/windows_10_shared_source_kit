@@ -1,0 +1,13 @@
+DIRS=\
+	DXGIFindMode \
+	DXGIFrameStats \
+	DXGILatency \
+	DXGIModeEnumeration \
+	DXGIPresent \
+	DXGIPresentRate \
+	DXGIStereoPresent \
+	DXGITrimMemory \
+	DXGIWaitVbl \
+	GetDispSurfData \
+	PresentDuration \
+	SwapChainRendering \

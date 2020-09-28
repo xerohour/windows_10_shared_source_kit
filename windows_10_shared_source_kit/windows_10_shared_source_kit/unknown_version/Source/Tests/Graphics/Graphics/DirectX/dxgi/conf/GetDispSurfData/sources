@@ -1,0 +1,76 @@
+D3D_VERSION=10
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+COMMON_DXGI_LIB_ROOT=$(DIRECTX_TST_OBJ_ROOT)\dxgi\common\lib
+
+TARGETNAME=DXGIGetDispSurfData
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+TARGET_DESTINATION=Graphics\D3D\Conf
+
+
+C_DEFINES=$(C_DEFINES) -DWINVER=0x0600
+
+
+USE_ATL=1
+ATL_VER=70
+
+USE_RTTI=1
+
+!if $(FREEBUILD)
+DBG_NAME = Release
+!else
+DBG_NAME = Debug
+!endif
+
+INCLUDES=\
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FOrmatHelper; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\D3DTest; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\DXGITest; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\GraphicsTest; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\D3DConvert; \
+	$(GRAPHICS_TST_ROOT)\DirectX\DXGI\Common\Include; \
+	$(DIRECTX_TST_ROOT)\D3DX11\include; \
+	$(SDK_INC_PATH); \
+	$(INCLUDES); \
+
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\ModeHelperFunctions\$(O)\ModeHelperFunctions.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\WGFTestFramework\D3DTest\$(O)\D3DTest.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\WGFTestFramework\DXGITest\$(O)\DXGITest.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3DConvert\$O\D3DConvert.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgiwndclass\$O\DXGIWndClass.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgibbfmt\$O\DXGIBBFMT.LIB \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgiswapeffects\$O\DXGISwapEffects.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\modeset\$O\ModeSet.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgisurfutils\$O\DXGISurfUtils.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\d3d10swapchain\$O\D3D10SwapChain.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\d3d10refutil\$O\D3D10RefUtil.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgifmt\$O\DXGIFMT.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\getdeviceinfo\$O\GetDeviceInfo9.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgiscanoutformats\$O\DXGIScanoutFormats.lib \
+	$(DIRECTX_TST_OBJ_ROOT)\Common\3DMath\$O\3dmath.lib \
+	$(SDK_LIB_PATH)\d3d9.lib \
+	$(SDK_LIB_PATH)\dxgi.lib \
+	$(SDK_LIB_PATH)\d3d10.lib \
+	$(SDK_LIB_PATH)\d3dx10_test.lib \
+	$(SDK_LIB_PATH)\psapi.lib \
+	$(SDK_LIB_PATH)\kernel32.lib \
+	$(SDK_LIB_PATH)\d3d11.lib \
+	$(WINDOWS_LIB_PATH)\d3dx11$(LIBTAG).lib \
+	$(WINDOWS_LIB_PATH)\d3dx11fx$(DBG_NAME).lib \
+
+SOURCES= \
+	DrawD3D10Scene.cpp \
+	GetDispSurfData.cpp \
+	GetDispSurfData.rc \
+	Tests.cpp \
+	TextureCode.cpp \
+
+
+PASS2_BINPLACE=\
+    -:DEST $(TARGET_DESTINATION)  GetDispSurfData.fx   \

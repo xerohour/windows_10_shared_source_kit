@@ -1,0 +1,24 @@
+!include ..\..\VidMM_tests.mk 
+
+TARGETNAME=DMAsplit
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_VISTA)
+
+INCLUDES=\
+    ..\Utilities; \
+    $(INCLUDES); \
+
+
+UMTYPE=console
+UMENTRY=main
+
+TARGETLIBS=\
+    $(TARGETLIBS) \
+    $(OBJ_PATH)\..\Utilities\$O\ConformUtilLib.lib \
+
+SOURCES=\
+    DMAsplit.cpp \
+    main.cpp \
+    Main.rc \
+
+SOURCES=$(SOURCES) kitContent.kml

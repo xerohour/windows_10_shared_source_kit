@@ -1,0 +1,35 @@
+!include $(GRAPHICS_TST_ROOT)\directx\directxdm.mk
+
+TARGETNAME=GraphicsTestDM
+TARGETTYPE=LIBRARY
+
+
+USE_MSVCRT=1
+
+USE_NATIVE_EH=1
+
+USE_RTTI=1
+
+USE_STL=1
+STL_VER=100
+
+
+C_DEFINES =	$(C_DEFINES) /DDXGI_DLL_NAME=\"dxgi$(DX_BETA_NAMING).dll\" /DD3DKMDT_SPECIAL_MULTIPLATFORM_TOOL=1
+
+
+INCLUDES=\
+    $(WINDOWS_TST_ROOT)\Graphics\Common\D3DStrings; \
+    $(GRAPHICS_TST_ROOT)\Common\DeviceManager; \
+    $(DIRECTX_TST_ROOT)\Common\Include; \
+    $(DIRECTX_TST_ROOT)\Common\WGFTestFramework\Core\include; \
+    $(INCLUDES)
+
+
+SOURCES= \
+    GraphicsTest.cpp \
+    dxgivaluesets.cpp \
+    dxgivaluesetsgenerated.cpp \
+    minmaxrange.cpp\
+
+
+

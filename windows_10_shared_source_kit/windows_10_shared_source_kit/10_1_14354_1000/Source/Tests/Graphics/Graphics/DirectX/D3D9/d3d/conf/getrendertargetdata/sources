@@ -1,0 +1,29 @@
+!include ..\conf.mk
+
+USE_RTTI=1
+#USE_IOSTREAM=1
+USE_STL=1
+
+TARGETNAME=GetRenderTargetData
+
+SOURCES=\
+	GetRenderTargetData.rc \
+	parameters.cpp \
+	GetRenderTargetData.cpp \
+	D3DNodes.cpp \
+	Backbuffer.cpp \
+	BackbufferTexture.cpp \
+	BackbufferCubeTexture.cpp \
+	RenderTarget.cpp \
+	RenderTargetTexture.cpp \
+	RenderTargetCubeTexture.cpp \
+	textureSurface.cpp \
+	textureTexture.cpp \
+	textureCubeTexture.cpp \
+	cubetextureSurface.cpp \
+	cubetextureTexture.cpp \
+	cubetextureCubetexture.cpp \
+	OddBalls.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+

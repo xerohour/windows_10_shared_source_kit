@@ -1,0 +1,219 @@
+// Tests for Instruction: mNxN
+#include "include.fx"
+$include "PShader.prep"
+${##################################################################################################
+#from PShader import *
+
+if ps_3_0:
+	regcombos = [ 'rcv',
+				  'rvc' ]
+else:
+	regcombos = [ 'rcvtr',
+				  'rvcrt' ]
+regcombos = [c for c in apply(zip, regcombos)]
+
+# default src values in range -2 < n < 2:
+values = [-58, -52, 23, 10, -37, 43, 55, -63, 62, 59, 24, -57, -46, 50, -17, 61, -41, -47, 34, -61]
+fValues = [v/32.0 for v in values]
+src_defaults = fValues[:4], fValues[4:8], fValues[8:12], fValues[12:16], fValues[16:20]
+# now for <= 2.x color registers that are clamped 0-1:
+fValues = [abs(v)/64.0 for v in values]
+color_defaults = fValues[:4], fValues[4:8]
+# don't need this anymore:
+del fValues
+default_result = 0.0
+
+lstSrc0Values = [
+	[random.randint(-127,127) / 32.0 for c in range(4)]
+	for i in range(2) ]
+lstSrc1Values = [
+	[	[random.randint(-127,127) / 32.0 for c in range(4)]
+		for r in range(4) ]
+	for i in range(2) ]
+
+
+# [ (rows,cols), ... ]
+lstOps = [ (4,4), (4,3), (3,4), (3,3), (2,3) ]
+
+SetupDefaults(src_defaults, color_defaults)
+
+class Op_mNxN(Operation):
+	def __init__(s, rows, cols, sat=0, pp=0):
+		Operation.__init__(s, 'm%dx%d'%(cols,rows), sat, pp)
+	def Apply(s, src0, src1):
+		vec, mat = src0.Transform(), src1.Transform()
+		mrows, mcols = len(mat), len(mat[0])
+		result = [	reduce( operator.add,
+							map( operator.mul, vec[:mcols], row ) )
+					for row in mat ]
+		result += [0] * (4 - len(result))
+		return Operation.Apply(s, result)
+
+class Inst_mNxN(Instruction):
+	def __init__(s, op, pred, dest, sources, result):
+		Instruction.__init__(s, op, pred, dest, sources, result)
+		s.DeclareConstantsPerTestcase = True
+
+# if you do not specify a value, the default will be used based on the register type
+# if you do specify a value, that value will be set through one of several ways based
+# on register type:
+#	r - def c reg in shader, mov r#, c#
+#	c, i, b - def c/i/b reg in shader, use that
+#	v, t - set VertexShaderConstant for corresponding output - ! NOT CURRENTLY SUPPORTED
+def WriteTestCase(
+	sat=0, pp=0, mask=0,							# instruction & destination modifiers
+	pred=0, pnot=0, pswz=0,							# predication
+	reg0='r', src0=None, neg0=0, abs0=0, swz0=0,	# source 0
+	reg1='c', src1=None, neg1=0, abs1=0, swz1=0,	# source 1
+	rows=4, cols=4,
+	**extra_params):
+	global curCount
+
+	# Initialize sources:
+	sources = CollapseSources(locals(), 2)
+	# add additional implied sources:
+##	sources = sources + [['%s%d'%(sources[1][0], int(sources[1][1])+n),None,0,0,0] for n in range(1,rows)]
+	sources = [Source(*sources[0]), MatrixSource(*(sources[1]+[rows,cols]))]
+##	sources = [apply(Source, src) for src in sources]
+
+	# Initialize other objects:
+	pred = Predication(value=pred, pnot=pnot, pswz=pswz)
+	dest = Destination('r0', mask)
+	op = Op_mNxN(rows, cols, sat, pp)
+	result = op.Apply(*sources)
+
+	# Instruction takes care of the code generation:
+	inst = Inst_mNxN(op, pred, dest, sources, result)
+	inst.WriteTest()
+
+	curCount += 1
+
+	return inst.GetText()
+
+$}$#################################################################################################
+
+$[defineMACROS]
+
+#define SET_PS_CONSTANTS$# \
+$#	$< ' \\\n'.join(WritePSConstantDefaults(src_defaults).split('\n')) $>
+
+$<WriteVS(src_defaults, color_defaults)$>
+
+// Tests:
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// dimensions * source registers * modifiers * swizzles
+${SetGroup('mNxN - Standard ')
+lTests = []
+paramDict = {}
+params = {
+	'pp': [[0,1]],
+	'reg0': [regcombos],
+	'neg0': [[0,1]],
+	'swz0': [[0]+lstBasicSwz],
+	'op': [lstOps]
+	}
+if ps_3_0:
+	params.update({
+		'abs0': [[0,1]]
+		})
+combos = ComputeCombinations(params)
+for c in combos:
+	paramDict['mask'] = 0
+	reg0, reg1 = c['reg0']
+	rows, cols = c['op']
+	if ps_ver < 3.0 and reg1 == 'v':
+		if rows > 2:
+			reg1 = 't'
+		else:
+			reg1 = 'v0'
+	paramDict.update(c)
+	if rows < 4:
+		paramDict['mask'] = 'xyzw'[:rows]
+	paramDict.update({'reg0':reg0, 'reg1':reg1})
+	paramDict.update({'rows':rows, 'cols':cols})
+	lTests.append(WriteTestCase(**paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// dimensions * values
+${SetGroup('mNxN - Values ')
+lTests = []
+paramDict = {}
+params = {
+	'op': [lstOps],
+	'src0': [lstSrc0Values],
+	'src1': [lstSrc1Values],
+	'neg0': [[0,1]],
+	'swz0': [[0]+lstBasicSwz],
+	}
+combos = ComputeCombinations(params)
+for c in combos:
+	paramDict['mask'] = 0
+	rows, cols = c['op']
+	paramDict.update(c)
+	paramDict.update({'rows':rows, 'cols':cols})
+	if rows < 4:
+		paramDict['mask'] = 'xyzw'[:rows]
+	lTests.append(WriteTestCase(**paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// dimensions * values
+${SetGroup('mNxN - sat ')
+lTests = []
+paramDict = {'sat':1}
+params = {
+	'op': [lstOps],
+	'src0': [lstSrc0Values],
+	'src1': [lstSrc1Values],
+	'neg0': [[0,1]],
+	'swz0': [[0]+lstBasicSwz],
+	}
+combos = ComputeCombinations(params)
+for c in combos:
+	paramDict['mask'] = 0
+	rows, cols = c['op']
+	paramDict.update(c)
+	paramDict.update({'rows':rows, 'cols':cols})
+	if rows < 4:
+		paramDict['mask'] = 'xyzw'[:rows]
+	lTests.append(WriteTestCase(**paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// dimensions * predication
+${SetGroup('mNxN - Pred ')
+lTests = []
+if predicate_support:
+	paramDict = {}
+	params = {
+		'op': [lstOps],
+		'pred': [[0]+lstSomePredicateValues],
+		'pnot': [[0,1]],
+		'pswz': [[0]+lstReplicateSwizzles]
+		}
+	combos = ComputeCombinations(params)
+	for c in combos:
+		paramDict['mask'] = 0
+		rows, cols = c['op']
+		paramDict.update(c)
+		paramDict.update({'rows':rows, 'cols':cols})
+		if rows < 4:
+			paramDict['mask'] = 'xyzw'[:rows]
+		lTests.append(WriteTestCase(**paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+// End of file.  $curCount tests generated.

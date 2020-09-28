@@ -1,0 +1,25 @@
+!include ..\..\conf.mk
+
+TARGETNAME=PointSprite
+
+SOURCES=..\sprite.rc \
+        ..\sprite.cpp \
+        ..\attenfvfl.cpp \
+        ..\attenfvfls.cpp \
+        ..\scalefvfl.cpp \
+        ..\scalefvfls.cpp \
+        ..\scalefvftl.cpp \
+        ..\scalefvftls.cpp \
+        ..\batch.cpp \
+        ..\caps.cpp \
+        ..\cull.cpp \
+        ..\fill.cpp \
+        ..\mipmap.cpp \
+        ..\user.cpp \
+        ..\volume.cpp \
+        ..\path.cpp \
+        ..\transform.cpp
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

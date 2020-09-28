@@ -1,0 +1,46 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_core.mk
+
+TARGETNAME=WGF11Shader5x
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(PROJECT_LIB_PATH)\d3dcompiler_test.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\FormatHelper\$O\FormatHelper.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\Common\FloatUtils\$O\FloatUtils.lib \
+
+SOURCES=\
+	AsmHelper.cpp \
+	Bitwise.cpp \
+	Condition.cpp \
+	Constantbuffers.cpp \
+	Controlflow.cpp \
+	DoublesArith.cpp \
+	Floatarith.cpp \
+	Index.cpp \
+	Intarith.cpp \
+	LoadStore.cpp \
+	MemoryAccessInstructions.cpp \
+	Move.cpp \
+	Multisample.cpp \
+	Raster.cpp \
+	Registers.cpp \
+	Resourceaccess.cpp \
+	Shader5x.cpp \
+	Shader5x.rc \
+	Sumabsdiff.cpp \
+	Swizzle.cpp \
+	Topology.cpp \
+	Typeconvert.cpp \
+	ShaderInstruction.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+# Restore the linker default stack size as some tests are very recursive
+LINKER_STACKSIZE= -STACK:0x100000
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

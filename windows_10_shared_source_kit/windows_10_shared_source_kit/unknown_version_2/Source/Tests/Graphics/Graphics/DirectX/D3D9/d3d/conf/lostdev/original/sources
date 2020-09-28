@@ -1,0 +1,33 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=LostDev
+TARGETTYPE=PROGRAM
+TARGETLIBS=$(TARGETLIBS) \
+			$(SDK_LIB_PATH)\shell32.lib \
+
+SOURCES= \
+		..\LostDev.rc \
+		..\LostDev.cpp \
+		..\LostDevCases.cpp \
+		..\LostDevUtility.cpp \
+		..\LostBaseTexture.cpp \
+		..\LostTexture.cpp \
+		..\LostCubeTexture.cpp \
+		..\LostVolumeTexture.cpp \
+		..\LostSurface.cpp \
+		..\LostImageSurface.cpp \
+		..\LostOffscreenPlainSurface.cpp \
+		..\LostDepthStencil.cpp \
+		..\LostRenderTarget.cpp \
+		..\LostVertexBuffer.cpp \
+		..\LostStateBlock.cpp \
+		..\CasesManager.cpp
+
+UMTYPE=windows
+
+UMENTRY=winmain
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

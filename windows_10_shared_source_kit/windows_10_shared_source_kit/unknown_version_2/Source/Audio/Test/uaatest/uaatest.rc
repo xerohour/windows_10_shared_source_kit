@@ -1,0 +1,9 @@
++ nHalf) , (float) (m_Port.CenterY())        },
+        { (float) (m_Port.Left() - 1)     , (float) (m_Port.Top() - 1)        }, // just outside
+        { (float) (m_Port.CenterX())      , (float) (m_Port.Top() - 1)        },
+        { (float) (m_Port.Right() + 1)    , (float) (m_Port.Top() - 1)        },
+        { (float) (m_Port.Right() + 1)    , (float) (m_Port.CenterY())        },
+        { (float) (m_Port.Right() + 1)    , (float) (m_Port.Bottom() + 1)     },
+        { (float) (m_Port.CenterX())      , (float) (m_Port.Bottom() + 1)     },
+        { (float) (m_Port.Left() - 1)     , (float) (m_Port.Bottom() + 1)     },
+        { (float)

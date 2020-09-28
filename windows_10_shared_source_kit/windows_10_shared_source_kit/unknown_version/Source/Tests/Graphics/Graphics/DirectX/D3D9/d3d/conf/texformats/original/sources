@@ -1,0 +1,25 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=TexFormats
+
+SOURCES= \
+        ..\Compare.cpp \
+        ..\DrawGrid.cpp \
+	..\PackedRGB.cpp \
+        ..\FloatTex.cpp \
+        ..\FVF3.cpp \
+        ..\FVF4.cpp \
+        ..\Print.cpp \
+        ..\SysMem.cpp \
+        ..\TexFormats.cpp \
+	..\FloatPrecision.cpp \
+        ..\TexFormats.rc \
+        ..\Verify.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

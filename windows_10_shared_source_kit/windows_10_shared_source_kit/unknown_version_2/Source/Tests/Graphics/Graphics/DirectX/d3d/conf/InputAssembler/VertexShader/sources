@@ -1,0 +1,32 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\..\Conf11_Core.mk
+
+TARGETNAME=WGF11VertexShader
+
+# Devdiv workaround for out of heap error when compiling arm64fre using x86 hosted tools.
+# Bug 1035362 has been written to look into the out of heap in the compiler. For now
+# use a 64-bit hosted compiler for compiling this project.
+SUBSTITUTE_AMD64_CC=$(SDXROOT)\tools\vc\x64\$(_BUILDARCH)\cl.exe
+SUBSTITUTE_ARM64_CC=$(SDXROOT)\tools\vc\x64\$(_BUILDARCH)\cl.exe
+
+INCLUDES=\
+	.\; \
+	..\; \
+	$(INCLUDES)
+
+SOURCES=\
+	..\InputAssembler.cpp \
+	..\HelperFunctions.cpp \
+	..\GeneratedValues.cpp \
+	..\ReadFromUnboundSlot.cpp \
+	..\Limits.cpp \
+	..\InputAssembler.rc \
+	IAGroups.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

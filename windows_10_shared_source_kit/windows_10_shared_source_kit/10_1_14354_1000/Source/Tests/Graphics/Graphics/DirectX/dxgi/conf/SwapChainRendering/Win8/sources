@@ -1,0 +1,6 @@
+WANT_ONECORE_LIBS=1
+
+!include ..\sources.inc
+
+
+TARGETNAME=$(TARGETNAME).Win8

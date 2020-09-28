@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WGFInputAssembler.razzle", "WGFInputAssembler.razzle.2008.vcproj", "{96F283DB-93DA-4237-A1B9-BDE81300BC2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Draw|Win32 = Draw|Win32
+		InputAssembler|Win32 = InputAssembler|Win32
+		Razzle|Win32 = Razzle|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96F283DB-93DA-4237-A1B9-BDE81300BC2E}.Draw|Win32.ActiveCfg = Draw|Win32
+		{96F283DB-93DA-4237-A1B9-BDE81300BC2E}.Draw|Win32.Build.0 = Draw|Win32
+		{96F283DB-93DA-4237-A1B9-BDE81300BC2E}.InputAssembler|Win32.ActiveCfg = InputAssembler|Win32
+		{96F283DB-93DA-4237-A1B9-BDE81300BC2E}.InputAssembler|Win32.Build.0 = InputAssembler|Win32
+		{96F283DB-93DA-4237-A1B9-BDE81300BC2E}.Razzle|Win32.ActiveCfg = Razzle|Win32
+		{96F283DB-93DA-4237-A1B9-BDE81300BC2E}.Razzle|Win32.Build.0 = Razzle|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

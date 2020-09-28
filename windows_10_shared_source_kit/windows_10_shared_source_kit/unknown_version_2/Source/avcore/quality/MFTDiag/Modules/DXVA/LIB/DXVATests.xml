@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- categories: Playback, MultiInstance, Stress, Quality
+     subtype: H264, WMV1, WMV2, WMV3, WVC1, MPEG2
+     component clsid:
+          Microsoft MPEG Video Decoder MFT {2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}
+          Microsoft H264 Video Decoder MFT {62CE7E72-4C71-4D20-B15D-452831A87D9D}
+          WMVideo Decoder MFT              {82D353DF-90BD-4382-8BC2-3F6192B76E34} -->
+
+<TestSuite>
+  <!-- PLAYBACK TESTS -->
+  <TEST testId="1"> 
+    <Category>Playback</Category> 
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #1: Soccer_1280x720p_3mbps_25fps_High_at_L4.1_Cabac_frext_slice.mp4</Name> 
+    <Description>Playback #1: Soccer_1280x720p_3mbps_25fps_High_at_L4.1_Cabac_frext_slice.mp4</Description> 
+    <TimeoutSec>0</TimeoutSec> 
+    <InputFile>Soccer_1280x720p_3mbps_25fps_High_at_L4.1_Cabac_frext_slice.mp4</InputFile> 
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="2">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>layback #2: Tallship_1920x1088i_field_14mbps_25fps_High_at_L4.1_Cabac_Slice.mp4</Name>
+    <Description>Playback #2: Tallship_1920x1088i_field_14mbps_25fps_High_at_L4.1_Cabac_Slice.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1088i_field_14mbps_25fps_High_at_L4.1_Cabac_Slice.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="3">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #3: Tallship_720x480p_5mbps_24fps_Main_at_L3.2_CABAC_DifficultEdge.mp4</Name>
+    <Description>Playback #3: Tallship_720x480p_5mbps_24fps_Main_at_L3.2_CABAC_DifficultEdge.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_720x480p_5mbps_24fps_Main_at_L3.2_CABAC_DifficultEdge.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="4">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #4: Dancing_1920x1088p_9mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</Name>
+    <Description>Playback #4: Dancing_1920x1088p_9mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1088p_9mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="5">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #5: Dancing_1920x1088_6mbps_25fps_High_at_L4.1_Cavlc.mp4</Name>
+    <Description>Playback #5: Dancing_1920x1088_6mbps_25fps_High_at_L4.1_Cavlc.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1088_6mbps_25fps_High_at_L4.1_Cavlc.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="6">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #6: Dancing_1920x1088i_6mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</Name>
+    <Description>Playback #6: Dancing_1920x1088i_6mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1088i_6mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="7">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #7: Dancing_1920x1088i_9mbps_25fps_Main_at_L4.1_Cabac_PureMbaff.mp4</Name>
+    <Description>Playback #7: Dancing_1920x1088i_9mbps_25fps_Main_at_L4.1_Cabac_PureMbaff.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1088i_9mbps_25fps_Main_at_L4.1_Cabac_PureMbaff.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="8">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #8: Dancing_1920x1088i_8mbps_25fps_Main_at_L4.1_Cabac_Frext_Frm.mp4</Name>
+    <Description>Playback #8: Dancing_1920x1088i_8mbps_25fps_Main_at_L4.1_Cabac_Frext_Frm.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1088i_8mbps_25fps_Main_at_L4.1_Cabac_Frext_Frm.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="9">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #9: Soccer_544x480_1mbps_29.97fps_Main_at_L3.0_Cabac_DTV.mp4</Name>
+    <Description>Playback #9: Soccer_544x480_1mbps_29.97fps_Main_at_L3.0_Cabac_DTV.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_544x480_1mbps_29.97fps_Main_at_L3.0_Cabac_DTV.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="10">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #10: Soccer_1920x1080i_17mbps_29.97fps_High_at_L4.0_Cabac.mts</Name>
+    <Description>Playback #10: Soccer_1920x1080i_17mbps_29.97fps_High_at_L4.0_Cabac.mts</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1920x1080i_17mbps_29.97fps_High_at_L4.0_Cabac.mts</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="11">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #11: Dancing_1920x1088p_9mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</Name>
+    <Description>Playback #11: Dancing_1920x1088p_9mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1088p_9mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="12">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #12: Dancing_1920x1088_9mbps_25fps_Main_at_L4.1_Cabac_NoFrext.mp4</Name>
+    <Description>Playback #12: Dancing_1920x1088_9mbps_25fps_Main_at_L4.1_Cabac_NoFrext.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1088_9mbps_25fps_Main_at_L4.1_Cabac_NoFrext.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="13">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #13: Soccer_1280x720p_5mbps_60fps_Main_at_L4.0_Cabac_ChromaMoving_VBR_DTV.mp4</Name>
+    <Description>Playback #13: Soccer_1280x720p_5mbps_60fps_Main_at_L4.0_Cabac_ChromaMoving_VBR_DTV.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_5mbps_60fps_Main_at_L4.0_Cabac_ChromaMoving_VBR_DTV.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="14">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #14: Soccer_1280x720p_4mbps_30fps_Baseline_at_L3.1_8slices.mp4</Name>
+    <Description>Playback #14: Soccer_1280x720p_4mbps_30fps_Baseline_at_L3.1_8slices.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_4mbps_30fps_Baseline_at_L3.1_8slices.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="15">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #15: Singing_320x240p_62kbps_24fps_Baseline_at_L3.0_TextureSkinTones.mp4</Name>
+    <Description>Playback #15: Singing_320x240p_62kbps_24fps_Baseline_at_L3.0_TextureSkinTones.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Singing_320x240p_62kbps_24fps_Baseline_at_L3.0_TextureSkinTones.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="16">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #16: Tallship_1920x1080i_10mbps_30fps_Baseline_at_L4.0_fmoaso.mp4</Name>
+    <Description>Playback #16: Tallship_1920x1080i_10mbps_30fps_Baseline_at_L4.0_fmoaso.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1080i_10mbps_30fps_Baseline_at_L4.0_fmoaso.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="17">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #17: Soccer_544x480i_2mbps_29.97fps_Main_at_L3.0_Cabac.mp4</Name>
+    <Description>Playback #17: Soccer_544x480i_2mbps_29.97fps_Main_at_L3.0_Cabac.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_544x480i_2mbps_29.97fps_Main_at_L3.0_Cabac.mp4</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="18">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #18: H264FormatChange_720x480p_HP_at_L3.0_320x240p_MP.264</Name>
+    <Description>Playback #18: H264FormatChange_720x480p_HP_at_L3.0_320x240p_MP.264</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>H264FormatChange_720x480p_HP_at_L3.0_320x240p_MP.264</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="19">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Playback #19: H264formatChange_1920x1088_High_at_L4.1_1280x720_Main.264</Name>
+    <Description>Playback #19: H264formatChange_1920x1088_High_at_L4.1_1280x720_Main.264</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>H264formatChange_1920x1088_High_at_L4.1_1280x720_Main.264</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="20">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Playback #20: Soccer_MPG1_352x240p_1145kbps_24fps_Main_at_Main.m2v</Name>
+    <Description>Playback #20: Soccer_MPG1_352x240p_1145kbps_24fps_Main_at_Main.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_MPG1_352x240p_1145kbps_24fps_Main_at_Main.m2ts</InputFile>
+    <DXVAType>9and11</DXVAType>
+    <DComp>1</DComp>
+    <FullScreen>1</FullScreen>
+  </TEST>
+  <TEST testId="21">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Playback #21: Soccer_1280x720p_17.5mbps_29.97fps_Main_at_High.m2v</Name>
+    <Description>Playback #21: Soccer_1280x720p_17.5mbps_29.97fps_Main_at_High.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_17.5mbps_29.97fps_Main_at_High.m2v</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="22">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Playback #22: Tallship_1920x1080p_10mbps_29.97fps_Main_at_High.m2v</Name>
+    <Description>Playback #22: Tallship_1920x1080p_10mbps_29.97fps_Main_at_High_DTV.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1080p_10mbps_29.97fps_Main_at_High.m2v</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="23">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>>
+    <Name>Playback #23: foursquares_320x240_10mbps_30fps_Main_at_Main.m2v</Name>
+    <Description>Playback #23: foursquares_320x240_10mbps_30fps_Main_at_Main.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>foursquares_320x240_10mbps_30fps_Main_at_Main.m2v</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="24">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>>
+    <Name>Playback #24: Dancing_1920x1080p_10mbps_23.97fps_Main_at_High.m2v</Name>
+    <Description>Playback #24: Dancing_1920x1080p_10mbps_23.97fps_Main_at_High.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1080p_10mbps_23.97fps_Main_at_High.m2v</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="25">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>>
+    <Name>Playback #25: Dancing_1920x1080p_17mbps_23.97fps_Main_at_High.m2v</Name>
+    <Description>Playback #25: Dancing_1920x1080p_17mbps_23.97fps_Main_at_High.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1080p_17mbps_23.97fps_Main_at_High.m2v</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="27">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Playback #27: TallShip_1920x1080p_15mbps_29.97fps_Main_at_High.m2v</Name>
+    <Description>Playback #27: TallShip_1920x1080p_15mbps_29.97fps_Main_at_High.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>TallShip_1920x1080p_15mbps_29.97fps_Main_at_High.m2v</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="28">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Playback #28: Dancing_1920x1080p_20mbps_23.97fps_Main_at_High.m2v</Name>
+    <Description>Playback #28: Dancing_1920x1080p_20mbps_23.97fps_Main_at_High.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1080p_20mbps_23.97fps_Main_at_High.m2v</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="30">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Playback #30: Tallship_720x480i_field_60mbps_29.97fps_Main_at_High.m2v</Name>
+    <Description>Playback #30: Tallship_720x480i_field_60mbps_29.97fps_Main_at_High.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_720x480i_field_60mbps_29.97fps_Main_at_High.m2v</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="31">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Playback #31: Tallship_720x480i_frame_900kbps_29.97fps_main_at_main.m2v</Name>
+    <Description>Playback #31: Tallship_720x480i_frame_900kbps_29.97fps_main_at_main.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_720x480i_frame_900kbps_29.97fps_main_at_main.m2v</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="32">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #32: Singing_352x288p_10mbps_15fps_AP_at_L0_cbr_TextureSkinTones_Noloopfilter.wmv</Name>
+    <Description>Playback #32: Singing_352x288p_10mbps_15fps_AP_at_L0_cbr_TextureSkinTones_Noloopfilter.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Singing_352x288p_10mbps_15fps_AP_at_L0_cbr_TextureSkinTones_Noloopfilter.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+    <DComp>1</DComp>
+    <FullScreen>1</FullScreen>
+  </TEST>
+  <TEST testId="33">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #33: Soccer_720x480i_Field_TFF_3mbps_29.97fps_AP_at_L1_7BFr.wmv</Name>
+    <Description>Playback #33: Soccer_720x480i_Field_TFF_3mbps_29.97fps_AP_at_L1_7BFr.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_720x480i_Field_TFF_3mbps_29.97fps_AP_at_L1_7BFr.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="34">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #34: Tallship_720x576p_10mbps_25fps_AP_at_L1_6BFr_Noloopfilter.wmv</Name>
+    <Description>Playback #34: Tallship_720x576p_10mbps_25fps_AP_at_L1_6BFr_Noloopfilter.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_720x576p_10mbps_25fps_AP_at_L1_6BFr_Noloopfilter.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="35">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #35: Soccer_1280x720p_15mbps_60fps_AP_at_L2.wmv</Name>
+    <Description>Playback #35: Soccer_1280x720p_15mbps_60fps_AP_at_L2.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_15mbps_60fps_AP_at_L2.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="36">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #36: Soccer_1920x1080i_Frame_18mbps_29.97fps_AP_at_L2.wmv</Name>
+    <Description>Playback #36: Soccer_1920x1080i_Frame_18mbps_29.97fps_AP_at_L2.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1920x1080i_Frame_18mbps_29.97fps_AP_at_L2.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="37">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #37: Soccer_1920x1080p_10mbps_30fps_AP_at_L3_Motion_VBR_5bFr_0Complx_3Smoothe_Loopfilter.wmv</Name>
+    <Description>Playback #37: Soccer_1920x1080p_10mbps_30fps_AP_at_L3_Motion_VBR_5bFr_0Complx_3Smoothe_Loopfilter.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1920x1080p_10mbps_30fps_AP_at_L3_Motion_VBR_5bFr_0Complx_3Smoothe_Loopfilter.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="38">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #38: Soccer_1280x720p_10mbps_24fps_AP_at_L3_CBR_1BFr_Noloopfilter.wmv</Name>
+    <Description>Playback #38: Soccer_1280x720p_10mbps_24fps_AP_at_L3_CBR_1BFr_Noloopfilter.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_10mbps_24fps_AP_at_L3_CBR_1BFr_Noloopfilter.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="39">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #39: Tallship_1920x1080i_MBR_4mbps_29.97fps_AP_at_L3.wmv</Name>
+    <Description>Playback #39: Tallship_1920x1080i_MBR_4mbps_29.97fps_AP_at_L3.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1080i_MBR_4mbps_29.97fps_AP_at_L3.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="40">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #40: Soccer_320x240p_500kbps_29.97fps_WMV3_MP.wmv</Name>
+    <Description>Playback #40: Soccer_320x240p_500kbps_29.97fps_WMV3_MP.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_320x240p_500kbps_29.97fps_WMV3_MP.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="41">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #41: Soccer_1280x720p_15mbps_60fps_MP_at_HL.wmv</Name>
+    <Description>Playback #41: Soccer_1280x720p_15mbps_60fps_MP_at_HL.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_15mbps_60fps_MP_at_HL.wmv</InputFile>
+    <DXVAType>9and11</DXVAType>
+  </TEST>
+  <TEST testId="42">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #42: multi_resolution_with_sp.asf</Name>
+    <Description>Playback #42: multi_resolution_with_sp.asf</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>multi_resolution_with_sp.asf</InputFile>
+    <DXVAType>9and11</DXVAType>
+    <ArchOptional>x86;amd64;arm;arm64</ArchOptional>
+  </TEST>
+  <TEST testId="43">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Playback #43: no_sp_cif_hd_vga.asf</Name>
+    <Description>Playback #43: no_sp_cif_hd_vga.asf</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>no_sp_cif_hd_vga.asf</InputFile>
+    <DXVAType>9and11</DXVAType>
+    <ArchOptional>x86;amd64;arm;arm64</ArchOptional>
+  </TEST>
+
+  <!-- FUZZ TESTS -->
+  <TEST testId="100">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Fuzz #1: Singing_320x240p_380kbps_24fps_Baseline_at_L3.0_-fuzztype5_-RFrs4.264</Name>
+    <Description>Fuzz #1: Singing_320x240p_380kbps_24fps_Baseline_at_L3.0_-fuzztype5_-RFrs4.264</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Singing_320x240p_380kbps_24fps_Baseline_at_L3.0_-fuzztype5_-RFrs4.264</InputFile>
+    <H264SourceSendFakeMT>1</H264SourceSendFakeMT>
+  </TEST>
+  <TEST testId="101">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Fuzz #2: Soccer_640x480p_1.2mbps_29.97fps_High_at_L4.1_-fuzztype0_-RFrp2_-RFer21_-RFrs121_-RFep26_-RFf38.264</Name>
+    <Description>Fuzz #2: Soccer_640x480p_1.2mbps_29.97fps_High_at_L4.1_-fuzztype0_-RFrp2_-RFer21_-RFrs121_-RFep26_-RFf38.264</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_640x480p_1.2mbps_29.97fps_High_at_L4.1_-fuzztype0_-RFrp2_-RFer21_-RFrs121_-RFep26_-RFf38.264</InputFile>
+    <H264SourceSendFakeMT>1</H264SourceSendFakeMT>
+  </TEST>
+  <TEST testId="102">
+    <Category>Playback</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Fuzz #3: Tallship_1920x1088i_field_14mbps_FuzzNalu_PPS_ER5.264</Name>
+    <Description>Fuzz #3: Tallship_1920x1088i_field_14mbps_FuzzNalu_PPS_ER5.264</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1088i_field_14mbps_FuzzNalu_PPS_ER5.264</InputFile>
+    <H264SourceSendFakeMT>1</H264SourceSendFakeMT>
+  </TEST>
+  <TEST testId="107">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>>
+    <Name>Fuzz #8: Soccer_1280x720p_17.5mbps_29.97fps_Main_at_High_-fuzztype0_-RFrp2_-RFer28_-RFrs35_-RFep39_-RFf26.m2v</Name>
+    <Description>Fuzz #8: Soccer_1280x720p_17.5mbps_29.97fps_Main_at_High_-fuzztype0_-RFrp2_-RFer28_-RFrs35_-RFep39_-RFf26.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_17.5mbps_29.97fps_Main_at_High_-fuzztype0_-RFrp2_-RFer28_-RFrs35_-RFep39_-RFf26.m2v</InputFile>
+  </TEST>
+  <TEST testId="108">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Fuzz #9: Dancing_1920x1080p_20mbps_FuzzElement_PictH_SeqHExt_ER20.m2v</Name>
+    <Description>Fuzz #9: Dancing_1920x1080p_20mbps_FuzzElement_PictH_SeqHExt_ER20.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1080p_20mbps_FuzzElement_PictH_SeqHExt_ER20.m2v</InputFile>
+  </TEST>
+  <TEST testId="109">
+    <Category>Playback</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>>
+    <Name>Fuzz #10: M2VFormatChange_FuzzElement_SeqtH_GOP_ER20.m2v</Name>
+    <Description>Fuzz #10: M2VFormatChange_FuzzElement_SeqtH_GOP_ER20.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>M2VFormatChange_FuzzElement_SeqtH_GOP_ER20.m2v</InputFile>
+  </TEST>
+
+  <TEST testId="114">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Fuzz #15: Singing_320x240p_10mbps_FuzzAction_DropBDU_ER20.wmv</Name>
+    <Description>Fuzz #15: Singing_320x240p_10mbps_FuzzAction_DropBDU_ER20.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Singing_320x240p_10mbps_FuzzAction_DropBDU_ER20.wmv</InputFile>
+  </TEST>
+  <TEST testId="115">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Fuzz #16: Soccer_720x480i_Field_TFF_3mbps_FuzzActions_RepeatBDU_ER15.wmv</Name>
+    <Description>Fuzz #16: Soccer_720x480i_Field_TFF_3mbps_FuzzActions_RepeatBDU_ER15.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_720x480i_Field_TFF_3mbps_FuzzActions_RepeatBDU_ER15.wmv</InputFile>
+  </TEST>
+  <TEST testId="116">
+    <Category>Playback</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Fuzz #17: Soccer_720x480i_frame_3mbps_FuzzActions_ReplaceBDU_ER25.wmv</Name>
+    <Description>Fuzz #17: Soccer_720x480i_frame_3mbps_FuzzActions_ReplaceBDU_ER25.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_720x480i_frame_3mbps_FuzzActions_ReplaceBDU_ER25.wmv</InputFile>
+  </TEST>
+
+  <!-- QUALITY TESTS -->
+  <TEST testId="200">
+    <Category>Quality</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Quality #1: Tallship_1920x1088_10mbps_25fps_High_at_L4.1_Cabac_Mbaff.mp4</Name>
+    <Description>Quality #1: Tallship_1920x1088_10mbps_25fps_High_at_L4.1_Cabac_Mbaff.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1088_10mbps_25fps_High_at_L4.1_Cabac_Mbaff.mp4</InputFile>
+  </TEST>
+  <TEST testId="201">
+    <Category>Quality</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Quality #2: Tallship_1920x1088_6mbps_25fps_High_at_L4.1_Cabac_Picaff.mp4</Name>
+    <Description>Quality #2: Tallship_1920x1088_6mbps_25fps_High_at_L4.1_Cabac_Picaff.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1088_6mbps_25fps_High_at_L4.1_Cabac_Picaff.mp4</InputFile>
+  </TEST>
+  <TEST testId="202">
+    <Category>Quality</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Quality #3: Tallship_1920x1088_10mbps_25fps_High_at_L4.1_Cabac_Prog.mp4</Name>
+    <Description>Quality #3: Tallship_1920x1088_10mbps_25fps_High_at_L4.1_Cabac_Prog.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1088_10mbps_25fps_High_at_L4.1_Cabac_Prog.mp4</InputFile>
+    <DXVAType>9</DXVAType>
+  </TEST>
+  <TEST testId="203">
+    <Category>Quality</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Quality #4: Soccer_1280x720p_5mbps_60fps_Main_at_L4.0_Cabac_ChromaMoving_VBR_DTV.mp4</Name>
+    <Description>Quality #4: Soccer_1280x720p_5mbps_60fps_Main_at_L4.0_Cabac_ChromaMoving_VBR_DTV.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_5mbps_60fps_Main_at_L4.0_Cabac_ChromaMoving_VBR_DTV.mp4</InputFile>
+  </TEST>
+  <TEST testId="204">
+    <Category>Quality</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Quality #5: Lanczos_Mobileportrait_720x1280p_9mbps_25fps_Main_at_L3.1_Cabac.mp4</Name>
+    <Description>Quality #5: Lanczos_Mobileportrait_720x1280p_9mbps_25fps_Main_at_L3.1_Cabac.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Lanczos_Mobileportrait_720x1280p_9mbps_25fps_Main_at_L3.1_Cabac.mp4</InputFile>
+  </TEST>
+  <TEST testId="205">
+    <Category>Quality</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <VisValType>Quality</VisValType>
+    <Name>Quality #6: Tallship_1920x1080p_4mbps_30fps_Baseline_at_L4.0_4slices.mp4</Name>
+    <Description>Quality #6: Tallship_1920x1080p_4mbps_30fps_Baseline_at_L4.0_4slices.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1080p_4mbps_30fps_Baseline_at_L4.0_4slices.mp4</InputFile>
+  </TEST>
+  <TEST testId="299">
+    <Category>Quality</Category>
+    <InputType>H264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <VisValType>Quality</VisValType>
+    <Name>Quality #7: Rotate_180.mov</Name>
+    <Description>Quality #7: Rotate_180.mov</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Rotate_180.mov</InputFile>
+  </TEST>
+  <TEST testId="206">
+    <Category>Quality</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Quality #7: Dancing_1920x1080p_20mbps_23.97fps_Main_at_High.m2v</Name>
+    <Description>Quality #7: Dancing_1920x1080p_20mbps_23.97fps_Main_at_High.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1080p_20mbps_23.97fps_Main_at_High.m2v</InputFile>
+  </TEST>
+  <TEST testId="207">
+    <Category>Quality</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Quality #8: Soccer_1280x720p_18mbps_25fps_Main_at_High.m2v</Name>
+    <Description>Quality #8: Soccer_1280x720p_18mbps_25fps_Main_at_High.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_18mbps_25fps_Main_at_High.m2ts</InputFile>
+    <DXVAType>9</DXVAType>
+  </TEST>
+  <TEST testId="211">
+    <Category>Quality</Category>
+    <InputType>MPEG2</InputType>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Quality #12: Tallship_720x480i_frame_900kbps_29.97fps_main_at_main.m2v</Name>
+    <Description>Quality #12: Tallship_720x480i_frame_900kbps_29.97fps_main_at_main.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_720x480i_frame_900kbps_29.97fps_main_at_main.m2v</InputFile>
+  </TEST>
+  <TEST testId="212">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Quality #13: Tallship_320x240p_10mbps_29.97fps_AP_at_L0_6BFr_CBR_Noloopfilter.wmv</Name>
+    <Description>Quality #13: Tallship_320x240p_10mbps_29.97fps_AP_at_L0_6BFr_CBR_Noloopfilter.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_320x240p_10mbps_29.97fps_AP_at_L0_6BFr_CBR_Noloopfilter.wmv</InputFile>
+  </TEST>
+  <TEST testId="213">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Quality #14: Soccer_720x480i_Field_TFF_3mbps_29.97fps_AP_at_L1_2BFr.wmv</Name>
+    <Description>Quality #14: Soccer_720x480i_Field_TFF_3mbps_29.97fps_AP_at_L1_2BFr.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_720x480i_Field_TFF_3mbps_29.97fps_AP_at_L1_2BFr.wmv</InputFile>
+  </TEST>
+  <TEST testId="214">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Quality #15: Soccer_720x480i_frame_3mbps_29.97fps_AP_at_L1_4444rangeredux.wmv</Name>
+    <Description>Quality #15: Soccer_720x480i_frame_3mbps_29.97fps_AP_at_L1_4444rangeredux.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_720x480i_frame_3mbps_29.97fps_AP_at_L1_4444rangeredux.wmv</InputFile>
+  </TEST>
+  <TEST testId="215">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <VisValType>Quality</VisValType>
+    <Name>Quality #16: Soccer_1280x720_15mbps_29.97fps_AP_at_L2.wmv</Name>
+    <Description>Quality #16: Soccer_1280x720_15mbps_29.97fps_AP_at_L2.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720_15mbps_29.97fps_AP_at_L2.wmv</InputFile>
+  </TEST>
+  <TEST testId="216">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Quality #17: Soccer_MotionDifDirect_1280x720p_10mbps_24fps_AP_at_L2_vbr_5bfr_2complx_55smoothe_loopfilter.wmv</Name>
+    <Description>Quality #17: Soccer_MotionDifDirect_1280x720p_10mbps_24fps_AP_at_L2_vbr_5bfr_2complx_55smoothe_loopfilter.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_MotionDifDirect_1280x720p_10mbps_24fps_AP_at_L2_vbr_5bfr_2complx_55smoothe_loopfilter.wmv</InputFile>
+  </TEST>
+  <TEST testId="217">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Quality #18: Soccer_1280x720p_15mbps_60fps_AP_at_L3_2dquantoption.wmv</Name>
+    <Description>Quality #18: Soccer_1280x720p_15mbps_60fps_AP_at_L3_2dquantoption.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_15mbps_60fps_AP_at_L3_2dquantoption.wmv</InputFile>
+  </TEST>
+  <TEST testId="218">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Quality #19: Soccer_960x720p_15mbps_60fps_AP_at_L3_4x3PAR.wmv</Name>
+    <Description>Quality #19: Soccer_960x720p_15mbps_60fps_AP_at_L3_4x3PAR.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_960x720p_15mbps_60fps_AP_at_L3_4x3PAR.wmv</InputFile>
+  </TEST>
+  <TEST testId="219">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Quality #20: Soccer_1920x1080i_Field_TFF_18mbps_29.97fps_AP_at_L3_1LoopFilter.wmv</Name>
+    <Description>Quality #20: Soccer_1920x1080i_Field_TFF_18mbps_29.97fps_AP_at_L3_1LoopFilter.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1920x1080i_Field_TFF_18mbps_29.97fps_AP_at_L3_1LoopFilter.wmv</InputFile>
+    <DXVAType>9</DXVAType>
+  </TEST>
+  <TEST testId="220">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <VisValType>Quality</VisValType>
+    <Name>Quality #21: Soccer_1920x1080i_Frame_18mbps_29.97fps_AP_at_L3.wmv</Name>
+    <Description>Quality #21: Soccer_1920x1080i_Frame_18mbps_29.97fps_AP_at_L3.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1920x1080i_Frame_18mbps_29.97fps_AP_at_L3.wmv</InputFile>
+  </TEST>
+  <TEST testId="221">
+    <Category>Quality</Category>
+    <InputType>WVC1</InputType>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Quality #22: spFramesNewBitstreamLayout.asf</Name>
+    <Description>Quality #22: spFramesNewBitstreamLayout.asf</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>spFramesNewBitstreamLayout.asf</InputFile>
+    <ArchOptional>x86;amd64;arm;arm64</ArchOptional>
+  </TEST>
+  
+  <!-- STRESS TESTS -->
+  <TEST testId="300">
+    <Category>Stress</Category>
+    <InputType>H264</InputType>
+    <RunTimeInSeconds>900</RunTimeInSeconds>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>Stress #1: Dancing_1920x1080p_13mbps_23.97fps_Main_at_4.0L_Cabac_VBR_DTV.mp4</Name>
+    <Description>Stress #1: Dancing_1920x1080p_13mbps_23.97fps_Main_at_4.0L_Cabac_VBR_DTV.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1080p_13mbps_23.97fps_Main_at_4.0L_Cabac_VBR_DTV.mp4</InputFile>
+  </TEST>
+  <TEST testId="303">
+    <Category>Stress</Category>
+    <InputType>MPEG2</InputType>
+    <RunTimeInSeconds>3600</RunTimeInSeconds>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>Stress #6: M2VFormatChange_1280x720p_MP_at_HL_1920x1080p_MP.m2v</Name>
+    <Description>Stress #6: M2VFormatChange_1280x720p_MP_at_HL_1920x1080p_MP.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>M2VFormatChange_1280x720p_MP_at_HL_1920x1080p_MP.m2v</InputFile>
+  </TEST>
+  <TEST testId="305">
+    <Category>Stress</Category>
+    <InputType>WVC1</InputType>
+    <RunTimeInSeconds>3600</RunTimeInSeconds>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>Stress #7: Tallship_1920x1080i_MBR_8mbps_29.97_AP_at_L3.wmv</Name>
+    <Description>Stress #7: Tallship_1920x1080i_MBR_8mbps_29.97_AP_at_L3.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Tallship_1920x1080i_MBR_8mbps_29.97_AP_at_L3.wmv</InputFile>
+  </TEST>
+  
+  <!-- MULTIINSTANCE TESTS -->
+  <TEST testId="400">
+    <Category>MultiInstance</Category>
+    <InputType>H264</InputType>
+    <NumInstances>2</NumInstances>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>MultiInstance #1: Soccer_1280x720p_3mbps_25fps_High_at_L4.1_Cabac_frext_slice.mp4</Name>
+    <Description>MultiInstance #1: Soccer_1280x720p_3mbps_25fps_High_at_L4.1_Cabac_frext_slice.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_3mbps_25fps_High_at_L4.1_Cabac_frext_slice.mp4</InputFile>
+  </TEST>
+  <TEST testId="403">
+    <Category>MultiInstance</Category>
+    <InputType>MPEG2</InputType>
+    <NumInstances>2</NumInstances>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>MultiInstance #4: m2vformatchange_320x240iFrame_MP_at_ML_1920x1080iField_MP.m2v</Name>
+    <Description>MultiInstance #4: m2vformatchange_320x240iFrame_MP_at_ML_1920x1080iField_MP.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>m2vformatchange_320x240iFrame_MP_at_ML_1920x1080iField_MP.m2v</InputFile>
+  </TEST>
+  <TEST testId="404">
+    <Category>MultiInstance</Category>
+    <InputType>MPEG2</InputType>
+    <NumInstances>2</NumInstances>
+    <Component_CLSID>{2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}</Component_CLSID>
+    <Name>MultiInstance #5: foursquares_320x240_10mbps_30fps_Main_at_Main.m2v</Name>
+    <Description>MultiInstance #5: foursquares_320x240_10mbps_30fps_Main_at_Main.m2v</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>foursquares_320x240_10mbps_30fps_Main_at_Main.m2v</InputFile>
+  </TEST>
+  <TEST testId="405">
+    <Category>MultiInstance</Category>
+    <InputType>WVC1</InputType>
+    <NumInstances>2</NumInstances>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>MultiInstance #6: Singing_320x240p_10mbps_23.97fps_AP_at_L0_2BFr_TextureSkinTones_Noloopfilter.wmv</Name>
+    <Description>MultiInstance #6: Singing_320x240p_10mbps_23.97fps_AP_at_L0_2BFr_TextureSkinTones_Noloopfilter.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Singing_320x240p_10mbps_23.97fps_AP_at_L0_2BFr_TextureSkinTones_Noloopfilter.wmv</InputFile>
+  </TEST>
+  <TEST testId="406">
+    <Category>MultiInstance</Category>
+    <InputType>WVC1</InputType>
+    <NumInstances>2</NumInstances>
+    <Component_CLSID>{82D353DF-90BD-4382-8BC2-3F6192B76E34}</Component_CLSID>
+    <Name>MultiInstance #7: Soccer_1280x720p_10mbps_24fps_AP_at_L3_CBR_1BFr_Noloopfilter.wmv</Name>
+    <Description>MultiInstance #7: Soccer_1280x720p_10mbps_24fps_AP_at_L3_CBR_1BFr_Noloopfilter.wmv</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Soccer_1280x720p_10mbps_24fps_AP_at_L3_CBR_1BFr_Noloopfilter.wmv</InputFile>
+  </TEST>
+</TestSuite>

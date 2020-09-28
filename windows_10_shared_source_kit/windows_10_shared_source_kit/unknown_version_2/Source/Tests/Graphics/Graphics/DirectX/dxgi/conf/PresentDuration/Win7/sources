@@ -1,0 +1,7 @@
+WANT_SDK_LIBS=1
+
+!include ..\sources.inc
+
+SOURCES=\
+	$(SOURCES) \
+	KitContent.kml \

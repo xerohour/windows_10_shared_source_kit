@@ -1,0 +1,18 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+TARGETNAME=DCOMPIsolation
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+UMENTRY=winmain
+
+#
+# Override the default NT_TARGET_VERSION.  This is required to build DCOMP.
+#
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN8)
+
+
+SOURCES=\
+	DCOMPIsolation.cpp \
+
+
+TARGETLIBS=\

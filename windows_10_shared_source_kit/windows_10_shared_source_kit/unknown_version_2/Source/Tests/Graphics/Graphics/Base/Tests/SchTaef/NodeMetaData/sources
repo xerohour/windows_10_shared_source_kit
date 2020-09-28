@@ -1,0 +1,54 @@
+ps.dwTextureCaps = DevCaps.TextureCaps;
+	pDevice->m_Desc.dpcTriCaps.dwTextureFilterCaps = DevCaps.TextureFilterCaps;
+	pDevice->m_Desc.dpcTriCaps.dwTextureBlendCaps = 0;
+	pDevice->m_Desc.dpcTriCaps.dwTextureAddressCaps = DevCaps.TextureAddressCaps;
+	pDevice->m_Desc.dpcTriCaps.dwStippleWidth = 0;
+	pDevice->m_Desc.dpcTriCaps.dwStippleHeight = 0;
+
+	pDevice->m_Desc.dpcLineCaps.dwMiscCaps = DevCaps.PrimitiveMiscCaps;
+	pDevice->m_Desc.dpcLineCaps.dwRasterCaps = DevCaps.RasterCaps;
+	if (0 == (DevCaps.LineCaps & D3DLINECAPS_FOG))
+		pDevice->m_Desc.dpcLineCaps.dwRasterCaps |= ~(D3DPRASTERCAPS_FOGVERTEX | D3DPRASTERCAPS_FOGTABLE |
+													D3DPRASTERCAPS_WFOG | D3DPRASTERCAPS_ZFOG | 
+													D3DPRASTERCAPS_FOGRANGE);
+	if (DevCaps.LineCaps & D3DLINECAPS_ZTEST)
+		pDevice->m_Desc.dpcLineCaps.dwZCmpCaps = DevCaps.ZCmpCaps;
+	else
+		pDevice->m_Desc.dpcLineCaps.dwZCmpCaps = 0;
+	if (DevCaps.LineCaps & D3DLINECAPS_BLEND)
+	{
+		pDevice->m_Desc.dpcLineCaps.dwSrcBlendCaps = DevCaps.SrcBlendCaps;
+		pDevice->m_Desc.dpcLineCaps.dwDestBlendCaps = DevCaps.DestBlendCaps;
+	}
+	else
+	{
+		pDevice->m_Desc.dpcLineCaps.dwSrcBlendCaps = 0;
+		pDevice->m_Desc.dpcLineCaps.dwDestBlendCaps = 0;
+	}
+	if (DevCaps.LineCaps & D3DLINECAPS_ALPHACMP)
+		pDevice->m_Desc.dpcLineCaps.dwAlphaCmpCaps = DevCaps.AlphaCmpCaps;
+	else
+		pDevice->m_Desc.dpcLineCaps.dwAlphaCmpCaps = 0;
+	pDevice->m_Desc.dpcLineCaps.dwShadeCaps = DevCaps.ShadeCaps;
+	pDevice->m_Desc.dpcLineCaps.dwTextureBlendCaps = 0;
+	if (DevCaps.LineCaps & D3DLINECAPS_TEXTURE)
+	{
+		pDevice->m_Desc.dpcLineCaps.dwTextureCaps = DevCaps.TextureCaps;
+		pDevice->m_Desc.dpcLineCaps.dwTextureFilterCaps = DevCaps.TextureFilterCaps;
+		pDevice->m_Desc.dpcLineCaps.dwTextureAddressCaps = DevCaps.TextureAddressCaps;
+	}
+	else
+	{
+		pDevice->m_Desc.dpcLineCaps.dwTextureCaps = 0;
+		pDevice->m_Desc.dpcLineCaps.dwTextureFilterCaps = 0;
+		pDevice->m_Desc.dpcLineCaps.dwTextureAddressCaps = 0;
+	}
+	pDevice->m_Desc.dpcLineCaps.dwStippleWidth = 0;
+	pDevice->m_Desc.dpcLineCaps.dwStippleHeight = 0;
+
+	pDevice->m_Desc.dwPrimitiveMiscCaps = DevCaps.PrimitiveMiscCaps;
+	pDevice->m_Desc.dwRasterCaps = DevCaps.RasterCaps;
+	pDevice->m_Desc.dwZCmpCaps = DevCaps.ZCmpCaps;
+	pDevice->m_Desc.dwSrcBlendCaps = DevCaps.SrcBlendCaps;
+	pDevice->m_Desc.dwDestBlendCaps = DevCaps.DestBlendCaps;
+	pDevice->m_Desc.dwAlphaCmpCaps = DevCaps.AlphaCmp

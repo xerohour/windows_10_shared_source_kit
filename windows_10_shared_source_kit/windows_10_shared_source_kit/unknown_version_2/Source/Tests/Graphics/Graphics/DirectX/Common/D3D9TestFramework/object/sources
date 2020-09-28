@@ -1,0 +1,14 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CObject
+
+SOURCES= \
+        CObject.cpp \
+        Interface.cpp
+
+
+PRECOMPILED_INCLUDE=ObjectPCH.h
+PRECOMPILED_CXX=1
+
+

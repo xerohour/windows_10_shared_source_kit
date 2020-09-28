@@ -1,0 +1,16 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<Content xmlns="http://microsoft.com/schemas/Windows/Kits/Manifest">
+  <ContentGroup
+      BuildArchitecture="each"
+      Destination="$(_BuildArch)"
+      >
+    <FeatureReference Name="Device.Graphics"/>
+    <CertificationBasicFile
+        Destination="nttest\windowstest\graphics\d3d\conf"
+        Name="clear.exe"
+        Source="$(OBJ_PATH)\$(O)"
+        TestSuite="Device.Graphics"
+        WdkDestination="nttest\windowstest\graphics\d3d\conf"
+        />
+  </ContentGroup>
+</Content>

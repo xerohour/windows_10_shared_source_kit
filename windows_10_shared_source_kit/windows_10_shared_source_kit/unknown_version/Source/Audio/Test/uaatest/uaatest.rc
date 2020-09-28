@@ -1,0 +1,31 @@
+/*
+* Copyright (c) Microsoft Corporation. All rights reserved.
+*/
+
+#include <shell98.rc>
+#include "resource.h"
+#include "windows.h"
+#include "ntverp.h"
+
+//#include "winver.h"
+
+
+//
+// Version
+//
+#define VER_FILETYPE				VFT_APP
+#define VER_FILESUBTYPE				VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR 		"UAA Test Application"
+#define VER_INTERNALNAME_STR			"uaatest.exe"
+#define VER_ORIGINALFILENAME_STR		"uaatest.exe"
+
+#include "common.ver"
+
+
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_UAATEST             ICON    DISCARDABLE     "uaatest.ico"

@@ -1,0 +1,26 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=Address
+
+SOURCES= \
+        ..\Address.rc \
+        ..\Address.cpp \
+        ..\Border.cpp \
+        ..\Clamp.cpp \
+        ..\DrawMesh.cpp \
+        ..\IndependentUV.cpp \
+        ..\Mirror.cpp \
+	..\MirrorOnce.cpp \
+        ..\Wrap.cpp \
+        ..\WrapU.cpp \
+        ..\WrapUV.cpp \
+        ..\WrapV.cpp 
+
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

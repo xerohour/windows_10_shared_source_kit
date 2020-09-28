@@ -1,0 +1,47 @@
+!include $(GRAPHICS_TST_ROOT)\Graphics.mk
+
+UNIANSI = unicode
+
+C_DEFINES = $(C_DEFINES) -DUNICODE -D_UNICODE
+
+TARGETNAME=CommonD3DTestBase
+TARGETTYPE=LIBRARY
+
+USE_MSVCRT=1
+
+USE_NATIVE_EH=1
+
+USE_STL=1
+STL_VER=100
+
+USE_ATL=1
+ATL_VER=70
+
+INCLUDES= \
+	$(INCLUDES); \
+	$(PROJECT_INC_PATH)\d3dpri; \
+	$(SDK_INC_PATH); \
+	$(SDKTOOLS_INC_PATH); \
+	$(SDKTOOLS_INC_PATH)\WexTest\Cue; \
+	$(SDKTOOLS_INC_PATH)\WexTest\Tools; \
+	$(GRAPHICS_TST_ROOT)\Common\DeviceManager; \
+	$(GRAPHICS_TST_ROOT)\Common\D3DStrings; \
+	$(WINDOWS_TST_ROOT)\Common\Handle; \
+	$(WINDOWS_TST_ROOT)\Common\Include; \
+	$(WINDOWS_TST_ROOT)\Common\Properties; \
+	$(WINDOWS_TST_ROOT)\Common\RegEx; \
+	$(WINDOWS_TST_ROOT)\Common\SimpleLog; \
+	$(WINDOWS_TST_ROOT)\Common\SimpleLog\TAEFLog; \
+	$(WINDOWS_TST_ROOT)\Common\StringUtils; \
+	$(WINDOWS_TST_ROOT)\Common\StringConverters; \
+	$(WINDOWS_TST_ROOT)\Common\SystemProperties; \
+	$(WINDOWS_TST_ROOT)\Common\VariationCore; \
+	$(WINDOWS_TST_ROOT)\Common\VariationData; \
+	$(WINDOWS_TST_ROOT)\Common\Tref; \
+	$(WINDOWS_TST_ROOT)\Common\StringUtils; \
+	$(DIRECTX_TST_ROOT)\Common\Include; \
+
+SOURCES=\
+	CommonD3DTestBase.cpp \
+
+

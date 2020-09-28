@@ -1,0 +1,23 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "nonpowtwo"
+#define VER_ORIGINALFILENAME_STR    "NonPowTwo.exe"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+TEX0.BMP				 BITMAP  DISCARDABLE       "Media\\tex0.bmp"
+TEX1.BMP				 BITMAP  DISCARDABLE       "Media\\tex1.bmp"
+TEX2.BMP				 BITMAP  DISCARDABLE       "Media\\tex2.bmp"
+WINDOW.BMP                               BITMAP  DISCARDABLE       "Media\\Window.bmp"
+ENV1.BMP				 BITMAP  DISCARDABLE       "Media\\env1.bmp"
+ENV2.BMP				 BITMAP  DISCARDABLE       "Media\\env2.bmp"
+
+#include <common.ver>

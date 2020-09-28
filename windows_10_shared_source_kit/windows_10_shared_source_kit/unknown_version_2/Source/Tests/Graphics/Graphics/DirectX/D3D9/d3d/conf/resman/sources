@@ -1,0 +1,32 @@
+!include ..\conf.mk
+
+TARGETNAME=ResMan
+
+TARGET_DESTINATION=graphics\d3d\conf:graphics\d3d\func
+
+SOURCES=ResMan.rc \
+ResMan.cpp \
+ListTest.cpp \
+CheckColors.cpp \
+CheckDXCaps.cpp \
+default.cpp \
+ResourcesForBasicTest.cpp \
+ResourcesGenerationFunctions.cpp \
+BasicTest.cpp \
+ChangeColorsTest.cpp \
+DiscardBytesTest.cpp \
+LRUTest.cpp \
+MRUTest.cpp \
+
+
+	
+	
+	
+
+
+
+        
+        
+
+
+

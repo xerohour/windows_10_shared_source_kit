@@ -1,0 +1,26 @@
+TARGET_DESTINATION=graphics\d3d\conf
+TARGETNAME=SVCaseGen
+TARGETTYPE=PROGRAM
+
+TEST_CODE=1
+
+MANAGED_CODE=1
+URT_VER=4.5
+
+SOURCES= \
+	$(ASSEMBLYINFO) \
+	SVCaseGenForm.cs \
+	SVCaseGen.cs \
+	EditOutput.cs \
+
+REFERENCES= \
+$(CLR_REF_PATH)\System.metadata_dll;\
+$(CLR_REF_PATH)\System.Windows.Forms.metadata_dll;\
+$(CLR_REF_PATH)\System.Drawing.metadata_dll;\
+$(CLR_REF_PATH)\System.Data.metadata_dll;\
+$(CLR_REF_PATH)\System.Xml.metadata_dll\
+
+
+# Default Key and assembly version
+ASSEMBLY_IDENTITY_PUBLIC_KEY_NAME=WindowsTestUntrusted
+ASSEMBLY_IDENTITY_VERSION_NAME=WindowsTest

@@ -1,0 +1,11 @@
+!include ..\conf.mk
+
+TARGETNAME=Present
+
+SOURCES= \
+        resource.rc  \
+        CPresentTest.cpp  \
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

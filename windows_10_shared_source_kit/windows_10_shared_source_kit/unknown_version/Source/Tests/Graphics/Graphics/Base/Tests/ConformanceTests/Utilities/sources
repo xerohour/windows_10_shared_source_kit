@@ -1,0 +1,13 @@
+!include ..\..\Vidmm_tests.mk
+
+
+TARGETNAME=ConformUtilLib
+TARGETTYPE=LIBRARY
+
+
+SOURCES = BackBufferCompare.cpp \
+          Image.cpp \
+
+
+
+TARGETLIBS=\

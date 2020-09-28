@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9.00"
+	Name="StreamOut"
+	ProjectGUID="{276EE032-87DA-48F0-A007-CA9D4234FE1F}"
+	RootNamespace="StreamOut"
+	Keyword="MakeFileProj"
+	TargetFrameworkVersion="131072"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="0"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="build -ZI"
+				ReBuildCommandLine="build -cZI"
+				CleanCommandLine="build recycle"
+				Output="$(OBJECT_ROOT)\testsrc\multimediatest\wggt\dxg\d3d\conf\StreamOut\objchk\i386\WGFStreamOut.exe"
+				PreprocessorDefinitions=""
+				IncludeSearchPath=""
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="0"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="build -zI"
+				ReBuildCommandLine="build -czI"
+				CleanCommandLine="build recycle"
+				Output="StreamOut.exe"
+				PreprocessorDefinitions="WIN32;NDEBUG"
+				IncludeSearchPath=""
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
+			<File
+				RelativePath=".\MultiBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MultiStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SingleBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\StreamOut.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
+			<File
+				RelativePath=".\MultiBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MultiStream.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SingleBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StreamOut.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
+			<File
+				RelativePath=".\ShaderSource.sh"
+				>
+			</File>
+			<File
+				RelativePath=".\ShaderSourceMulti.sh"
+				>
+			</File>
+			<File
+				RelativePath=".\sources"
+				>
+			</File>
+			<File
+				RelativePath=".\streamout.rc"
+				>
+			</File>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

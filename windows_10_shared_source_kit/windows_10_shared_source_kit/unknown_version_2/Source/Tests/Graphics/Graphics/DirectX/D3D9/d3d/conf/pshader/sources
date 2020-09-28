@@ -1,0 +1,8 @@
+ader[256];
+    memset(szHeader, TEXT(' '), sizeof(TCHAR)*256);
+    TCHAR* pszHeader = szHeader + 16;
+    
+    SLOG(eInfo1, "----------------------------------------------------------------------------------------");
+    for (u=0; u < u32MatrixDimension; u++)
+    {
+        pszHeader +=_stprintf(pszHeader, TEXT("%6ld       

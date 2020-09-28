@@ -1,0 +1,21 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\directx.mk
+
+TARGETNAME=HResultHelp
+TARGETTYPE=LIBRARY
+
+
+USE_MSVCRT=1
+
+USE_NATIVE_EH=1
+
+USE_STL=1
+STL_VER=100
+
+INCLUDES=.\; \
+         $(DIRECTX_TST_ROOT)\Common\Include; \
+         $(INCLUDES) \
+
+
+SOURCES= \
+	HResultHelp.cpp
+

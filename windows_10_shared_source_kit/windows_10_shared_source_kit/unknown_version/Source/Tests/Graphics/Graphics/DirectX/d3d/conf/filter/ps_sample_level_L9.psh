@@ -1,0 +1,159 @@
+Texture1D myTex1D;
+Texture2D myTex2D;
+Texture3D myTex3D;
+TextureCube myTexCube;
+sampler samp;
+
+cbuffer cb0 : register(b0)
+{
+	float4 inverseViewport;
+};
+
+cbuffer cb1 : register(b1)
+{
+	float4 texCoords[4];
+};
+
+struct PSIn
+{
+	float4 pos : SV_Position;
+};
+
+struct PSOut
+{
+	float4 color : SV_Target;
+};
+
+float xFraction(float2 pos)
+{
+	return (pos.x * inverseViewport.z * 0.5);
+}
+
+float yFraction(float2 pos)
+{
+	return (pos.y * -inverseViewport.w * 0.5);
+}
+
+float4 interpolate(float2 pos)
+{
+	float xFrac = xFraction(pos);
+	float yFrac = yFraction(pos);
+	
+	float4 topVals = texCoords[0] * (1-xFrac) + texCoords[1] * xFrac;
+	float4 botVals = texCoords[3] * (1-xFrac) + texCoords[2] * xFrac;
+	float4 finalVal = topVals * (1-yFrac) + botVals * (yFrac);
+	
+	return finalVal;
+}
+
+float calcLevel(float2 pos)
+{
+	float xFrac = xFraction(pos);
+	float yFrac = yFraction(pos);
+	
+	float levelVal = (xFrac + yFrac) / 2;
+	return (levelVal * 7) - 1;
+}
+
+PSOut main(PSIn input)
+{
+	PSOut output;
+	output.color = float4( 1.0, 1.0, 1.0, 1.0 );
+	return output;
+}
+
+PSOut main_1(PSIn input)
+{
+	PSOut output;
+	float1 tex = interpolate(input.pos);
+	output.color = myTex1D.SampleLevel(samp, tex, calcLevel(input.pos));
+	return output;
+}
+
+PSOut main_2(PSIn input, float2 pos2_noperspective : pos)
+{
+	PSOut output;
+	float2 tex = interpolate(pos2_noperspective);
+	output.color = myTex2D.SampleLevel(samp, tex, calcLevel(pos2_noperspective));
+	return output;
+}
+
+PSOut main_3(PSIn input, float2 pos2_noperspective : pos)
+{
+	PSOut output;
+	float3 tex = interpolate(pos2_noperspective);
+	output.color = myTex3D.SampleLevel(samp, tex, calcLevel(pos2_noperspective));
+	return output;
+}
+
+PSOut main_4(PSIn input, float2 pos2_noperspective : pos)
+{
+	PSOut output;
+	float3 tex = interpolate(pos2_noperspective);
+	output.color = myTexCube.SampleLevel(samp, tex, calcLevel(pos2_noperspective));
+	return output;
+}
+
+PSOut main_1_aoff(PSIn input)
+{
+	PSOut output;
+	float1 tex = interpolate(input.pos);
+	if (input.pos.x < 1/inverseViewport.z)
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex1D.SampleLevel(samp, tex, calcLevel(input.pos), int3(-1,0,-1));
+		else
+			output.color = myTex1D.SampleLevel(samp, tex, calcLevel(input.pos), int3(0,-1, 0));
+	}
+	else
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex1D.SampleLevel(samp, tex, calcLevel(input.pos), int3(1,1,2));
+		else
+			output.color = myTex1D.SampleLevel(samp, tex, calcLevel(input.pos), int3(0,2,1));
+	}
+	return output;
+}
+
+PSOut main_2_aoff(PSIn input)
+{
+	PSOut output;
+	float2 tex = interpolate(input.pos);
+	if (input.pos.x < 1/inverseViewport.z)
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex2D.SampleLevel(samp, tex, calcLevel(input.pos), int3(-1,0,-1));
+		else
+			output.color = myTex2D.SampleLevel(samp, tex, calcLevel(input.pos), int3(0,-1, 0));
+	}
+	else
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex2D.SampleLevel(samp, tex, calcLevel(input.pos), int3(1,1,2));
+		else
+			output.color = myTex2D.SampleLevel(samp, tex, calcLevel(input.pos), int3(0,2,1));
+	}
+	return output;
+}
+
+PSOut main_3_aoff(PSIn input)
+{
+	PSOut output;
+	float3 tex = interpolate(input.pos);
+	if (input.pos.x < 1/inverseViewport.z)
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex3D.SampleLevel(samp, tex, calcLevel(input.pos), int3(-1,0,-1));
+		else
+			output.color = myTex3D.SampleLevel(samp, tex, calcLevel(input.pos), int3(0,-1, 0));
+	}
+	else
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex3D.SampleLevel(samp, tex, calcLevel(input.pos), int3(1,1,2));
+		else
+			output.color = myTex3D.SampleLevel(samp, tex, calcLevel(input.pos), int3(0,2,1));
+	}
+	return output;
+}
+

@@ -1,0 +1,43 @@
+!include ..\..\pnp_tests.mk
+!include ..\..\unicodetests.mk
+
+TARGETNAME=PersistentReset
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WIN7)
+
+UMTYPE=console
+UMENTRY=main
+
+USE_MSVCRT=1
+USE_NATIVE_EH=1
+USE_STL=1
+USE_RTTI=1
+
+INCLUDES=\
+    $(INCLUDES); \
+    $(BASE_VID_TST_ROOT)\common\dmm; \
+    $(BASE_VID_TST_ROOT)\common\RateUtil; \
+    $(BASE_VID_TST_ROOT)\common\PdbUtil; \
+    $(BASE_VID_TST_ROOT)\common\PowerMngr; \
+    ..\PDBCommonComponent; \
+    
+TARGETLIBS=\
+    $(TARGETLIBS) \
+    $(SDK_LIB_PATH)\setupapi.lib \
+    $(WINDOWS_LIB_PATH)\ccdlib.lib \
+    $(WINDOWS_LIB_PATH)\user32p.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\dmm\native\$O\dmmdiag.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\monwmi\$O\monwmi.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\RateUtil\$(O)\RateUtil.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\PdbUtil\$(O)\PdbUtil.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\PowerMngr\$(O)\PowerMngr.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\tests\PersistentDB\PDBCommonComponent\$(O)\PDBCommonComponent.lib \
+
+SOURCES=\
+    main.rc \
+    main.cpp \
+    CDSReset.cpp \
+    SDCReset.cpp \
+    CDSDevMode.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml

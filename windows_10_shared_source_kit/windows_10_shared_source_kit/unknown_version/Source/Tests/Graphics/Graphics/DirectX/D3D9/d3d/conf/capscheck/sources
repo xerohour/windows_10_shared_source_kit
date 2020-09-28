@@ -1,0 +1,12 @@
+!include ..\conf.mk
+
+TARGETNAME=CapsCheck
+
+SOURCES=CapsCheck.rc \
+        CapsCheck.cpp \
+		VersionMatch.cpp \
+		Required.cpp \
+		Consistency.cpp
+
+SOURCES=$(SOURCES) kitContent.kml
+

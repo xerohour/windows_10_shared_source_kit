@@ -1,0 +1,3 @@
+DIRS= \
+    gammarmp8{!arm,!arm64} \
+    gammarmp9

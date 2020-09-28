@@ -1,0 +1,21 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "blend"
+#define VER_ORIGINALFILENAME_STR    "BLEND.EXE"
+
+#include <common.ver>
+
+grid128.bmp bitmap "grid128.bmp"
+grid64.bmp bitmap "grid64.bmp"
+grid32.bmp bitmap "grid32.bmp"
+grid128bw.bmp bitmap "grid128bw.bmp"
+grid64bw.bmp bitmap "grid64bw.bmp"
+grid32bw.bmp bitmap "grid32bw.bmp"
+
+FloatTex.FX rcdata "floattex.fx"
+

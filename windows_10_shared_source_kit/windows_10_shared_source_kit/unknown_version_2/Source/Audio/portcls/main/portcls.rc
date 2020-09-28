@@ -1,0 +1,20 @@
+
+            WdfIoTargetGetDevice(FxIoTarget));
+    }
+
+    WdfDeleteObjectSafe(memoryWrite);
+    return status;
+}
+
+_IRQL_requires_max_(PASSIVE_LEVEL)
+NTSTATUS
+SpbWritelessRead(
+    _In_                        WDFIOTARGET FxIoTarget,
+    _In_                        WDFREQUEST  FxRequest,
+    _Out_writes_(DataLength)    PBYTE       Data,
+    _In_                        ULONG       DataLength,
+    _In_opt_                    LPGUID      ActivityId
+    )
+/*++
+ 
+  Routine

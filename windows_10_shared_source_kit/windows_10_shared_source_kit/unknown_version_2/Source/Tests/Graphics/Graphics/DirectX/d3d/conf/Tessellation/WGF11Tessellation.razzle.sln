@@ -1,0 +1,17 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WGF11Tessellation", "WGF11Tessellation.razzle.vcproj", "{BB0F8974-ED05-4593-8274-5959AE8753D7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Razzle|Win32 = Razzle|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB0F8974-ED05-4593-8274-5959AE8753D7}.Razzle|Win32.ActiveCfg = Razzle|Win32
+		{BB0F8974-ED05-4593-8274-5959AE8753D7}.Razzle|Win32.Build.0 = Razzle|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,4 @@
+#include <WGFTestUI.rc>
+
+DXGITrim_shader.fx RCDATA "DXGITrim_shader.fx"
+DXGITrim_shader_vb.fx RCDATA "DXGITrim_shader_vb.fx"

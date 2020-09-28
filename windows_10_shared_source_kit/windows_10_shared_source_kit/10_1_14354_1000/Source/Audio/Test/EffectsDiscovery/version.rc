@@ -1,0 +1,16 @@
+// Copyright (C) Microsoft Corporation. All rights reserved.
+
+// Adding standardized versioning to WLK applications
+#include <winver.h>
+#include <ntverp.h>
+
+//
+// Version
+//
+#define VER_FILETYPE                 VFT_DLL
+#define VER_FILESUBTYPE              VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR      "Effects Discovery"
+#define VER_INTERNALNAME_STR         "EffectsDiscovery"
+
+#include <common.ver>
+

@@ -1,0 +1,16 @@
+
+VS_CRITERIA VS_135_Criteria = { true, false, 0x0300, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_135_Desc = "vs_3_0 : texldl v# inside rep block with breakp !p.y is allowed";
+string VS_135 =
+	"vs_3_0 "
+    "dcl_texcoord0 v0 "
+    "dcl_texcoord1 v1 "
+    "dcl_position v2 "
+	"dcl_position o0 "
+    "dcl_2d s0 "
+    "defi i0, 2, 0, 0, 0 "
+    "def c0, 0, 1, -1, 0 "
+    "def c1, 0, 1, -1, 0 "
+    "mov r0, c0 "
+    "mov r1, c1 "
+    "setp_gt p0,

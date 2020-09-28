@@ -1,0 +1,13 @@
+!include ..\sources.inc
+
+TARGETNAME=CrossProcShare
+TARGETTYPE=LIBRARY
+
+SOURCES= \
+    Communication.cpp \
+    CrossProcShareTest.cpp \
+    CrossProcShareTest_Client.cpp \
+    CrossProcShareTestUtility.cpp \
+    EnumResource.cpp
+
+TARGETLIBS=\

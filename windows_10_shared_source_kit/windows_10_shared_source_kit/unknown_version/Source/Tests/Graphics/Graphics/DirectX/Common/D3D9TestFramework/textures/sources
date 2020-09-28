@@ -1,0 +1,22 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CTextures
+
+SOURCES= \
+        CTexture.cpp \
+	CTexture9.cpp \
+        CTexture8.cpp \
+        CTexture7.cpp \
+        CTexture6.cpp \
+        CCubeTexture.cpp \
+        CCubeTexture9.cpp \
+        CCubeTexture8.cpp \
+        CCubeTexture7.cpp \
+        CVolTexture.cpp \
+        CVolTexture9.cpp \
+        CVolTexture8.cpp \
+    	CnTexture.cpp
+
+PRECOMPILED_INCLUDE=TexturesPCH.h
+PRECOMPILED_CXX=1

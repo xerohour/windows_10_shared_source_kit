@@ -1,0 +1,22 @@
+!include ..\..\conf.mk
+
+TARGETNAME=UpdateTexture
+
+SOURCES= 	..\UpdateTex.rc \
+		..\CUpdateTexBase.cpp \
+		..\UpdateTex.cpp \
+		..\CBaseTex.cpp \
+		..\CMipTex.cpp \
+		..\CCubeTex.cpp\
+		..\CVolTex.cpp\
+		..\TestCases.cpp\
+		..\dxusage.cpp\
+		..\VTdraw.cpp\
+		..\VTMatrix.cpp\
+		..\VTmipvol.cpp\
+		..\VTTestCases.cpp\
+		..\VTVolume.cpp\
+		..\UtilFormats.cpp
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

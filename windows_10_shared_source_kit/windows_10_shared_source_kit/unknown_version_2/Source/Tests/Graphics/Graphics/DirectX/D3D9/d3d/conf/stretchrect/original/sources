@@ -1,0 +1,22 @@
+!include ..\..\conf.mk
+
+TARGETNAME=StretchRect
+
+SOURCES= \
+		..\StretchRectTest.rc \
+		..\auxiliary.cpp \
+		..\dxfmt.cpp \
+		..\dxpool.cpp \
+		..\dxusage.cpp \
+		..\dxmultisample.cpp \
+		..\dxfilter.cpp \
+		..\dims.cpp \
+		..\rects.cpp \
+		..\SurfaceTypes.cpp \
+		..\StretchRectTestMain.cpp \
+		..\StretchRectDepthStencil.cpp \
+		..\StretchRectKeepStates.cpp \
+		..\StretchRectTest.cpp \
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

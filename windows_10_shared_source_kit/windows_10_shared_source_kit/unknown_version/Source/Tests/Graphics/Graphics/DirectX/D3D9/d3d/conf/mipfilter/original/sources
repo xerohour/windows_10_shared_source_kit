@@ -1,0 +1,20 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=MipFilter
+
+SOURCES= \
+        ..\DrawGrid.cpp \
+        ..\Full.cpp \
+        ..\MaxBias.cpp \
+        ..\Min.cpp \
+        ..\MipFilter.rc \
+        ..\MipFilter.cpp \
+        ..\NonSquare.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

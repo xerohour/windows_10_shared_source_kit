@@ -1,0 +1,35 @@
+//
+// ps.psh
+// Copyright (c) 2004 Microsoft Corporation. All rights reserved.
+//
+
+RWTexture2D<float4> txUAV : register(u0);
+RWTexture2D<uint> txUAVOverdraw : register(u1);
+
+struct PSIn
+{
+	float4	pos : SV_Position;
+	float4	color : color;
+};
+
+struct PSOut
+{
+	float4	color : SV_Target;
+};
+
+PSOut mainRTV(PSIn input)
+{
+	PSOut output;
+		
+	output.color = input.color;
+	
+	return output;
+}
+
+void mainUAV(PSIn input)
+{
+    float2 UAVPos = floor(input.pos.xy);
+
+    InterlockedAdd( txUAVOverdraw[UAVPos], 1 );
+    txUAV[UAVPos] = input.color;
+}

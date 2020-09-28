@@ -1,0 +1,3 @@
+ -0.33f,  1.00f, 0.f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3( -0.99f, 0.99f, -0.99f));
+	g_cubeV[11] = VOLVERTEX(D3DXVECTOR3( -0.33f,  0.00f, 0.f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3( -0.99f, 0.99f,  0.99f));
+	g_cubeV[12] = VOLVERTEX(D3DXVECTOR3(  0.33f,  0.00f, 0.f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3(  0.99f,-0.99f,  0

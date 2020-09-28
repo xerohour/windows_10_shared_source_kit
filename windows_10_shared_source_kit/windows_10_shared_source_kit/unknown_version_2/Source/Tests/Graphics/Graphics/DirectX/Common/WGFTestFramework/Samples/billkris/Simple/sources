@@ -1,0 +1,21 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\samples\samples.mk
+
+TARGETNAME=Simple 
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+USE_RTTI=1
+
+SOURCES= \
+	simple.rc \
+	simple.cpp \
+
+PASS1_BINPLACE=\
+        -:DEST Graphics\D3D\SUPPORT\$(TARGETNAME) *.xml \
+
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(WINDOWS_TST_OBJ_ROOT)\Common\StringConverters\ANSI\$O\StringConverters_ANSI.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\Common\SimpleLog\DXGLog\$O\SimpleDXGLog.lib \
+	$(SDK_LIB_PATH)\DXGUID.lib \

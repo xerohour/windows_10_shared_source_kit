@@ -1,0 +1,32 @@
+VATest(56));
+}
+
+void CMediaEngineTests::VP9QualityTest57(void)
+{
+    VERIFY_SUCCEEDED(ExecuteVPxDXVATest(57));
+}
+
+void CMediaEngineTests::VP9QualityTest58(void)
+{
+    VERIFY_SUCCEEDED(ExecuteVPxDXVATest(58));
+}
+
+
+void CMediaEngineTests::VP8PlaybackTest20(void)
+{
+    VERIFY_SUCCEEDED(ExecuteVPxDXVATest(20));
+}
+
+void CMediaEngineTests::VP8PlaybackTest21(void)
+{
+    VERIFY_SUCCEEDED(ExecuteVPxDXVATest(21));
+}
+
+void CMediaEngineTests::VP8PlaybackTest22(void)
+{
+    VERIFY_SUCCEEDED(ExecuteVPxDXVATest(22));
+}
+
+void CMediaEngineTests::VP8PlaybackTest23(void)
+{
+    VERIFY_SUCCEEDED(Exec

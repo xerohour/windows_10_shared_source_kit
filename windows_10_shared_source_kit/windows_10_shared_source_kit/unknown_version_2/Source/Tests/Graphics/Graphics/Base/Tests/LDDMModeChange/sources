@@ -1,0 +1,25 @@
+!include ..\unicodetests.mk
+
+TARGETNAME=LDDMModeChange
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_VISTA)
+
+UMTYPE=console
+UMENTRY=main
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(OBJ_PATH)\..\..\common\ddiclient\ddilib\$(O)\ddilib.lib \
+	$(BASE_VID_TST_OBJ_ROOT)\common\ccd\common\$O\CCDCommon.lib \
+	$(BASE_VID_TST_OBJ_ROOT)\common\dispdiagparser\lib\$O\dispdiagparser.lib \
+
+SOURCES=\
+	DisplayModeStructures.cpp \
+	RandomModeChange.cpp \
+	RandomMultiMon.cpp \
+	UnmanagedPrimarySurface.cpp \
+	SharedSurfaceLock.cpp \
+	Main.cpp \
+	Main.rc \
+
+SOURCES=$(SOURCES) kitContent.kml

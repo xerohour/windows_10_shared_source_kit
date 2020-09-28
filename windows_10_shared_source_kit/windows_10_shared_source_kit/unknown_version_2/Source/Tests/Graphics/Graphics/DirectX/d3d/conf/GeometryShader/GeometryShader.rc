@@ -1,0 +1,10 @@
+#include <WGFConsoleShell.rc>
+
+//////////////////////////////////////////////////////////////////////////
+// IDR_SHADER_SOURCE
+//////////////////////////////////////////////////////////////////////////
+PrimType.sh		RCDATA		"PrimType.sh"
+PrimID.sh		RCDATA		"PrimID.sh"
+InstanceID.sh	RCDATA		"InstanceID.sh"
+GSTopology.sh	RCDATA		"GSTopology.sh"
+GSMultiOut.sh	RCDATA		"GSMultiOut.sh"

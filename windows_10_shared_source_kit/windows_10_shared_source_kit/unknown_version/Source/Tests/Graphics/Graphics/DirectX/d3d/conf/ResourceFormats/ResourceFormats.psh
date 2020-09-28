@@ -1,0 +1,71 @@
+// ResourceFormats Pixel Shader
+
+#define RESOURCE_BUFFER				0
+#define RESOURCE_TEXTURE1D			1
+#define RESOURCE_TEXTURE1D_ARRAY	2
+#define RESOURCE_TEXTURE2D			3
+#define RESOURCE_TEXTURE2D_ARRAY	4
+#define RESOURCE_TEXTURE3D			5
+#define RESOURCE_TEXTURECUBE		6
+
+struct PSIn
+{
+	float4 vPos	: SV_Position;
+	float2 vTexCoords : texCoord;
+};
+
+struct PSOut
+{
+	float4 vColor : SV_Target;
+};
+
+cbuffer cb0 : register( b0 )
+{	
+	float4		mxTrans;
+	float		fWidth;
+	float		fHeight;
+	int			iRes;
+	int			iSlice;
+};
+
+Buffer			pBuffer;
+Texture1D		pTex1D;
+Texture1DArray	pTex1DArr;
+Texture2D		pTex2D;
+Texture2DArray	pTex2DArr;
+Texture3D		pTex3D;
+TextureCube		pTexCube;
+
+SamplerState s;
+
+PSOut PShaderMain( PSIn input )
+{
+	PSOut output;
+	
+	if( iRes == RESOURCE_BUFFER )
+	{
+		output.vColor = pBuffer.Load( float3( input.vTexCoords.x, 0.f, 0.f ) );
+	}
+	else if( iRes == RESOURCE_TEXTURE1D )
+	{
+		output.vColor = pTex1D.Load( float3( input.vTexCoords.x, iSlice, 0.f ) );
+	}
+	else if( iRes == RESOURCE_TEXTURE1D_ARRAY )
+	{
+		output.vColor = pTex1DArr.Load( float3( input.vTexCoords.x, iSlice, 0.f ) );
+	}
+	else if( iRes == RESOURCE_TEXTURE2D )
+	{
+		output.vColor = pTex2D.Load( float3( input.vTexCoords.x, input.vTexCoords.y, iSlice ) );
+	}
+	else if( iRes == RESOURCE_TEXTURE2D_ARRAY )
+	{
+		output.vColor = pTex2DArr.Load( float4( input.vTexCoords.x, input.vTexCoords.y, iSlice, 0.f ) );
+	}
+	else if( iRes == RESOURCE_TEXTURE3D )
+	{
+		output.vColor = pTex3D.Load( float4( input.vTexCoords.x, input.vTexCoords.y, iSlice, 0.f ) );
+	}
+	
+	return output;
+}

@@ -1,0 +1,20 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=ZCmp
+
+SOURCES= \
+        ..\Always.cpp \
+        ..\Combo.cpp \
+        ..\Equal.cpp \
+        ..\Greater.cpp \
+        ..\Less.cpp \
+        ..\ZCmp.rc \
+        ..\ZCmp.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

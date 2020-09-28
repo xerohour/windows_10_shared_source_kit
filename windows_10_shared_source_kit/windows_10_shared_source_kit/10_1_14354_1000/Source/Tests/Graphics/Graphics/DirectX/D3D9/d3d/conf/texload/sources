@@ -1,0 +1,20 @@
+!include ..\conf.mk
+
+
+TARGETNAME=TexLoad
+
+SOURCES= \
+        Agp.cpp \
+        Draw.cpp \
+        Manage.cpp \
+        System.cpp \
+        TexLoad.cpp \
+        TexLoad.rc \
+        Video.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

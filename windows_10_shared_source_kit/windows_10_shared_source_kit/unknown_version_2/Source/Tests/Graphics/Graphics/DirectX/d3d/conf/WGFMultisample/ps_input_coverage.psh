@@ -1,0 +1,25 @@
+// These shaders for early depth stencil on to ensure
+// that the depth test result does not affect the value of the SV_COVERAGE input
+struct PSIn_PixelFreq
+{
+    float4 pos : SV_Position;
+    float2 tex : tex;
+};
+
+[earlydepthstencil]
+uint4 MainPixelCoverage(PSIn_PixelFreq input, uint coverage : SV_COVERAGE) : SV_TARGET0
+{
+    return uint4(coverage, (uint)input.tex, 0, 0);    
+}
+
+struct PSIn_SampleFreq
+{
+    float4 pos : SV_Position;
+    sample float2 tex : tex;
+};
+
+[earlydepthstencil]
+uint4 MainSampleCoverage(PSIn_SampleFreq input, uint coverage : SV_COVERAGE) : SV_TARGET0
+{
+    return uint4(coverage, (uint)input.tex, 0, 0);    
+}

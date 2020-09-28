@@ -1,0 +1,384 @@
+  //      consumers of this data in the kernel account for this.
+    //
+
+    Descriptor = Add2Ptr(Target, DiskInformationLength);
+    Descriptor->Type = CmResourceTypeDeviceSpecific;
+    Descriptor->u.DeviceSpecificData.DataSize = 0;
+    if ((VideoRomBlockPresent != FALSE) && (VideoRomBlockCount > 0)) {
+        Descriptor->u.DeviceSpecificData.DataSize = VideoRomBlockCount *
+                                                    sizeof(CM_ROM_BLOCK);
+
+        Target = (PVOID)(Descriptor + 1);
+        RtlCopyMemory(Target,
+                      VideoRomBlock,
+                      VideoRomBlockCount * sizeof(CM_ROM_BLOCK));
+    }
+
+    *SystemEntry = ConfigurationRoot;
+
+BuildSystemNodeEnd:
+    if (VideoRomBlock != NULL) {
+        BlMmFreeHeap(VideoRomBlock);
+    }
+
+    if (!NT_SUCCESS(Status)) {
+        OslpCleanupControllerNode(ConfigurationRoot);
+    }
+
+    return Status;
+}
+
+NTSTATUS
+OslpBuildDiskControllerTree (
+    __deref_out PCONFIGURATION_COMPONENT_DATA *DiskRootEntry,
+    __in PGENERIC_BUFFER DiskIdBuffer
+    )
+
+/*++
+
+Routine Description:
+
+    This routine will build configuration tree entries for all block i/o
+    devices.
+
+Arguments:
+
+    DiskRootEntry - On output, contains a pointer to the root of the
+        disk controller configuration tree.
+
+    DiskIdBuffer - Supplies a generic buffer listing the device IDs for all
+        hard disks enumerated by the boot environment.
+
+Return Value:
+
+    STATUS_SUCCESS when successful.
+    STATUS_NO_MEMORY if an allocation fails.
+    STATUS_INVALID_PARAMETER if the firmware configuration tree is malformed.
+
+--*/
+
+{
+
+    PCONFIGURATION_COMPONENT Component;
+    PCONFIGURATION_COMPONENT_DATA CurrentEntry;
+    GENERIC_BUFFER DeviceIdBuffer;
+    BOOT_ENVIRONMENT_DEVICE EnumerateDeviceId;
+    ULONG Index;
+    ULONG NumDevices;
+    PCONFIGURATION_COMPONENT_DATA RootControllerEntry;
+    PCONFIGURATION_COMPONENT_DATA SiblingEntry;
+    NTSTATUS Status;
+
+    DeviceIdBuffer.Buffer = NULL;
+    DeviceIdBuffer.BufferSize = 0;
+    SiblingEntry = NULL;
+
+    //
+    // Allocate and initialize the root of the disk controller configuration
+    // tree.
+    //
+    // The tree is one level deep, containing a list of all floppy devices
+    // followed immediately by a list of all HDDs.
+    //
+
+    Status = OslpInitializeControllerNode(
+                    ControllerClass,
+                    DiskController,
+                    0xffffffff,
+                    NULL,
+                    0,
+                    &RootControllerEntry);
+
+    if (!NT_SUCCESS(Status)) {
+        goto BuildDiskControllerTreeEnd;
+    }
+
+    Component = &RootControllerEntry->ComponentEntry;
+
+    Status = OslFwGetFloppyControllerData(
+        (PCM_PARTIAL_RESOURCE_LIST *) &RootControllerEntry->ConfigurationData,
+        &Component->ConfigurationDataLength);
+
+    if (!NT_SUCCESS(Status)) {
+        goto BuildDiskControllerFloppyEnd;
+    }
+
+    //
+    // Enumerate all floppy devices, creating a configuration tree component
+    // for each.
+    //
+
+    RtlZeroMemory(&EnumerateDeviceId, sizeof(BOOT_ENVIRONMENT_DEVICE));
+    EnumerateDeviceId.DeviceType = DEVICE_BLOCK_IO;
+    EnumerateDeviceId.Size = sizeof(BOOT_ENVIRONMENT_DEVICE);
+    EnumerateDeviceId.u.BlockIo.BlockIoType = BLOCK_IO_REMOVABLE_DISK;
+    Status = BlDeviceEnumerateDeviceClass(&EnumerateDeviceId,
+                                          &DeviceIdBuffer,
+                                          TRUE);
+
+    if (!NT_SUCCESS(Status)) {
+        goto BuildDiskControllerFloppyEnd;
+    }
+
+    //
+    // Try to create a peripheral floppy class entry for each removable
+    // disk.
+    //
+
+    NumDevices = DeviceIdBuffer.DataSize / sizeof(DEVICE_ID);
+    for (Index = 0; Index < NumDevices; Index += 1) {
+        Status = OslpCreateFloppyPeripheralEntry(
+                             ((PDEVICE_ID)DeviceIdBuffer.Buffer)[Index],
+                             &CurrentEntry);
+
+        if (!NT_SUCCESS(Status)) {
+            continue;
+        }
+
+        //
+        // Insert the floppy entry into the configuration tree.  All
+        // peripheral device class nodes are inserted as children to the
+        // disk controller.
+        //
+
+        if (SiblingEntry != NULL) {
+            SiblingEntry->Sibling = CurrentEntry;
+
+        } else {
+            RootControllerEntry->Child = CurrentEntry;
+        }
+
+        CurrentEntry->Parent = RootControllerEntry;
+        SiblingEntry = CurrentEntry;
+    }
+
+    //
+    // Iterate through the list of hard drives supplied by the caller,
+    // creating a configuration tree component for each.
+    //
+
+BuildDiskControllerFloppyEnd:
+    NumDevices = DiskIdBuffer->DataSize / sizeof(DEVICE_ID);
+    for (Index = 0; Index < NumDevices; Index += 1) {
+        Status = OslpCreateDiskPeripheralEntry(
+                       ((PDEVICE_ID)DiskIdBuffer->Buffer)[Index],
+                       Index,
+                       &CurrentEntry);
+
+        if (!NT_SUCCESS(Status)) {
+            continue;
+        }
+
+        //
+        // Insert the disk entry into the configuration tree.  All peripheral
+        // device class nodes are inserted as children to the disk controller.
+        //
+
+        if (SiblingEntry != NULL) {
+            SiblingEntry->Sibling = CurrentEntry;
+
+        } else {
+            RootControllerEntry->Child = CurrentEntry;
+        }
+
+        CurrentEntry->Parent = RootControllerEntry;
+        SiblingEntry = CurrentEntry;
+    }
+
+    Status = STATUS_SUCCESS;
+    *DiskRootEntry = RootControllerEntry;
+
+BuildDiskControllerTreeEnd:
+
+    //
+    // Free memory allocated by this routine.
+    //
+
+    if (DeviceIdBuffer.BufferSize != 0) {
+        BlMmFreeHeap(DeviceIdBuffer.Buffer);
+    }
+
+    if (!NT_SUCCESS(Status)) {
+
+        //
+        // In the event of an error, the configuration tree should be freed.
+        //
+
+        OslpCleanupControllerNode(RootControllerEntry);
+    }
+
+    return Status;
+}
+
+NTSTATUS
+OslpBuildAcpiBiosNode (
+    __deref_out PCONFIGURATION_COMPONENT_DATA *AcpiClassNode
+    )
+
+/*++
+
+Routine Description:
+
+    This routine will build configuration a configuration tree entry
+    for an ACPI bios.  This entry includes a pointer to the root ACPI table
+    and a description of ACPI memory.
+
+Arguments:
+
+    AcpiClassNode - On output, contains a pointer to a configuration tree
+        entry for the ACPI bios.
+
+Return Value:
+
+    STATUS_SUCCESS when successful.
+    STATUS_NO_MEMORY if an allocation fails.
+
+--*/
+
+{
+
+    PCONFIGURATION_COMPONENT_DATA AcpiEntry;
+    PACPI_BIOS_MULTI_NODE AcpiMultiNode;
+    PCONFIGURATION_COMPONENT Component;
+    PACPI_E820_ENTRY MemoryMapArray;
+    ULONG MemoryMapArraySize;
+    ULONG MemoryMapCount;
+    PCM_PARTIAL_RESOURCE_LIST ResourceList;
+    PHYSICAL_ADDRESS RsdtPa;
+    NTSTATUS Status;
+
+    MemoryMapArray = NULL;
+    ResourceList = NULL;
+    Status = OslpInitializeControllerNode(
+                                AdapterClass,
+                                MultiFunctionAdapter,
+                                0xffffffff,
+                                "ACPI BIOS",
+                                sizeof("ACPI BIOS"),
+                                &AcpiEntry);
+
+    if (!NT_SUCCESS(Status)) {
+        goto BuildAcpiBiosNodeEnd;
+    }
+
+    //
+    // An ACPI Class Node contains an ACPI_BIOS_MULTI_NODE resource.  This
+    // structure describes the location of the RSDT as well as the E820
+    // table.  The E820 table is used on legacy bios systems to get the
+    // firmware memory map.  The ACPI driver uses this to make sure
+    // the PCI driver does not attempt to assign a non-reserved address
+    // range for a PCI devices config or memory space.
+    //
+    // The loader already passes a memory map to the kernel.  If any specific
+    // information is required, it should be derived from that firmware
+    // independent memory map.
+    //
+    // TODO: The ACPI component does not properly use the OS memory map.  Until
+    //       such time, the OS loader will pass the duplicated memory map via
+    //       the legacy interface.
+    //
+
+    Status = BlFwGetAcpiMemoryMap(&MemoryMapArray, &MemoryMapCount);
+    if (!NT_SUCCESS(Status) || (MemoryMapCount == 0)) {
+        goto BuildAcpiBiosNodeEnd;
+    }
+
+    MemoryMapArraySize = sizeof(ACPI_E820_ENTRY) * MemoryMapCount;
+    Component = &AcpiEntry->ComponentEntry;
+    Component->ConfigurationDataLength =
+        (sizeof(CM_PARTIAL_RESOURCE_LIST) +
+         FIELD_OFFSET(ACPI_BIOS_MULTI_NODE, E820Entry) +
+         MemoryMapArraySize);
+
+    ResourceList = BlMmAllocateHeap(Component->ConfigurationDataLength);
+    if (ResourceList == NULL) {
+        Status = STATUS_NO_MEMORY;
+        goto BuildAcpiBiosNodeEnd;
+    }
+
+    AcpiEntry->ConfigurationData = ResourceList;
+    RtlZeroMemory(ResourceList, Component->ConfigurationDataLength);
+    ResourceList->Count = 1;
+    ResourceList->PartialDescriptors[0].Type = CmResourceTypeDeviceSpecific;
+    ResourceList->PartialDescriptors[0].u.DeviceSpecificData.DataSize =
+        FIELD_OFFSET(ACPI_BIOS_MULTI_NODE, E820Entry) + MemoryMapArraySize;
+
+    AcpiMultiNode = Add2Ptr(ResourceList,sizeof(CM_PARTIAL_RESOURCE_LIST));
+
+    //
+    // Determine the address of the RSDT (Root System Description Table).
+    // The firmware may not have populated the necessary tables on ARM platform.
+    // Hence do not treat a failure as fatal. The tables are expected to be
+    // supplied via an override mechanism.
+    //
+
+    Status = BlFwGetSystemTable(FW_TABLE_RSDT, &RsdtPa);
+    if (!NT_SUCCESS(Status)) {
+        RsdtPa.QuadPart = RSDT_ADDRESS_NOT_PRESENT;
+        Status = STATUS_SUCCESS;
+    }
+
+    AcpiMultiNode->RsdtAddress.QuadPart = RsdtPa.QuadPart;
+
+    //
+    // Copy the memory map into the descriptor.
+    //
+
+    AcpiMultiNode->Count = MemoryMapCount;
+    RtlCopyMemory(&AcpiMultiNode->E820Entry[0],
+                  MemoryMapArray,
+                  MemoryMapArraySize);
+
+    *AcpiClassNode = AcpiEntry;
+
+BuildAcpiBiosNodeEnd:
+
+    //
+    // In the error case, free any memory allocated by this routine.
+    //
+    // N.B. The resource list is freed as part of cleaning up the ACPI node.
+    //
+
+    if (!NT_SUCCESS(Status)) {
+        OslpCleanupControllerNode(AcpiEntry);
+    }
+
+    if (MemoryMapArray != NULL) {
+        BlMmFreeHeap(MemoryMapArray);
+    }
+
+    return Status;
+}
+
+NTSTATUS
+OslpBuildKeyboardControllerNode (
+    __deref_out PCONFIGURATION_COMPONENT_DATA *KeyboardControllerNode
+    )
+
+/*++
+
+Routine Description:
+
+    This routine will build a configuration tree entry for a keyboard
+    controller and peripheral. This entry includes the keyboard LED state.
+
+    All other information about the controller is derived via normal PNP
+    mechanisms.
+
+Arguments:
+
+    KeyboardControllerNode - On output, contains a pointer to a configuration tree
+        entry for the keyboard controller.
+
+Return Value:
+
+    STATUS_SUCCESS when successful.
+    STATUS_NO_MEMORY if an allocation fails.
+
+--*/
+
+{
+
+    PCONFIGURATION_COMPONENT Component = NULL;
+    PCONFIGURATION_COMPONENT_DATA KeyboardControllerEntry;
+    PCONFIGURATION_COMPONENT_DATA KeyboardPeriphera

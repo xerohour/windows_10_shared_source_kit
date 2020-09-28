@@ -1,0 +1,9 @@
+LIBRARY fpstate
+
+HEAPSIZE 4096
+
+EXPORTS
+    Init    @1
+    Get     @2
+    Set     @3
+    Compare @4

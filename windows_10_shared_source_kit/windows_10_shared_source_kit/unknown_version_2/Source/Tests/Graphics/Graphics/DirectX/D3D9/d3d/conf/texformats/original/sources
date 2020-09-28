@@ -1,0 +1,11 @@
+irement.u.Memory.Length;
+            if (Window->Alignment < BarRequirement.u.Memory.Alignment) {
+                Window->Alignment = BarRequirement.u.Memory.Alignment;
+            }
+
+            break;
+
+        case CmResourceTypePort:
+            Window = &BridgeRequirements->IoWindow;
+            Window->Size += BarRequirement.u.Port.Length;
+            if (Window->Alignment < BarRequirement.u.Port.Al

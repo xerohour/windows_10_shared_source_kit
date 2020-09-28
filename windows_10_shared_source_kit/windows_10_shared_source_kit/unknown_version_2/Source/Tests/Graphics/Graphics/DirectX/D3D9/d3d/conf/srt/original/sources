@@ -1,0 +1,21 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=Srt
+
+SOURCES= \
+        ..\Buffer.cpp \
+        ..\Describe.cpp \
+        ..\Invalid.cpp \
+	..\Null.cpp \
+        ..\OffScreen.cpp \
+        ..\Srt.rc \
+        ..\Srt.cpp \
+        ..\Texture.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

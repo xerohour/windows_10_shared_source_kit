@@ -1,0 +1,58 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DirectX.mk
+
+
+TARGETNAME=WGFVidMMWDDM1_2
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+
+# Set the default binplace location
+!if "$(TARGET_DESTINATION)" == ""
+TARGET_DESTINATION=Graphics\wddm\bin
+!endif
+
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN7)
+
+
+# This line brings in VidMM
+WANT_GRAPHICS_TESTCOMPONENTS_VIDMM_LIBS = 0
+
+WANT_NON_UNICODE=1
+!include $(BASE_VID_TST_ROOT)\common\common.mk
+
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(WINDOWS_TST_ROOT)\Common\CTL\Inc; \
+	$(WINDOWS_TST_ROOT)\Common\StringConverters; \
+	$(BASE_VID_TST_ROOT)\tests\vidmmtests\common\wgfvidmm; \
+	$(BASE_VID_TST_ROOT)\common\CrossProcSharing\inc; \
+        $(WINDOWS_TST_ROOT)\Graphics\DirectX\Common\WGFTestFramework\D3D11Test; \
+           
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(WINDOWS_TST_OBJ_ROOT)\Common\CTL\link\$O\ctl.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\common\ETWConsumers\DxgKernel\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etwdxgkernelConsumer.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\common\ETWConsumers\DisplayUMD\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etwDisplayUMDConsumer.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\common\ETWConsumers\D3D\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etwD3DConsumer.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\common\ETWConsumers\D3D10Level9\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etwD3D10Level9Consumer.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\Common\TestXKit\core\makelib\$O\Testx_Core.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\Common\TestXKit\widget\makelib\$O\Testx_Widget.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\Common\TestXKit\remote\makelib\$O\Testx_Remote.lib \
+	$(BASE_VID_TST_OBJ_ROOT)\common\TestComponents\VidMM\VidMmEtwListener\$O\VidMmEtwListener.lib \
+	$(BASE_VID_TST_OBJ_ROOT)\tests\vidmmtests\common\wgfvidmm\$O\wgfvidmm.lib \
+	$(WINDOWS_TST_COMMON)\etw\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etw.lib \
+	$(BASE_VID_TST_OBJ_ROOT)\common\CrossProcSharing\lib\unicode\$O\CrossProcSharing.lib \
+        $(DIRECTX_TST_OBJ_ROOT)\Common\WGFTestFramework\D3D11Test\$(O)\D3D11Test.lib \
+	$(SDK_LIB_PATH)\tdh.lib \
+        $(SDK_LIB_PATH)\d3dx10_test.lib \
+        $(SDK_LIB_PATH)\d3d11.lib \
+
+
+SOURCES=\
+	VidMMWDDM1_2.rc \
+	VidMMWDDM1_2.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml

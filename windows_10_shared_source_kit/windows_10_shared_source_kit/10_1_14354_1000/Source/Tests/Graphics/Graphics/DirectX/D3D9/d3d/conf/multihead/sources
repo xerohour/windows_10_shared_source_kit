@@ -1,0 +1,10 @@
+!include ..\conf.mk
+
+TARGETNAME=MultiHead
+
+SOURCES= CMultiHead.cpp \
+         CMultiHeadConf.cpp  \
+         MultiHead.rc
+
+SOURCES=$(SOURCES) kitContent.kml
+

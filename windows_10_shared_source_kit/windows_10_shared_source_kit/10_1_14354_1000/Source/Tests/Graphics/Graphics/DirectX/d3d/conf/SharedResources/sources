@@ -1,0 +1,41 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_core.mk
+
+TARGETNAME=WGF11SharedResources
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\d3d9.lib \
+	$(SDK_LIB_PATH)\d3d10.lib \
+	$(SDK_LIB_PATH)\d3d10_1.lib \
+	$(MINCORE_PRIV_SDK_LIB_VPATH)\ext-ms-win-gdi-draw-l1.lib \
+	$(MINCORE_PRIV_SDK_LIB_VPATH)\ext-ms-win-ntuser-gui-l1.lib \
+	$(MINCORE_PRIV_SDK_LIB_VPATH)\ext-ms-win-rtcore-ntuser-cursor-l1.lib \
+
+SOURCES= \
+	SharedResource.rc \
+	SharedResource.cpp \
+	SharedResourceChild.cpp
+
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FormatHelper; \
+	$(INCLUDES)
+
+DELAYLOAD=\
+	$(DELAYLOAD) \
+	d3d9.dll; \
+	d3d10.dll; \
+	d3d10_1.dll; \
+	ext-ms-win-gdi-draw-l1.dll; \
+	ext-ms-win-ntuser-gui-l1.dll; \
+	ext-ms-win-rtcore-ntuser-cursor-l1.dll; \
+
+	
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

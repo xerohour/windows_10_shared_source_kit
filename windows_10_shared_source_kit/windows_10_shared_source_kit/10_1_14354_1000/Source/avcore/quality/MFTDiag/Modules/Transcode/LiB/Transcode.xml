@@ -1,0 +1,1304 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<TestSuite> 
+    <TEST testId="1"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>700000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode>
+        </OutputType> 
+        <Name>Transcode #1: AVC Baseline_at_L3.0 352x288 to H264 320x240 Baseline</Name> 
+        <Description>Transcode #1: AVC Baseline_at_L3.0 352x288 to H264 320x240 Baseline</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>005_MSHDRef_Texture_SkinTones_05_352x288p15f_baseline30_138kbps.mp4</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="2"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>2200000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+          <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #2:MJPEG 1920x1080 to H264 640x480 Baseline</Name> 
+        <Description>Transcode #2: MJPEG 1920x1080 to H264 640x480 Baseline</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>22_AVI_MJPEG_1920x1080_44Mbps_2997_ADPCM_11025kHz.avi</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="3"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>77</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>3200000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+          <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #3: MPEG-4 Visual AdvancedSimple_at_L5 720x480 to H264 720x480 Main</Name> 
+        <Description>Transcode #3: MPEG-4 Visual AdvancedSimple_at_L5 720x480 to H264 720x480 Main</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>15_MSHDRef_Difficult_Edge_02_720x480i30f_h263_1000kbps.avi</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="4"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>3200000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>107374182401</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453696</MF_MT_FRAME_SIZE>
+          <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #4: VC-1 AP_at_L3 1920x1080 to H264 720x576 Baseline</Name> 
+        <Description>Transcode #4: VC-1 AP_at_L3 1920x1080 to H264 720x576 Baseline</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>1080i30_TFF_codec_WVC1_mode_0_bitrate_18000000_framerate_29.970_buffer2000_Bframes0_interlacedframe_TFF.wmv</InputFile> 
+        <AcceptableHR>0xc00d36b4</AcceptableHR> 
+        <AcceptableReason>The inbox H264 encoder does not support this format</AcceptableReason> 
+    </TEST> 
+ 
+    <TEST testId="5"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>77</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>12000000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>8246337209400</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>1</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #5: AVC High_at_L3.1 1280x720 to H264 1920x1080 main</Name> 
+        <Description>Transcode #5: AVC High_at_L3.1 1280x720 to H264 1920x1080 main</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>043_MSHDRef_Motion_DifDirect_01_1280x720p24f_high31_1100kbps.mp4</InputFile> 
+        <AcceptableHR>0xc00d36b4</AcceptableHR> 
+        <AcceptableReason>The inbox H264 encoder does not support this format</AcceptableReason> 
+    </TEST> 
+ 
+    <TEST testId="6"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>5600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>2</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #6: VC-1 SP 320x240 to H264 640x480 baseline</Name> 
+        <Description>Transcode #6: VC-1 SP 320x240 to H264 640x480 baseline</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Texture_High01_320x240_bitrate1000000_wmv3_sp_progressive_29.97fps_cbr_4complx_3smooth_noloopfilt.asf</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="7"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>77</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>2500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #7: MPEG-4 Visual AdvancedSimple_at_L5 720x576 to H264 720x480 main</Name> 
+        <Description>Transcode #7: MPEG-4 Visual AdvancedSimple_at_L5 720x576 to H264 720x480 main</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>32_MSHDRef_Difficult_Edge_06_720x576p25f_MPEG_2500kbps.avi</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="8"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>100</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>9000000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>8246337209400</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #8: VC-1 AP_at_L3 1440x1080 to H264 1920x1080 high 1/2</Name> 
+        <Description>Transcode #8: VC-1 AP_at_L3 1440x1080 to H264 1920x1080 high 1/2</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>1080i30_TFF_codec_WVC1_mode_0_bitrate_18000000_framerate_29.970_buffer2000_interlacedfield_PAR_4x3_TFF.wmv</InputFile> 
+        <AcceptableHR>0xC00DA412</AcceptableHR> 
+        <AcceptableReason>The inbox H264 encoder does not support this format</AcceptableReason> 
+    </TEST> 
+ 
+    <TEST testId="9"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #9: AVC Main_at_L3.0 320x240 to H264 720x480 Baseline 1/2</Name> 
+        <Description>Transcode #9: AVC Main_at_L3.0 320x240 to H264 720x480 Baseline 1/2</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>108_MSHDRef_Texture_SkinTones_08_320x240p24f_main30_90kbps.mp4</InputFile> 
+        <AcceptableHR>0xC00DA412</AcceptableHR> 
+        <AcceptableReason>The inbox H264 encoder does not support this format</AcceptableReason> 
+    </TEST> 
+ 
+    <TEST testId="10"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>77</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>1500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #10: MJPEG 720x480 to H264 720x480 main 1/4</Name> 
+        <Description>Transcode #10: MJPEG 720x480 to H264 720x480 main 1/4</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>23_AVI_MJPEG_720x480_10Mbps_2997_ADPCM_8kHz.avi</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="11"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_RGB24</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>100</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>800000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #11: Uncompressed RGB24 1440x1080 to H264 720x480 high 1/4</Name> 
+        <Description>Transcode #11: Uncompressed RGB24 1440x1080 to H264 720x480 high 1/4</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Difficult_Edge_03_1440x1080_25fps_RGB24.avi</InputFile> 
+        <AcceptableHR>0xC00DA412</AcceptableHR> 
+        <AcceptableReason>The inbox H264 encoder does not support this format</AcceptableReason> 
+    </TEST> 
+ 
+    <TEST testId="12"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>700000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #12: VC-1 AP_at_L3 1920x1080 to VC-1 320x240 AP</Name> 
+        <Description>Transcode #12: VC-1 AP_at_L3 1920x1080 to VC-1 320x240 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>1080i30_TFF_codec_WVC1_mode_0_bitrate_18000000_framerate_29.970_keydist1_buffer2000_interlacedfield_TFF.wmv</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="13"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>2200000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>1</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #13: AVC High_at_L3.0 352x288 to VC-1 640x480 AP</Name> 
+        <Description>Transcode #13: AVC High_at_L3.0 352x288 to VC-1 640x480 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>070_MSHDRef_Texture_SkinTones_05_352x288p25f_high30_CABAC_124kbps.mp4</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="14"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>3200000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881001</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>2</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #14: MPEG-4 Visual AdvancedSimple_at_L5 320x240 to VC-1 720x480 AP</Name> 
+        <Description>Transcode #14: MPEG-4 Visual AdvancedSimple_at_L5 320x240 to VC-1 720x480 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>32_MPEG4_320x240_15_1206kbps.3gp</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="15"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_IYUV</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>3100000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>107374182401</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453696</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #15: Uncompressed YUV 720x480 to VC-1 720x576 AP</Name> 
+        <Description>Transcode #15: Uncompressed YUV 720x480 to VC-1 720x576 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_IYUV.avi</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="16"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>17000000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>5497558139600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode>
+        </OutputType> 
+        <Name>Transcode #16: VC-1 MP_at_HL 1920x1080 to VC-1 1280x720 AP</Name> 
+        <Description>Transcode #16: VC-1 MP_at_HL 1920x1080 to VC-1 1280x720 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>10_WMV_1920x1080_15000K_30_WMA_320kHz44.1kHz.wmv</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="17"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>5500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #17: AVC High_at_L4.0 1920x1080 to VC-1 640x480 AP</Name> 
+        <Description>Transcode #17: AVC High_at_L4.0 1920x1080 to VC-1 640x480 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>049_MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_high40_int_4900kbps.mp4</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="18"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>2500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #18: VC-1 SP 352x240 to VC-1 720x480 AP</Name> 
+        <Description>Transcode #18: VC-1 SP 352x240 to VC-1 720x480 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Texture_SkinTones_05_352x288_bitrate30000000_wmv3_sp_prog_20fps_vbr_3complx_0smooth_loopfil.asf</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="19"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>8000000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>5497558139600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #19: MPEG-4 Visual AdvancedSimple_at_L1 368x208 to VC-1 1280x720 AP</Name> 
+        <Description>Transcode #19: MPEG-4 Visual AdvancedSimple_at_L1 368x208 to VC-1 1280x720 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>33_H264_368x208_15_796kbps.3gp</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="20"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MFVideoFormat_DVSD</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>1</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #20: DV 720x480  to VC-1 720x480 AP 1/2</Name> 
+        <Description>Transcode #20: DV 720x480  to VC-1 720x480 AP 1/2</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>21_AVI_720x480_2997_DFbitrate_PCM_Inter.avi</InputFile> 
+        <AcceptableHRWoA>0xC00D5212</AcceptableHRWoA>
+        <AcceptableReasonWoA>There is no inbox decoder for this format</AcceptableReasonWoA> 
+    </TEST> 
+ 
+    <TEST testId="21"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>2</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #21: WMV1 1920x1080  to VC-1 720x480 AP 1/4</Name> 
+        <Description>Transcode #21: WMV1 1920x1080  to VC-1 720x480 AP 1/4</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>tallships_1920x1080_WMV1_bitrate_6000000_framerate_29.97.wmv</InputFile> 
+        <AcceptableHRWoA>0xC00D36B4</AcceptableHRWoA>
+        <AcceptableReasonWoA>There is no inbox decoder for this format</AcceptableReasonWoA> 
+    </TEST> 
+ 
+    <TEST testId="22"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>SP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>380000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #22: MJPEG 1280x720 to WMV9 320x240 SP</Name> 
+        <Description>Transcode #22: MJPEG 1280x720 to WMV9 320x240 SP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>39_MOV_PhotoJPEG_1280x720_LOSSLESS_30_PCM_48kHz.mov</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="23"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV2</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>SP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>380000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #23: WMV2 1920x1080  to WMV9 640x480 SP</Name> 
+        <Description>Transcode #23: WMV2 1920x1080  to WMV9 640x480 SP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>tallships_1920x1080_WMV3_bitrate_6000000_framerate_29.97.wmv</InputFile> 
+        <AcceptableHRWoA>0xC00D36B4</AcceptableHRWoA>
+        <AcceptableReasonWoA>There is no inbox decoder for this format</AcceptableReasonWoA> 
+    </TEST> 
+ 
+    <TEST testId="24"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>3200000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881001</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #24: AVC Baseline_at_L3.1 352x240 to WMV9 720x480 MP</Name> 
+        <Description>Transcode #24: AVC Baseline_at_L3.1 352x240 to WMV9 720x480 MP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>004_MSHDRef_Texture_SkinTones_05_352x288p15f_baseline31_232kbps.mp4</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="25"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>SP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>380000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>107374182401</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #25: MPEG-4 Visual AdvancedSimple_at_L5 176x172 to WMV9 320x240 SP</Name> 
+        <Description>Transcode #25: MPEG-4 Visual AdvancedSimple_at_L5 176x172 to WMV9 320x240 SP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>34_MPEG4_176x174_15_120kbps.3g2</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="26"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>16000000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>5497558139600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>1</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #26: VC-1 AP_at_L2 960x544 to WMV9 1280x720 MP</Name> 
+        <Description>Transcode #26: VC-1 AP_at_L2 960x544 to WMV9 1280x720 MP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>1080i30_TFF_codecWVC1_mode0_bitrate18000000_framerate29.97_buffer2000_width960_height540_interlacedframe.wmv</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="27"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>5600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>2</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #27: AVC Main_at_L3.0 352x288 to WMV9 640x480 MP</Name> 
+        <Description>Transcode #27: AVC Main_at_L3.0 352x288 to WMV9 640x480 MP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>098_MSHDRef_Texture_SkinTones_05_352x288p15f_main30_211kbps.mp4</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="28"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_YUY2</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>2500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #28: Uncompressed YUY2 720x480 to WMV9 720x480 MP</Name> 
+        <Description>Transcode #28: Uncompressed YUY2 720x480 to WMV9 720x480 MP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Difficult_Edge_02_720x480i30f_YUY2.avi</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="29"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>SP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>380000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #29: AVC High_at_L4.1 1280x720 to WMV9 320x240 SP</Name> 
+        <Description>Transcode #29: AVC High_at_L4.1 1280x720 to WMV9 320x240 SP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>043_MSHDRef_Motion_DifDirect_01_1280x720p24f_high31_1100kbps.mp4</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="30"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Transcode #30: MPEG-4 Visual AdvancedSimple_at_L5 320x240 to WMV9 720x480 MP 1/2</Name> 
+        <Description>Transcode #30: MPEG-4 Visual AdvancedSimple_at_L5 320x240 to WMV9 720x480 MP 1/2</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>56_MSHDRef_Texture_High_01_320x240p30f_h263_58kpbs.avi</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="31"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>VC-1 MP 640x360 to WMV9 720x480 MP 1/4</Name> 
+        <Description>Transcode #31: VC-1 MP 640x360 to WMV9 720x480 MP 1/4</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>09_VC1_640x360_30_3000kbps_Pro.wmv</InputFile> 
+    </TEST> 
+
+    <TEST testId="32"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>700000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #32: AVC Baseline_at_L3.0 352x288 to H264 320x240 Baseline</Name> 
+        <Description>Multiple Instance Transcode #32: AVC Baseline_at_L3.0 352x288 to H264 320x240 Baseline</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>005_MSHDRef_Texture_SkinTones_05_352x288p15f_baseline30_138kbps.mp4</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="33"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>2200000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>1</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #33: VC-1 AP_at_L3 1920x1080 to H264 640x480 Baseline</Name> 
+        <Description>Multiple Instance Transcode #33: VC-1 AP_at_L3 1920x1080 to H264 640x480 Baseline</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>1080i30_TFF_codec_WVC1_mode_0_bitrate_18000000_framerate_29.970_buffer2000_interlacedfield_PAR_4x3_TFF.wmv</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="34"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>77</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>3200000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881001</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>2</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #34: MPEG-4 Visual AdvancedSimple_at_L5 720x480 to H264 720x480 Main</Name> 
+        <Description>Multiple Instance Transcode #34: MPEG-4 Visual AdvancedSimple_at_L5 720x480 to H264 720x480 Main</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>15_MSHDRef_Difficult_Edge_02_720x480i30f_h263_1000kbps.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+        <AcceptableHR>0xC00D36B4</AcceptableHR> 
+        <AcceptableReason>The inbox H264 encoder does not support this format</AcceptableReason> 
+    </TEST> 
+ 
+    <TEST testId="35"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>3100000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>107374182401</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453696</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #35: VC-1 AP_at_L3 1920x1080 to H264 720x576 Baseline</Name> 
+        <Description>Multiple Instance Transcode #35: VC-1 AP_at_L3 1920x1080 to H264 720x576 Baseline</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>1080i30_TFF_codec_WVC1_mode_0_bitrate_18000000_framerate_29.970_buffer2000_Bframes0_interlacedframe_TFF.wmv</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="36"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>77</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>12000000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>8246337209400</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #36: AVC High_at_L3.1 1280x720 to H264 1920x1080 main</Name> 
+        <Description>Multiple Instance Transcode #36: AVC High_at_L3.1 1280x720 to H264 1920x1080 main</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>043_MSHDRef_Motion_DifDirect_01_1280x720p24f_high31_1100kbps.mp4</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="37"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>5500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #37: VC-1 SP 320x240 to H264 640x480 baseline</Name> 
+        <Description>Multiple Instance Transcode #37: VC-1 SP 320x240 to H264 640x480 baseline</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Texture_SkinTones_08_320x240_btrt500000_wmv3_sp_prog_50fps_vbr_6bfr_2complx_89smoothe_noloopfil.asf</InputFile> 
+        <NumInstances>2</NumInstances>  
+    </TEST> 
+ 
+    <TEST testId="38"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>77</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>1300000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>1</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #38: MPEG-4 Visual AdvancedSimple_at_L5 720x576 to H264 720x480 main 1/2</Name> 
+        <Description>Multiple Instance Transcode #38: MPEG-4 Visual AdvancedSimple_at_L5 720x576 to H264 720x480 main 1/2</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>32_MSHDRef_Difficult_Edge_06_720x576p25f_MPEG_2500kbps.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="39"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>100</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>9500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>8246337209400</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>2</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #39: VC-1 AP_at_L3 1440x1080 to H264 1920x1080 high 1/2</Name> 
+        <Description>Multiple Instance Transcode #39: VC-1 AP_at_L3 1440x1080 to H264 1920x1080 high 1/2</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>1080i30_TFF_codec_WVC1_mode_0_bitrate_18000000_framerate_29.970_buffer2000_interlacedfield_PAR_4x3_TFF.wmv</InputFile> 
+        <NumInstances>2</NumInstances> 
+        <AcceptableHR>0xC00DA412</AcceptableHR> 
+        <AcceptableReason>The inbox H264 encoder does not support this format</AcceptableReason> 
+    </TEST> 
+ 
+    <TEST testId="40"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>66</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>3100000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #40: AVC Main_at_L3.0 320x240 to H264 720x480 Baseline</Name> 
+        <Description>Multiple Instance Transcode #40: AVC Main_at_L3.0 320x240 to H264 720x480 Baseline</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>108_MSHDRef_Texture_SkinTones_08_320x240p24f_main30_90kbps.mp4</InputFile> 
+        <NumInstances>2</NumInstances> 
+	<AcceptableHR>0xc00d36b4</AcceptableHR> 
+        <AcceptableReason>The inbox H264 encoder does not support this format</AcceptableReason> 
+    </TEST> 
+ 
+    <TEST testId="41"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>77</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #41: AVC High_at_L4.0 720x480 to H264 720x480 main 1/4</Name> 
+        <Description>Multiple Instance Transcode #41: AVC High_at_L4.0 720x480 to H264 720x480 main 1/4</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>013_MSHDRef_Difficult_Edge_02_720x480i30f_high40_int_3300kbps.mp4</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="42"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_RGB24</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+            <MF_MT_MPEG2_PROFILE>100</MF_MT_MPEG2_PROFILE> 
+            <MF_MT_AVG_BITRATE>3500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #42: Uncompressed RGB24 1440x1080 to H264 720x480 high 1/4</Name> 
+        <Description>Multiple Instance Transcode #42: Uncompressed RGB24 1440x1080 to H264 720x480 high 1/4</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Difficult_Edge_03_1440x1080_25fps_RGB24.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+        <AcceptableHR>0xC00DA412</AcceptableHR> 
+        <AcceptableReason>The inbox H264 encoder does not support this format</AcceptableReason> 
+    </TEST> 
+ 
+    <TEST testId="43"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>700000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #43: VC-1 AP_at_L3 1920x1080 to VC-1 320x240 AP</Name> 
+        <Description>Multiple Instance Transcode #43: VC-1 AP_at_L3 1920x1080 to VC-1 320x240 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>1080i30_TFF_codec_WVC1_mode_0_bitrate_18000000_framerate_29.970_keydist1_buffer2000_interlacedfield_TFF.wmv</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="44"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>2300000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #44: AVC High_at_L3.0 352x288 to VC-1 640x480 AP</Name> 
+        <Description>Multiple Instance Transcode #44: AVC High_at_L3.0 352x288 to VC-1 640x480 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>070_MSHDRef_Texture_SkinTones_05_352x288p25f_high30_CABAC_124kbps.mp4</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="45"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>700000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881001</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>1</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #45: MPEG-4 Visual AdvancedSimple_at_L5 320x240 to VC-1 720x480 AP</Name> 
+        <Description>Multiple Instance Transcode #45: MPEG-4 Visual AdvancedSimple_at_L5 320x240 to VC-1 720x480 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>32_MPEG4_320x240_15_1206kbps.3gp</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="46"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_IYUV</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>3100000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>107374182401</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453696</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>2</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #46: Uncompressed YUV 720x480 to VC-1 720x576 AP</Name> 
+        <Description>Multiple Instance Transcode #46: Uncompressed YUV 720x480 to VC-1 720x576 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_IYUV.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="47"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>8000000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>5497558139600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #47: VC-1 MP_at_HL 1920x1080 to VC-1 1280x720 AP</Name> 
+        <Description>Multiple Instance Transcode #47: VC-1 MP_at_HL 1920x1080 to VC-1 1280x720 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>10_WMV_1920x1080_15000K_30_WMA_320kHz44.1kHz.wmv</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="48"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>5600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #48: AVC High_at_L4.0 1920x1080 to VC-1 640x480 AP</Name> 
+        <Description>Multiple Instance Transcode #48: AVC High_at_L4.0 1920x1080 to VC-1 640x480 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>049_MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_high40_int_4900kbps.mp4</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="49"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>2500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #49: MPEG4 Simple_at_L3 352x240 to VC-1 720x480 AP</Name> 
+        <Description>Multiple Instance Transcode #49: MPEG4 Simple_at_L3 352x240 to VC-1 720x480 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Texture_SkinTones_05_352x288p15f_900kbps_XVid_MP4.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="50"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>8300000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>5497558139600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #50: MPEG-4 Visual AdvancedSimple_at_L1 368x208 to VC-1 1280x720 AP</Name> 
+        <Description>Multiple Instance Transcode #50: MPEG-4 Visual AdvancedSimple_at_L1 368x208 to VC-1 1280x720 AP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>33_H264_368x208_15_796kbps.3gp</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="51"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MFVideoFormat_DVSD</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>2</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #51: DV 720x480  to VC-1 720x480 AP 1/2</Name> 
+        <Description>Multiple Instance Transcode #51: DV 720x480  to VC-1 720x480 AP 1/2</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>21_AVI_720x480_2997_DFbitrate_PCM_Inter.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+        <AcceptableHRWoA>0xC00D5212</AcceptableHRWoA>
+        <AcceptableReasonWoA>There is no inbox decoder for this format</AcceptableReasonWoA> 
+    </TEST> 
+ 
+    <TEST testId="52"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>AP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #52: WMV1 1920x1080  to VC-1 720x480 AP 1/4</Name> 
+        <Description>Multiple Instance Transcode #52: WMV1 1920x1080  to VC-1 720x480 AP 1/4</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>tallships_1920x1080_WMV1_bitrate_6000000_framerate_29.97.wmv</InputFile> 
+        <NumInstances>2</NumInstances> 
+        <AcceptableHRWoA>0xC00D36B4</AcceptableHRWoA>
+        <AcceptableReasonWoA>There is no inbox decoder for this format</AcceptableReasonWoA> 
+    </TEST> 
+ 
+    <TEST testId="53"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>SP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>380000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #53: AVC Main_at_L3.0 352x288 to WMV9 320x240 SP</Name> 
+        <Description>Multiple Instance Transcode #53: AVC Main_at_L3.0 352x288 to WMV9 320x240 SP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>098_MSHDRef_Texture_SkinTones_05_352x288p15f_main30_211kbps.mp4</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="54"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV2</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>SP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>380000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #54: WMV2 1920x1080  to WMV9 640x480 SP</Name> 
+        <Description>Multiple Instance Transcode #54: WMV2 1920x1080  to WMV9 640x480 SP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>tallships_1920x1080_WMV3_bitrate_6000000_framerate_29.97.wmv</InputFile> 
+        <NumInstances>2</NumInstances> 
+        <AcceptableHRWoA>0xC00D36B4</AcceptableHRWoA>
+        <AcceptableReasonWoA>There is no inbox decoder for this format</AcceptableReasonWoA> 
+    </TEST> 
+ 
+    <TEST testId="55"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>3200000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881001</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #55: MPEG4 AdvancedSimple_at_L5 352x240 to WMV9 720x480 MP</Name> 
+        <Description>Multiple Instance Transcode #55: MPEG4 AdvancedSimple_at_L5 352x240 to WMV9 720x480 MP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>60_MSHDRef_Texture_SkinTones_05_352x288p15f_h263_140kpbs.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="56"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>SP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>380000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>107374182401</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>1</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #56: MPEG-4 Visual AdvancedSimple_at_L5 176x172 to WMV9 320x240 SP</Name> 
+        <Description>Multiple Instance Transcode #56: MPEG-4 Visual AdvancedSimple_at_L5 176x172 to WMV9 320x240 SP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>34_MPEG4_176x174_15_120kbps.3g2</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="57"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>8300000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>5497558139600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>2</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #57: VC-1 AP_at_L2 960x544 to WMV9 1280x720 MP</Name> 
+        <Description>Multiple Instance Transcode #57: VC-1 AP_at_L2 960x544 to WMV9 1280x720 MP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>1080i30_TFF_codecWVC1_mode0_bitrate18000000_framerate29.97_buffer2000_width960_height540_interlacedframe.wmv</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="58"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_H264</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>5600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>2748779069920</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #58: AVC Main_at_L3.0 352x288 to WMV9 640x480 MP</Name> 
+        <Description>Multiple Instance Transcode #58: AVC Main_at_L3.0 352x288 to WMV9 640x480 MP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>098_MSHDRef_Texture_SkinTones_05_352x288p15f_main30_211kbps.mp4</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="59"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_YUY2</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>2500000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>103079215105</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>3</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #59: Uncompressed YUY2 720x480 to WMV9 720x480 MP</Name> 
+        <Description>Multiple Instance Transcode #59: Uncompressed YUY2 720x480 to WMV9 720x480 MP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Difficult_Edge_02_720x480i30f_YUY2.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="60"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>SP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>380000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>1374389534960</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #60: MPEG4 AdvancedSimple_at_L5 1280x720 to WMV9 320x240 SP</Name> 
+        <Description>Multiple Instance Transcode #60: MPEG4 AdvancedSimple_at_L5 1280x720 to WMV9 320x240 SP</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>22_MSHDRef_Difficult_Edge_02_720x480p30f_MPEG_6000kbps.avi</InputFile> 
+        <NumInstances>2</NumInstances>
+    </TEST> 
+ 
+    <TEST testId="61"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>128849018881</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #61: MPEG-4 Visual AdvancedSimple_at_L5 320x240 to WMV9 720x480 MP 1/2</Name> 
+        <Description>Multiple Instance Transcode #61: MPEG-4 Visual AdvancedSimple_at_L5 320x240 to WMV9 720x480 MP 1/2</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>56_MSHDRef_Texture_High_01_320x240p30f_h263_58kpbs.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+ 
+    <TEST testId="62"> 
+        <Category>Transcode</Category> 
+        <InputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WVC1</MF_MT_SUBTYPE> 
+        </InputType> 
+        <OutputType> 
+            <MF_MT_SUBTYPE>MEDIASUBTYPE_WMV3</MF_MT_SUBTYPE> 
+            <MF_TRANSCODE_ENCODINGPROFILE>MP</MF_TRANSCODE_ENCODINGPROFILE> 
+            <MF_MT_AVG_BITRATE>1600000</MF_MT_AVG_BITRATE> 
+            <MF_MT_FRAME_RATE>257698037761</MF_MT_FRAME_RATE> 
+            <MF_MT_INTERLACE_MODE>2</MF_MT_INTERLACE_MODE> 
+            <MF_MT_FRAME_SIZE>3092376453600</MF_MT_FRAME_SIZE>
+            <CODECAPI_AVEncCommonRateControlMode>0</CODECAPI_AVEncCommonRateControlMode> 
+        </OutputType> 
+        <Name>Multiple Instance Transcode #62: VC-1 MP 640x360 to WMV9 720x480 MP 1/4</Name> 
+        <Description>Multiple Instance Transcode #62: VC-1 MP 640x360 to WMV9 720x480 MP 1/4</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>09_VC1_640x360_30_3000kbps_Pro.wmv</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST> 
+  
+</TestSuite> 

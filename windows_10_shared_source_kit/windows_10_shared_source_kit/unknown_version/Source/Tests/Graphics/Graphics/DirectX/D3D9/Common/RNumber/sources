@@ -1,0 +1,10 @@
+!include ..\Common.mk
+
+
+TARGETNAME=RNumber 
+
+SOURCES=RNumber.cpp
+
+
+
+

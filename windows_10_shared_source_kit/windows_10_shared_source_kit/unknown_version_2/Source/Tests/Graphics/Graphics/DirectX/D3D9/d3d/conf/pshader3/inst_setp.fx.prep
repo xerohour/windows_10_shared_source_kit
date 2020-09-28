@@ -1,0 +1,208 @@
+stIntervals = 1000;
+        m_Options.D3DOptions.dwWinMode = WINMODE_FULLSCREEN;
+        m_szCommandKey	= _T("PresentIntervalWindowed");
+	    m_szTestName	= _T("PresentInterval - Windowed");
+    }
+};
+//-----------------------------------------------------------------------------
+// File: CReschk.cpp
+//
+// Desc: 
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//-----------------------------------------------------------------------------
+#include "reschk.h"
+
+ DWORD dwPriority;
+    BOOL  bUseContentProtection;
+    D3DAUTHENTICATEDCHANNELTYPE AuthenticatedChannelType;
+//                                    Priority | Use Content Protection | Authenticated Channel Type
+RESCHK_TESTCASES g_MyTestCases[] = { {RESOURCE_PRIORITY_DISCARD, FALSE, D3DAUTHENTICATEDCHANNEL_D3D9},
+                                     {RESOURCE_PRIORITY_LOW, FALSE, D3DAUTHENTICATEDCHANNEL_D3D9},
+                                     {RESOURCE_PRIORITY_NORMAL, FALSE, D3DAUTHENTICATEDCHANNEL_D3D9},
+                                     {RESOURCE_PRIORITY_HIGH, FALSE, D3DAUTHENTICATEDCHANNEL_D3D9},
+                                     // {RESOURCE_PRIORITY_MAXIMUM, FALSE, D3DAUTHENTICATEDCHANNEL_D3D9}, Test with copy resource.
+                                     // {RESOURCE_PRIORITY_NORMAL, TRUE, D3DAUTHENTICATEDCHANNEL_D3D9}, IV case is tested in API case
+                                     {RESOURCE_PRIORITY_NORMAL, TRUE, D3DAUTHENTICATEDCHANNEL_DRIVER_SOFTWARE},
+                                     {RESOURCE_PRIORITY_NORMAL, TRUE, D3DAUTHENTICATEDCHANNEL_DRIVER_HARDWARE} };
+UINT cMyTestCases = sizeof(g_MyTestCases) / sizeof(g_MyTestCases[0]);
+
+CReschk::CReschk(void)
+{   
+    if(KeySet(_T("stress")))
+    {
+		SetTestType(TESTTYPE_STRESS);
+        m_nMaxPageOutRender     = 10;
+        m_nMaxPageOutResources  = 1;
+    }
+    else
+    {
+        SetTestType(TESTTYPE_CONF);
+        m_nMaxPageOutRender     = 5;
+        m_nMaxPageOutResources  = 512;
+    }
+
+    m_Options.D3DOptions.bReference = false;
+    m_Options.D3DOptions.fMinDXVersion = 9.1f;
+
+    m_nMaxTestCases = 4;
+
+    // Resources
+    m_pTestResource = NULL;
+    m_pCopyResource = NULL;
+
+    // Content Protection helper
+    m_pCPControl = NULL;
+
+    // Timing
+    m_dQPCFrequency = 0;
+    m_dLoadTime     = 0;
+    
+    // TestPageOut settings private
+    ReadInteger(_T("MaxSkip"),       1, (int*)&m_nMaxSkipPageOutTries, false);
+    // MinPageOut is not used on EonE because we need to run on each encryption GUID... 
+    // making the test run extremely long.
+    ReadInteger(_T("MinPageOut"),    3, (int*)&m_nMinPageOutTries,     false);
+    ReadInteger(_T("MaxFail"),       2, (int*)&m_nMaxFailPageOutTries, false);
+
+    // TestPageOut settings public
+    ReadInteger(_T("MaxRender"),    m_nMaxPageOutRender,    (int*)&m_nMaxPageOutRender,    false);
+    ReadInteger(_T("MaxResources"), m_nMaxPageOutResources, (int*)&m_nMaxPageOutResources, false);
+
+    if(KeySet(_T("EonE")))
+    {
+        // Add Encryption on Eviction test cases
+        m_nMaxTestCases = cMyTestCases;
+
+        // Force FlipEx
+        m_Options.D3DOptions.dwSwapEffect = SWAPEFFECT_FLIPEX;
+        m_Options.D3DOptions.DisplayMode.Format = FMT_X8R8G8B8; 
+    }
+}
+
+CReschk::~CReschk(void)
+{
+}
+
+//----------------------------------------------------------------------------
+// Name: CapsCheck()
+// Desc: Check caps requred by test. 
+//----------------------------------------------------------------------------
+bool CReschk::CapsCheck(void)
+{
+	// Reschk test is not valid for the reference device
+	if (m_pSrcDevice->GetDevType() == DEVICETYPE_REF)
+	{
+		WriteToLog("Reference device not supported.\n");
+		return false;
+	}
+
+	return true;
+}
+
+//----------------------------------------------------------------------------
+// Name: Setup()
+// Desc: Setup device specific settings, variables, ect.
+// Called when devices are restored(group init, device lost, etc)
+//----------------------------------------------------------------------------
+bool CReschk::Setup(void)
+{
+    // Make sure we are on 9.L or up
+    if( 9.1f > m_pD3D->GetVersion() )
+    {
+        WriteToLog(_T("Test needs DX9.L to run. Version = %f.\n"), m_pD3D->GetVersion());
+        return false;
+    }
+
+    // Common vertices for tests
+    float   fWidth  = (float)m_Options.D3DOptions.nBackBufferWidth  - 10.0f;
+    float   fHeight = (float)m_Options.D3DOptions.nBackBufferHeight - 10.0f;
+    m_Vertices[0] = DIFUSEVERTEX(10.0f,  fHeight, 0.9f, (1.0f / 0.9f), RGBA_MAKE(255,255,255,255));
+    m_Vertices[1] = DIFUSEVERTEX(10.0f,    10.0f, 0.9f, (1.0f / 0.9f), RGBA_MAKE(255,255,255,255));
+    m_Vertices[2] = DIFUSEVERTEX(fWidth, fHeight, 0.9f, (1.0f / 0.9f), RGBA_MAKE(255,255,255,255));
+    m_Vertices[3] = DIFUSEVERTEX(fWidth,   10.0f, 0.9f, (1.0f / 0.9f), RGBA_MAKE(255,255,255,255));
+
+    // Setup tests resources
+    if( false == SetupResource() )
+        WriteToLog(_T("SetupResource Failed"));
+
+    return true;
+}
+
+//----------------------------------------------------------------------------
+// Name: TestInitialize()
+// Desc: Setup non-device specific settings, variables, ect.
+// Called once for each group if CapsCheck succeeds.
+//----------------------------------------------------------------------------
+UINT CReschk::TestInitialize(void)
+{
+    if( false == SetTestRange(1, m_nMaxTestCases) )
+        return D3DTESTINIT_ABORT;
+    
+	return D3DTESTINIT_RUN;
+}
+
+//----------------------------------------------------------------------------
+// Name: ExecuteTest(UINT uTestNum)
+// Desc: Called once for each test defined by SetTestRange()
+//----------------------------------------------------------------------------
+bool CReschk::ExecuteTest(UINT uTestNum)
+{ 
+    if( 0 == uTestNum || uTestNum > cMyTestCases )
+    {
+        WriteToLog(_T("Bad input uTestNum. uTestNum must be > 0 and <= %d"), cMyTestCases);
+        return true;
+    }
+
+    HRESULT hr = E_FAIL;
+    double  PagedInRenderTime   = 0; // Render time when in memory GPU-accessible mem
+    double  PagedOutRenderTime  = 0; // Render time when not in memory GPU-accessible mem
+    UINT    nTMPMinPageOutTries = m_nMinPageOutTries; // To increment based on skips
+    UINT    nSkipedPageOutCount = 0; // Number of times TestPageOutResource skiped
+    UINT    nFailedPageOutCount = 0; // Number of times TestPageOutResource failed
+    UINT    uPagedOutRenderCount = 0; // Number of times
+    DWORD   dwPriTest   = g_MyTestCases[uTestNum - 1].dwPriority;  // Applied to m_pTestResource
+    DWORD   dwPriCopy   = dwPriTest + 0x28000000;       // PriTest + 1. Applied to m_pCopyResource 
+    UINT    nNumEncryptionGuids = 1; // Default is one to insure we run once if protection is not being tested.
+    GetLastError();
+
+    // Start test case
+    TCHAR szTestCaseName[256];
+    if( FALSE == g_MyTestCases[uTestNum - 1].bUseContentProtection )
+        sprintf(szTestCaseName, _T("Priority - %lu"), dwPriTest );
+    else
+    {
+        sprintf(szTestCaseName, _T("Encryption On Eviction") );
+    }
+    BeginTestCase(szTestCaseName, uTestNum);
+
+    // Make sure we have a test resource
+    if( NULL == m_pTestResource || NULL == m_pCopyResource )
+    {
+        WriteToLog(_T("Resource not setup"));
+        Skip();
+        return false;
+    }
+    
+    // Make sure we have work to do
+    if( 0 == m_nMinPageOutTries )
+    {
+        WriteToLog(_T("Bad input for MinPageOutTries."));
+        Fail();
+        return false;
+    }
+
+    // Create content protection helper object
+    ReleaseCPControl();
+    if( TRUE == g_MyTestCases[uTestNum - 1].bUseContentProtection )
+    {
+        // Create
+        if( false == CreateCPControl(g_MyTestCases[uTestNum - 1].AuthenticatedChannelType, TRUE) )
+        {
+            WriteToLog(_T("CreateCPControl failed."));
+            Skip();
+            return false;
+        }
+        
+        // Get number of encryption guids to test... nNumEncryptionGuids
+        hr = m_pCPControl->QueryEvictionEncryptionGuidCount(&nNumE

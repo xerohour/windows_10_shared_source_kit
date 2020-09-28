@@ -1,0 +1,17 @@
+!include ..\conf.mk
+
+
+TARGETNAME=ColorKey
+
+SOURCES= \
+        ColorKey.rc \
+        ColorKey.cpp \
+        DrawMesh.cpp \
+        TestColors.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

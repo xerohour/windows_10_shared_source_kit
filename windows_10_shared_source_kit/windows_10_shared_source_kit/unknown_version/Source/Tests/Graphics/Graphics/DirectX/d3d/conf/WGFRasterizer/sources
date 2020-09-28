@@ -1,0 +1,27 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_Core.mk
+
+TARGETNAME=WGF11Rasterizer
+
+INCLUDES=\
+	.\; \
+	..\; \
+	$(INCLUDES)
+
+SOURCES= \
+	rasterizer.cpp \
+	fillmode.cpp \
+	cullmode.cpp \
+	state.cpp \
+	interpolator.cpp \
+	pullModel.cpp \
+	rasterizer.rc \
+	forcedsamplecount.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

@@ -1,0 +1,20 @@
+!include ..\TestFrame.mk
+
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(OAK_INC_PATH); \
+	$(DDK_INC_PATH)
+
+
+TARGETNAME=CD3D
+
+SOURCES= \
+        CD3D.cpp \
+        CD3D9.cpp \
+        CD3D8.cpp \
+        CD3D7.cpp \
+	CD3D6.cpp
+
+PRECOMPILED_INCLUDE=D3DPCH.h
+PRECOMPILED_CXX=1

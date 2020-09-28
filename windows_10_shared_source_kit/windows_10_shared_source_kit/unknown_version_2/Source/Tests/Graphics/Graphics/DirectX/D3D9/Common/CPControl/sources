@@ -1,0 +1,31 @@
+TARGETNAME=CPControl
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+UMENTRY=dllmain
+
+TEST_CODE=1
+MSC_WARNING_LEVEL=/W3 /WX
+
+C_DEFINES=$(C_DEFINES) -DWIN32 -DINITGUID  -DUNICODE -D_UNICODE
+
+!ifdef BUILDWITHOUTOAEPPADDING
+C_DEFINES=$(C_DEFINES) -D_NOOAEPPADDING
+!endif
+      
+INCLUDES= \
+        $(DS_INC_PATH)\crypto; \
+        $(SDK_INC_PATH)\..\amovie\inc; \
+        $(SDK_INC_PATH); \
+        $(MULTIMEDIA_INC_PATH); \
+        $(AVCORE_INC_PATH); \
+        $(MULTIMEDIA_TST_INC_PATH); \
+        $(INCLUDES);
+
+
+SOURCES=CPControl.cpp \
+	CertHelper.cpp \
+        AuthHelper.cpp \
+        CryptHlp.cpp\
+        OPMControl.cpp \
+        OPMUtil.cpp \
+	Rsa32GenRandom.c \

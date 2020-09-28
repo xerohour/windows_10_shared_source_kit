@@ -1,0 +1,16 @@
+!include ..\..\conf.mk
+
+TARGETNAME=bump
+
+SOURCES=..\bump.rc \
+        ..\bump.cpp \
+        ..\address.cpp \
+        ..\blend.cpp \
+        ..\matrix.cpp \
+        ..\mix.cpp \
+        ..\offset.cpp \
+        ..\scale.cpp
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

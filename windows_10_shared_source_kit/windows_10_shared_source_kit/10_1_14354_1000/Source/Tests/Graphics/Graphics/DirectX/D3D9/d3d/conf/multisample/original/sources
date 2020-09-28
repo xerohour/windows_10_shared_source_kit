@@ -1,0 +1,17 @@
+!include ..\..\conf.mk
+
+TARGETNAME=Multisample
+
+SOURCES=..\multisample.rc  \
+        ..\multisample.cpp \
+        ..\samples.cpp     \
+        ..\mask.cpp	\
+        ..\toggle.cpp	\
+        ..\centroid.cpp	\
+	..\points.cpp	\
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+
+TARGETLIBS=$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\dwmapi.lib \
+

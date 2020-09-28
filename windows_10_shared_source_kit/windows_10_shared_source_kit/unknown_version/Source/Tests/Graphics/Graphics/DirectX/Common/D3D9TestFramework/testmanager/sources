@@ -1,0 +1,14 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CTestManager 
+
+SOURCES= \
+        CTestManager.cpp \
+        CTest.cpp
+
+PRECOMPILED_INCLUDE=TestManagerPCH.h
+PRECOMPILED_CXX=1
+
+
+

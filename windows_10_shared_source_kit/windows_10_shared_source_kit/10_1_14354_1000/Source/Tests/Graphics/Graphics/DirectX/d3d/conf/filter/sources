@@ -1,0 +1,35 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_Core.mk
+
+TARGETNAME=WGF11Filter
+
+
+USE_STL=1
+STL_VER=100
+
+
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FormatHelper; \
+	$(INCLUDES)
+
+
+SOURCES=\
+	Filter.cpp \
+	FilterCode.cpp \
+	Filter.rc \
+	BasicFilter.cpp \
+	MipFilter.cpp \
+	TextureCode.cpp \
+	MipGen.cpp \
+	AnisoFilter.cpp \
+	SamplerStates.cpp \
+	MinLOD.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

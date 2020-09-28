@@ -1,0 +1,25 @@
+#include <BaseVid.rc>
+
+
+skybox_back.JPG   RCDATA DISCARDABLE "..\\sch_media\\skybox_back.JPG"
+skybox_bottom.JPG RCDATA DISCARDABLE "..\\sch_media\\skybox_bottom.JPG"
+skybox_front.JPG  RCDATA DISCARDABLE "..\\sch_media\\skybox_front.JPG"
+skybox_left.JPG   RCDATA DISCARDABLE "..\\sch_media\\skybox_left.JPG"
+skybox_right.JPG  RCDATA DISCARDABLE "..\\sch_media\\skybox_right.JPG"
+skybox_top.JPG    RCDATA DISCARDABLE "..\\sch_media\\skybox_top.JPG"
+
+
+tree01S.dds  RCDATA DISCARDABLE "..\\sch_media\\tree01S.dds"
+tree01S1.dds RCDATA DISCARDABLE "..\\sch_media\\tree01S1.dds"
+tree01S2.dds RCDATA DISCARDABLE "..\\sch_media\\tree01S2.dds"
+tree02S.dds  RCDATA DISCARDABLE "..\\sch_media\\tree02S.dds"
+tree02S1.dds RCDATA DISCARDABLE "..\\sch_media\\tree02S1.dds"
+tree02S2.dds RCDATA DISCARDABLE "..\\sch_media\\tree02S2.dds"
+tree35S.dds  RCDATA DISCARDABLE "..\\sch_media\\tree35S.dds"
+tree35S1.dds RCDATA DISCARDABLE "..\\sch_media\\tree35S1.dds"
+tree35S2.dds RCDATA DISCARDABLE "..\\sch_media\\tree35S2.dds"
+
+seafloor.x x "..\\sch_media\\seafloor.x"
+skybox2.x  x "..\\sch_media\\skybox2.x"
+
+seafloor.bmp RCDATA DISCARDABLE "..\\sch_media\\seafloor.bmp"

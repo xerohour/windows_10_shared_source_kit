@@ -1,0 +1,8 @@
+!include ..\conf.mk
+
+TARGETNAME=luminance
+
+SOURCES=luminance.rc \
+        luminance.cpp \
+        address.cpp
+

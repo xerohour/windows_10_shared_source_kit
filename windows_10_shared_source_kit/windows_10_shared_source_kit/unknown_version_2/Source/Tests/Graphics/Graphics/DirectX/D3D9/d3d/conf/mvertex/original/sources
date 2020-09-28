@@ -1,0 +1,17 @@
+!include ..\..\conf.mk
+
+TARGETNAME=MVertex
+TARGETTYPE=PROGRAM
+
+SOURCES= \
+        ..\MVertex.rc \
+        ..\MVertex.cpp \
+        ..\Default.cpp
+
+UMTYPE=windows
+
+UMENTRY=winmain
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

@@ -1,0 +1,30 @@
+// odepth pixel shader
+
+struct PSIn
+{
+	float4 pos		: SV_Position;
+	float odepth	: odepth;
+};
+
+struct PSOut
+{
+	float4 color	: SV_Target;
+	float  depth	: SV_Depth;
+};
+
+cbuffer cb0 : register( b0 )
+{	
+	float4		inv_vp;		    // inverse viewport
+	float		default_depth;  // used when odepth is enabled
+	uint		rt_index;		// render target array index
+};
+
+PSOut main( PSIn input )
+{
+	PSOut output;
+	
+	output.color = float4(1,1,1,1);
+	output.depth = input.odepth;
+	
+	return output;
+}

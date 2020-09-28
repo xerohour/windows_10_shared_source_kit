@@ -1,0 +1,24 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "multi_swapchain"
+#define VER_ORIGINALFILENAME_STR    "Multi_SwapChain.exe"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+texture6.bmp          BITMAP  DISCARDABLE     "texture6.bmp"
+texture11.bmp         BITMAP  DISCARDABLE     "texture11.bmp"
+texture11_2.bmp       BITMAP  DISCARDABLE     "texture11_2.bmp"
+texture14.bmp         BITMAP  DISCARDABLE     "texture14.bmp"
+texture2.bmp          BITMAP  DISCARDABLE     "texture2.bmp"
+texture2_2.bmp        BITMAP  DISCARDABLE     "texture2_2.bmp"
+metal.bmp             BITMAP  DISCARDABLE     "metal.bmp"
+
+#include <common.ver>

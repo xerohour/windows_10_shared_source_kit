@@ -1,0 +1,13 @@
+WANT_MINCORE_LIBS=1
+
+!include ..\sources.inc
+
+
+TARGETNAME=$(TARGETNAME).Win8
+
+
+# @TODO [SEdmison]:  Remove dependency on CreateDCA,
+# and then remove the reference to GDI32.lib.
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\GDI32.lib \

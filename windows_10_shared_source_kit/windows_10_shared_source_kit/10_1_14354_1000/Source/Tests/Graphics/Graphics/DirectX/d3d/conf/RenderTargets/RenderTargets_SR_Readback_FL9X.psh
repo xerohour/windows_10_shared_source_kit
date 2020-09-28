@@ -1,0 +1,55 @@
+// RenderTargets Pixel Shader(s)
+
+#define RESOURCE_TEXTURE2D			2
+#define RESOURCE_TEXTURE3D			3
+
+
+#define RESOURCE_BUFFER				0
+#define RESOURCE_TEXTURE1D_ARRAY	1
+#define RESOURCE_TEXTURE2D_ARRAY	2
+#define RESOURCE_TEXTURE3D			3
+
+struct PSIn
+{
+	float4	vPos	: SV_Position;
+	float2	vTexCoords : texCoord;
+};
+
+struct PSOut
+{
+	float4 vColor : SV_Target;
+};
+
+cbuffer cb0 : register( b0 )
+{	
+	float4x4	mxTrans;
+	float		fWidth;
+	float		fHeight;
+	int			iRTIndex;
+	int			iRes;	
+};
+
+Texture2D		pTex2D;
+Texture3D		pTex3D;
+
+SamplerState s;
+
+PSOut PShaderMain( PSIn input )
+{
+	PSOut output;
+	
+	if( iRes == RESOURCE_TEXTURE2D )
+	{
+		output.vColor = pTex2D.Sample( s, float2( input.vTexCoords.x, input.vTexCoords.y ) );
+	}
+	else if( iRes == RESOURCE_TEXTURE3D )
+	{
+		output.vColor = pTex3D.Sample( s, float3( input.vTexCoords.x, input.vTexCoords.y, 0.f ) );
+	}
+	else
+	{
+		output.vColor = float4(0,0.5,0,0);
+	}
+	 
+	return output;
+}

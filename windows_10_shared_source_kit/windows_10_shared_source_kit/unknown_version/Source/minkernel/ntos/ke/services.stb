@@ -1,0 +1,189 @@
+;++
+;
+; Copyright (c) 2005-2008 Microsoft Corporation
+;
+; Module Name:
+;
+;   sysstubs.asm
+;
+; Abstract:
+;
+;   This module implements the system service dispatch stub procedures.
+;
+; Environment:
+;
+;    User or kernel mode.
+;
+;--
+
+#include "ksarm.h"
+
+        TEXTAREA
+
+        MACRO
+        STUBS_BEGIN1 $stub_begin
+        MEND
+
+        MACRO
+        STUBS_BEGIN2 $stub_begin
+        MEND
+
+        MACRO
+        STUBS_BEGIN3 $stub_begin
+        MEND
+
+        MACRO
+        STUBS_BEGIN4 $stub_begin
+        MEND
+
+        MACRO
+        STUBS_BEGIN5 $stub_begin
+        MEND
+
+        MACRO
+        STUBS_BEGIN6 $stub_begin
+        MEND
+
+        MACRO
+        STUBS_BEGIN7 $stub_begin
+        MEND
+
+        MACRO
+        STUBS_BEGIN8 $stub_begin
+        MEND
+
+;++
+;
+; UNKNOWN
+; ZwXXX (
+;     UNKNOWN
+;     )
+;
+; Routine Description:
+;   
+;   This stub is entered as the result of invoking a kernel service
+;   in kernel mode. The system call number associated with this stub is
+;   retrieved and the execution continues in the system call handler.
+;   
+; Arguments:
+;
+;   Unknown.
+;
+; Return Value:
+;
+;   Unknown.
+;
+;--
+
+        MACRO
+        SYSSTUBS_ENTRY1 $ServiceNumber, $Name, $NumArgs
+        IMPORT KiServiceInternal
+        CFG_ALIGN
+        LEAF_ENTRY Zw$Name
+        ldr     r12, =$ServiceNumber
+        b       KiServiceInternal
+        LEAF_END Zw$Name // _TEXT$00
+        MEND
+
+        MACRO
+        SYSSTUBS_ENTRY2 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        SYSSTUBS_ENTRY3 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        SYSSTUBS_ENTRY4 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        SYSSTUBS_ENTRY5 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        SYSSTUBS_ENTRY6 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        SYSSTUBS_ENTRY7 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        SYSSTUBS_ENTRY8 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        USRSTUBS_ENTRY1 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+;++
+;
+; UNKNOWN
+; XXX (
+;     UNKNOWN
+;     )
+;
+; Routine Description:
+;   
+;   This stub is entered as the result of invoking a system call in user
+;   mode code.  A SVC is invoked to signal this system call to the kernel.
+;   
+; Arguments:
+;
+;   Unknown.
+;
+; Return Value:
+;
+;   Unknown.
+;
+;--
+        MACRO
+        USRSTUBS_ENTRY2 $ServiceNumber, $Name, $NumArgs
+        CFG_ALIGN
+        LEAF_ENTRY Zw$Name
+        ALTERNATE_ENTRY Nt$Name
+
+        ldr     r12, =$ServiceNumber
+        svc     1
+        bx      lr
+        LEAF_END Zw$Name
+        MEND
+
+        MACRO
+        USRSTUBS_ENTRY3 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        USRSTUBS_ENTRY4 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        USRSTUBS_ENTRY5 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        USRSTUBS_ENTRY6 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        USRSTUBS_ENTRY7 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        USRSTUBS_ENTRY8 $ServiceNumber, $Name, $NumArgs
+        MEND
+
+        MACRO
+        STUBS_END
+        END
+        MEND
+
+        STUBS_BEGIN1 <"System Service Stub Procedures">
+        STUBS_BEGIN2 <"System Service Stub Procedures">
+        STUBS_BEGIN3 <"System Service Stub Procedures">
+        STUBS_BEGIN4 <"System Service Stub Procedures">
+        STUBS_BEGIN5 <"System Service Stub Procedures">
+        STUBS_BEGIN6 <"System Service Stub Procedures">
+        STUBS_BEGIN7 <"System Service Stub Procedures">
+        STUBS_BEGIN8 <"System Service Stub Procedures">

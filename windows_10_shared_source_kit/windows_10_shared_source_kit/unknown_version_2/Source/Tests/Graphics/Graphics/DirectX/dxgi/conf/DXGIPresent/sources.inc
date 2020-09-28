@@ -1,0 +1,4 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+TARGETLIBS=\
+	$(TARGETLIBS) \

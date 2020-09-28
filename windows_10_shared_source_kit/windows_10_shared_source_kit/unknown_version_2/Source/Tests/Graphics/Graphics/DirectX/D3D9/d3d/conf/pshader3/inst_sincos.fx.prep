@@ -1,0 +1,222 @@
+// Tests for Instruction: sincos
+#include "include.fx"
+$include "PShader.prep"
+${##################################################################################################
+
+if ps_3_0:
+	regcombos = [c for c in 'rcv']
+else:
+	regcombos = [c for c in 'rcvt']
+
+values = [0.1*pi, -0.4*pi, 0.65*pi, -0.95*pi]
+src_defaults = [values]
+# now for <= 2.x color registers that are clamped 0-1:
+color_defaults = [[0.1, 0.4, 0.65, 0.95]]
+
+SetupDefaults(src_defaults, color_defaults)
+
+special_constants = [
+	[ -1.5500992e-006, -2.1701389e-005,  0.0026041667, 0.00026041668 ],
+	[ -0.020833334, -0.12500000, 1.0, 0.50000000 ]
+	]
+
+eps, eps_pp = 0.01, 0.05	# spec says maximum absolute error is 0.002
+
+class Op_sincos(Operation):
+	def __init__(s, sat=0, pp=0):
+		Operation.__init__(s, 'sincos', sat, pp)
+	def Apply(s, src):
+		src = src.Transform()
+		q = src[0]
+		result = [ cos(q), sin(q), 0, 0 ]
+		return Operation.Apply(s, result)
+
+class Inst_sincos(Instruction):
+	def WriteOp(s):
+		spconst = ''
+		if ps_ver < 3.0:
+			spconst = ', c8, c9'
+		s.write('%s%s %s, %s%s' % (s.pred, s.op, s.dest, ', '.join([str(i) for i in s.sources]), spconst))
+		if ps_2_0:
+			mask = 'zw'
+			if s.dest.mask:
+				mask = ''.join([(c not in s.dest.mask) and c or '' for c in 'xyzw'])
+			s.write('mov %s.%s, c0.y' % (s.dest.reg, mask))
+# !!!! TODO: Remove Temporary workaround for D3DX PixelShaderConstant[] bug, when it's fixed:
+##	def SourceConst(s):
+##		Instruction.SourceConst(s)
+##		n = 8
+##		for sc in special_constants:
+##			s.write('def c%d, %s' % (n, ', '.join(map(str, sc))))
+##			n += 1
+	def VerifyResult(s):
+		s.write('VERIFY_RESULT')
+		mask = s.dest.mask or 'xy'
+		s.write(' '.join(['V_%s' % c for c in mask.upper()]))
+
+def WriteTestCase(
+	sat=0, pp=0, mask='xy',							# instruction & destination modifiers
+	pred=0, pnot=0, pswz=0,							# predication
+	reg0='r', src0=None, neg0=0, abs0=0, swz0=0,	# source 0
+	**extra_params):
+	global curCount
+
+	# Initialize sources:
+	sources = CollapseSources(locals(), 1)
+	sources = [Source(*src) for src in sources]
+
+	# Initialize other objects:
+	pred = Predication(value=pred, pnot=pnot, pswz=pswz)
+	dest = Destination('r0', mask)
+	op = Op_sincos(sat, pp)
+	result = op.Apply(*sources)
+	
+	# Instruction takes care of the code generation:
+	inst = Inst_sincos(op, pred, dest, sources, result)
+	inst.WriteTest()
+
+	curCount += 1
+
+	return inst.GetText()
+
+$}$#################################################################################################
+
+#define PS_SETUP \
+	$ps_ver_token$# \
+$#	def c0, 1.0, 0.0, $eps, $eps_pp
+
+$<predicate_support and """
+#define SET_PRED \
+	mov r0, c2 \
+	setp_gt p0, r0, c0.y
+""" or ''$>
+
+// sets green, then removes green if either red or blue channels are set:
+#define PS_END \
+	mov r2.ga, c0.x \
+	add_sat r2.g, r2.g, -r2.r \
+	add_sat r2.g, r2.g, -r2.b \
+	mov oC0, r2
+
+#define SET_VS \
+	VertexShaderConstant[0] = <mFinal>; \
+	VertexShader = <NormalVS>;
+
+#define SET_MAIN_PS_CONST \
+	PixelShaderConstant[0] = {1.0, 0.0, $eps, $eps_pp};
+
+// Customized verify result macro, does not scale eps: outputs to r1 0-right and 1-wrong, per component:
+#define VERIFY_RESULT \
+	add r1, r0, -c1 \
+	cmp r1, r1, r1, -r1 \
+$#---- following block is for scaling the epselon:
+$#	mov r3, c1 \
+$#	cmp r3, r3, r3, -r3 \
+$#	max r3, r3, c0.x \
+$#	mul r3, r2, r3 \
+$#	add r1, r3, -r1 \
+$#----
+	add r1, r2, -r1 \
+	cmp r1, r1, c0.y, c0.x    \
+	mov r2, c0.y
+
+// The following can be used to verify each component individually, since some
+// instructions or macros may write to extra components and you do not want to verify those.
+$<'\n'.join(['#define V_%s add_sat r2.r, r2.r, r1.%s' % (c.upper(), c) for c in 'xyzw'])$>
+
+$< ps_2_x and '#define USEPREDICATE bool UsePredicate = true;\n' or '' $>$#
+$< ps_2_x and '#define USEARBSWZ bool UseArbSwizzle = true;\n' or '' $>$#
+#define TESTCASE \
+Technique \
+< \
+	String Shape = "TinyQuad"; \
+	String Name =
+#define PASSBEGIN \
+> \
+{ \
+	Pass P0 \
+	{
+#define TESTBEGIN \
+		PixelShader = asm { \
+			PS_SETUP
+#define TESTEND \
+			PS_END \
+		}; \
+		SET_VS \
+		SET_MAIN_PS_CONST \
+		SET_PS_CONSTANTS \
+	} \
+}
+
+
+$[defineSpConst]{
+#define SET_PS_CONSTANTS \
+	PixelShaderConstant[8] = { -1.5500992e-006f, -2.1701389e-005f,  0.0026041667f, 0.00026041668f }; \
+	PixelShaderConstant[9] = { -0.020833334f, -0.12500000f, 1.0f, 0.50000000f };$#
+$}$#
+${
+if ps_ver >= 3.0:
+	block['defineSpConst'] = CBlock('#define SET_PS_CONSTANTS')
+$}$#
+$[defineSpConst] \
+	$< ' \\\n'.join(WritePSConstantDefaults(src_defaults).split('\n')) $>
+
+$<WriteVS(src_defaults, color_defaults)$>
+
+// Tests:
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// source registers * modifiers * swizzles
+${SetGroup('sincos - Standard ')
+lTests = []
+paramDict = {}
+params = {
+	'pp': [[0,1]],
+	'reg0': [regcombos],
+	'neg0': [[0,1]],
+	'swz0': [lstReplicateSwizzles]
+	}
+if ps_3_0:
+	params.update({
+		'abs0': [[0,1]]
+		})
+if not predicate_support:
+	params.update({
+		'mask': [['xy','x','y']]
+		})
+combos = ComputeCombinations(params)
+for c in combos:
+	paramDict.update(c)
+	lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// masks & predication
+${SetGroup('sincos - Pred ')
+lTests = []
+if predicate_support:
+	pswz = lstReplicateSwizzles[:]		# only replicate supported for 2.x
+	if ps_3_0:			# no limitation for 3.0
+##		pswz = lstBasicSwz
+		pswz += ['']
+	paramDict = {}
+	params = {
+		'mask': [['xy','x','y']],				# mask unsupported, even though spec says ok
+		'pred': [[0]+lstSomePredicateValues],
+		'pnot': [[0,1]],
+		'pswz': [pswz],
+		'swz0': [lstReplicateSwizzles]
+		}
+	combos = ComputeCombinations(params)
+	for c in combos:
+		paramDict.update(c)
+		lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+// End of file.  $curCount tests generated.

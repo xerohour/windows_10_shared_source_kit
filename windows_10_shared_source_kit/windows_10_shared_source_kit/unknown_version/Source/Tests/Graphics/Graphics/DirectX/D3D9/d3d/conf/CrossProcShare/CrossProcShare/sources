@@ -1,0 +1,11 @@
+!include ..\sources.inc
+
+TARGETNAME=D3DCrossProcShare
+
+SOURCES=$(SOURCES)\
+    EXEEntryPoint.cpp \
+    CrossProcShare_Conf.cpp \
+    CrossProcShare_IV.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+

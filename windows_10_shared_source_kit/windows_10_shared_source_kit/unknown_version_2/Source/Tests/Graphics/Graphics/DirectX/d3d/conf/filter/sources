@@ -1,0 +1,21 @@
+c0.zyx "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_017_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_017_Desc = "vs_2_0 : frc source reg combination c0.xzy is allowed";
+string VS_017 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.xzy "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_018_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_018_Desc = "vs_2_0 : frc source reg combination c0.ywx is allowed";
+string VS_018 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.ywx "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_019_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_019_Desc = "vs_2_0

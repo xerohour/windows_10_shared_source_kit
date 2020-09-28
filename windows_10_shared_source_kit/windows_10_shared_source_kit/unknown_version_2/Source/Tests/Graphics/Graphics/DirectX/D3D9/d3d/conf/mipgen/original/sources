@@ -1,0 +1,21 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=MipGen
+
+SOURCES= \
+        ..\MipGen.rc \
+        ..\MipGen.cpp \
+        ..\MipGenEmulation.cpp \
+        ..\MipGenEmulationTex.cpp \
+        ..\MipGenEmulationCubeTex.cpp \
+        ..\MipGenHardware.cpp \
+        ..\MipGenHardwareTex.cpp \
+        ..\MipGenHardwareCubeTex.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

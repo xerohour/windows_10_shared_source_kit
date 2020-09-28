@@ -1,0 +1,22 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CDevice
+
+SOURCES= \
+	CDevice.cpp \
+	CDevice9.cpp \
+	CDeviceD3DX9.cpp \
+	CDevice8.cpp \
+	CDeviceD3DX8.cpp \
+	CDevice7.cpp \
+	CDevice6.cpp \
+	Render.cpp \
+	DevWrappers.cpp \
+	CStateblock.cpp \
+	CShaders.cpp
+
+
+
+PRECOMPILED_INCLUDE=DevicePCH.h
+PRECOMPILED_CXX=1

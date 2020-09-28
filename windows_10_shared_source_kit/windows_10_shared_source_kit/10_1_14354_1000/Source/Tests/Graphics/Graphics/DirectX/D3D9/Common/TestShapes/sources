@@ -1,0 +1,20 @@
+!include ..\Common.mk
+
+
+TARGETNAME=TestShapes
+
+SOURCES= \
+        fanball.cpp \
+        fanhorn.cpp \
+        lines.cpp \
+        pointgrid.cpp \
+        randomtriangles.cpp \
+        testshapes.cpp \
+        trithing.cpp \
+        wavestrip.cpp
+
+
+PRECOMPILED_INCLUDE=TestShapesPCH.h
+PRECOMPILED_CXX=1
+
+

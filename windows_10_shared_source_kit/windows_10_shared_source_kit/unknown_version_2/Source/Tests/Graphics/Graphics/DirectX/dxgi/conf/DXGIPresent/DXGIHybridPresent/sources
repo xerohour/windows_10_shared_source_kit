@@ -1,0 +1,82 @@
+!include ..\sources.inc
+!include $(GRAPHICS_TST_ROOT)\common\adapterutil\adapterutil.mk
+
+TARGETNAME=DXGIHybridPresent
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN7)
+
+C_DEFINES=$(C_DEFINES)
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\DXGITest; \
+	$(GRAPHICS_TST_ROOT)\Directx\DXGI\Conf\DXGIPresent\DXGIPresent_lib; \
+	$(WINDOWS_TST_ROOT)\Common\etw; \
+	$(WINDOWS_TST_ROOT)\Common\etwconsumers\inc; \
+	$(WINDOWS_TST_ROOT)\Common\etwconsumers\DxgKernel\inc; \
+	$(WINDOWS_TST_ROOT)\Common\etwconsumers\TFramework\inc; \
+	$(GRAPHICS_TST_ROOT)\base\common\dmmapi\inc; \
+	$(BASE_VID_TST_ROOT)\common\CrossProcSharing\inc; \
+	$(DWM_PATH)\FeatureTests\Common\Utilities; \
+	$(GRAPHICS_TST_ROOT)\common\PowerUtil; \
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\d3d10.lib \
+  	$(SDK_LIB_PATH)\d3dx10_test.lib \
+	$(SDK_LIB_PATH)\d3d9.lib \
+	$(SDK_LIB_PATH)\dwmapi.lib \
+	$(WINDOWS_LIB_PATH)\dwmapip.lib \
+	$(SDK_LIB_PATH)\dxgi.lib \
+	$(SDK_LIB_PATH)\dxguid.lib \
+	$(SDK_LIB_PATH)\uuid.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\WGFTestFramework\DXGITest\$(O)\DXGITest.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\WGFTestFramework\D3DTest\$(O)\D3DTest.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\d3d10refutil\$O\D3D10RefUtil.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\d3d10swapchain\$O\D3D10SwapChain.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\devicewrapper\$O\DeviceWrapper.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgiwndclass\$O\DXGIWndClass.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgibbfmt\$O\DXGIBBFMT.LIB \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgifmt\$O\DXGIFMT.lib \
+        $(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\DXGISwapChainFlag\$O\DXGISwapChainFlag.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgiswapeffects\$O\DXGISwapEffects.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgipresentflagrecord\$O\dxgipresentflagrecord.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgisurfutils\$O\DXGISurfUtils.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgiscanoutformats\$O\DXGIScanoutFormats.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\enummodesgdi\$O\EnumModesGDI.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\getdeviceinfo\$O\GetDeviceInfo9.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\modeset\$O\ModeSet.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\DCOMPIsolation\$O\DCompIsolation.lib \
+        $(DIRECTX_TST_OBJ_ROOT)\dxgi\conf\dxgipresent\dxgipresent_lib\$O\DXGIPresent.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\common\ETWConsumers\DxgKernel\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etwdxgkernelConsumer.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\common\ETWConsumers\TFramework\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etwTFrameworkConsumer.lib \
+	$(WINDOWS_TST_COMMON)\etw\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etw.lib \
+	$(SDK_LIB_PATH)\tdh.lib \
+	$(BASE_VID_TST_OBJ_ROOT)\common\dmmapi\src\$O\dmmapi.lib \
+	$(BASE_VID_TST_OBJ_ROOT)\common\CrossProcSharing\lib\unicode\$O\CrossProcSharing.lib \
+	$(WINDOWS_TST_COMMON)\CTL\util\$O\ctlutil.lib \
+	$(DWM_OBJ_PATH)\FeatureTests\Common\Utilities\100\$(O)\Utilities.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\Common\PowerUtil\$(O)\PowerUtil.lib \
+
+
+TARGET_DESTINATION=Graphics\D3D\Conf
+
+USE_RTTI=1
+
+SOURCES=\
+	DXGIHybridPresent.cpp \
+        DXGIHybridPresentTDR.cpp \
+	DXGIHybridPresentPnPStop.cpp \
+	DXGIHybridPowerManagement.cpp \
+	DXGIHybridPresentChild.cpp \
+	HybridPresentETWValidation.cpp \
+	TestApp.cpp \
+	DXGIPresent.rc
+
+SOURCES=$(SOURCES) kitContent.kml
+
+

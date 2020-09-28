@@ -1,0 +1,32 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\dxgi\dxgi.mk
+
+
+TARGETNAME=CustomTestApp
+TARGETTYPE=LIBRARY
+
+#TARGET_DESTINATION=Graphics\D3D\Func
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_VISTA)
+
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(DDK_INC_PATH); \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\DXGITest; \
+	$(WINDOWS_TST_ROOT)\common\MessagePipe; \
+
+SOURCES=\
+	CustomTestApp.cpp \
+	D3D9AdapterTopology.cpp \
+	D3D8CustomTestApp.cpp \
+	D3D9CustomTestApp.cpp \
+	D3D9ToGDIAdapterTopologyMap.cpp \
+	DXGIAdapterTopology.cpp \
+	DXGICustomTestApp.cpp \
+	DXGIToGDIAdapterTopologyMap.cpp \
+	GDIAdapterTopology.cpp \
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	d(WINDOWS_TST_OBJ_ROOT)\common\MessagePipe\$O\MessagePipe.lib \
+

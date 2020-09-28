@@ -1,0 +1,10 @@
+DIRS= \
+	API{!cs_xbox} \
+	Conf{!cs_xbox} \
+	Func{!cs_xbox} \
+	Manual{!cs_xbox} \
+	D3D10Level9 \
+	scenario{!cs_xbox} \
+	fuzz{!cs_xbox} \
+	chess{!cs_xbox} \
+

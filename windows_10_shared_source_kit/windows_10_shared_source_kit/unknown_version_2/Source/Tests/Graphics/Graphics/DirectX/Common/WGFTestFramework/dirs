@@ -1,0 +1,14 @@
+DIRS=\
+	Core \
+	D3DTest \
+	D3D11Test{!cs_xbox} \
+	D3D11TestDM{!cs_xbox} \
+	DXGITest{!cs_xbox} \
+	GraphicsTest \
+	GraphicsTestDM{!cs_xbox} \
+	LegacyGraphicsTest \
+	WGFConsoleShell{!cs_xbox} \
+	WGFTestUI \
+	AddOns{!cs_xbox} \
+	Samples{!cs_xbox} \
+	HResultHelp

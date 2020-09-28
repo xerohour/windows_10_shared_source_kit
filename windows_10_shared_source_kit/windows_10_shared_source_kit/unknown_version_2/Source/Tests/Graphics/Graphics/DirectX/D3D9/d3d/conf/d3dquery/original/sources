@@ -1,0 +1,13 @@
+!include ..\..\conf.mk
+
+TARGETNAME=D3DQuery
+
+SOURCES= ..\Query.rc \
+         ..\CTestPtr.cpp \
+         ..\Query.cpp  \
+
+TARGETLIBS= $(TARGETLIBS) \
+            $(SDK_LIB_PATH)\Powrprof.lib \
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

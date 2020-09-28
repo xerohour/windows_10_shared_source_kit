@@ -1,0 +1,21 @@
+!include ..\..\VidMM_tests.mk
+
+TARGETNAME=Preemption
+
+INCLUDES=\
+    ..\Utilities; \
+    $(INCLUDES); \
+
+UMTYPE=console
+UMENTRY=main
+
+TARGETLIBS=\
+    $(TARGETLIBS) \
+    $(OBJ_PATH)\..\Utilities\$O\ConformUtilLib.lib \
+
+SOURCES=\
+    CausePreemption.cpp \
+    Reference.cpp \
+    TestPreemption.cpp \
+    main.cpp \
+    Main.rc \

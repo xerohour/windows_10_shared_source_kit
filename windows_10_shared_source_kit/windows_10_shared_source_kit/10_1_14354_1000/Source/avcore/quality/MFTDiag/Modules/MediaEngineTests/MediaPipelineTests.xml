@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- categories: Playback
+     subtype: H264, HEVC, WMV
+     testtype: DRM, MPO verification -->
+
+<TestSuite>
+  <TEST testId="1">
+    <Category>DRM</Category>
+    <InputType>H.264</InputType>    
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>DRM Playback #1: boat.main30.1047kbps.2s.720x480.h264.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Name>
+    <Description>DRM Playback #1: boat.main30.1047kbps.2s.720x480.h264.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Description>
+    <KID>{11c70e38-ff28-4234-bc4d-2463c57b9ec6}</KID>
+    <CONTENTKEY>tLjEAIsP510fnqTcvAJnMg==</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>boat.main30.1047kbps.2s.720x480.h264.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="2">
+    <Category>DRM</Category>
+    <InputType>H.264</InputType>        
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>DRM Playback #2: boat.main31.2340kbps.2s.1280x720.h264.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Name>
+    <Description>DRM Playback #2: boat.main31.2340kbps.2s.1280x720.h264.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Description>
+    <KID>{11c70e38-ff28-4234-bc4d-2463c57b9ec6}</KID>
+    <CONTENTKEY>tLjEAIsP510fnqTcvAJnMg==</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>boat.main31.2340kbps.2s.1280x720.h264.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="3">
+    <Category>DRM</Category>
+    <InputType>H.264</InputType>        
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>DRM Playback #3: ms_media_test.main40.30fps.idr2.0slice.3834kbps.1920x1080.h264.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Name>
+    <Description>DRM Playback #3: ms_media_test.main40.30fps.idr2.0slice.3834kbps.1920x1080.h264.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Description>
+    <KID>{7d7301ef-a09e-4830-ab44-b7f4982e81c6}</KID>
+    <CONTENTKEY>XVBovsmzhP9gRIZxWfFta3VVRPzVEWmJsazEJ46I</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>ms_media_test.main40.30fps.idr2.0slice.3834kbps.1920x1080.h264.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="4">
+    <Category>DRM</Category>
+    <InputType>H.264</InputType>        
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>DRM Playback #4: ms_media_test.main50.60fps.idr2.0slice.7982kbps.3840x2160.h264.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Name>
+    <Description>DRM Playback #4: ms_media_test.main50.60fps.idr2.0slice.7982kbps.3840x2160.h264.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Description>
+    <KID>{505f5a50-1a7a-4d02-8cef-40729ec75f44}</KID>
+    <CONTENTKEY>XVBovsmzhP9gRIZxWfFta3VVRPzVEWmJsazEJ46I</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>ms_media_test.main50.60fps.idr2.0slice.7982kbps.3840x2160.h264.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="5">
+    <Category>DRM</Category>
+    <InputType>HEVC</InputType>       
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>DRM Playback #5: ms_media_test.main50.60fps.idr2.0slice.7982kbps.3840x2160.h265.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Name>
+    <Description>DRM Playback #5: ms_media_test.main50.60fps.idr2.0slice.7982kbps.3840x2160.h265.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Description>
+    <KID>{330ffb38-540a-4ef3-b86b-02ca049e935d}</KID>
+    <CONTENTKEY>XVBovsmzhP9gRIZxWfFta3VVRPzVEWmJsazEJ46I</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>ms_media_test.main50.60fps.idr2.0slice.7982kbps.3840x2160.h265.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="6">
+    <Category>DRM</Category>
+    <InputType>H.264</InputType>      
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>DRM Playback #6: ms_media_test.main31.30fps.idr2.0slice.2340kbps.1280x720.h264.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Name>
+    <Description>DRM Playback #6: ms_media_test.main31.30fps.idr2.0slice.2340kbps.1280x720.h264.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Description>
+    <KID>{b6eb65e1-01bf-4289-ba5e-8b36056ad78e}</KID>
+    <CONTENTKEY>XVBovsmzhP9gRIZxWfFta3VVRPzVEWmJsazEJ46I</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>ms_media_test.main31.30fps.idr2.0slice.2340kbps.1280x720.h264.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="7">
+    <Category>DRM</Category>
+    <InputType>HEVC</InputType>     
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>DRM Playback #7: ms_media_test.main31.30fps.idr2.0slice.2340kbps.1280x720.h265.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Name>
+    <Description>DRM Playback #7: ms_media_test.main31.30fps.idr2.0slice.2340kbps.1280x720.h265.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</Description>
+    <KID>{82d5f64c-b944-4d16-96a2-9ff8169c1edb}</KID>
+    <CONTENTKEY>XVBovsmzhP9gRIZxWfFta3VVRPzVEWmJsazEJ46I</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>ms_media_test.main31.30fps.idr2.0slice.2340kbps.1280x720.h265.2ch.320kbps.aac_dashinit.cenc.sameKeys.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="8">
+    <Category>DRM</Category>
+    <InputType>HEVC</InputType>        
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>DRM Playback #8: boat.main40.4278kbps.2s.1920x1080.h265.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Name>
+    <Description>DRM Playback #8: boat.main40.4278kbps.2s.1920x1080.h265.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Description>
+    <KID>{11c70e38-ff28-4234-bc4d-2463c57b9ec6}</KID>
+    <CONTENTKEY>tLjEAIsP510fnqTcvAJnMg==</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>boat.main40.4278kbps.2s.1920x1080.h265.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="9">
+    <Category>DRM</Category>
+    <InputType>HEVC</InputType>        
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>DRM Playback #9: boat.main50.5760kbps.2s.2560x1440.h265.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Name>
+    <Description>DRM Playback #9: boat.main50.5760kbps.2s.2560x1440.h265.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Description>
+    <KID>{11c70e38-ff28-4234-bc4d-2463c57b9ec6}</KID>
+    <CONTENTKEY>tLjEAIsP510fnqTcvAJnMg==</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>boat.main50.5760kbps.2s.2560x1440.h265.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="10">
+    <Category>DRM</Category>
+    <InputType>HEVC</InputType>        
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>DRM Playback #10:boat.main51.15900kbps.2s.3840x2160.h265.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Name>
+    <Description>DRM Playback #10:boat.main51.15900kbps.2s.3840x2160.h265.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</Description>
+    <KID>{11c70e38-ff28-4234-bc4d-2463c57b9ec6}</KID>
+    <CONTENTKEY>tLjEAIsP510fnqTcvAJnMg==</CONTENTKEY>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>boat.main51.15900kbps.2s.3840x2160.h265.2ch.320kbps.aac_dashinit.enc.singleKey.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="11">
+    <Category>MPO</Category>
+    <InputType>H.264</InputType>
+    <Component_CLSID>{62ce7e72-4c71-4d20-b15d-452831a87d9d}</Component_CLSID>
+    <Name>MPO Playback #11:Dancing_1920x1088p_9mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</Name>
+    <Description>MPO Playback #11:Dancing_1920x1088p_9mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>Dancing_1920x1088p_9mbps_25fps_High_at_L4.1_Cabac_Frext.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="12">
+    <Category>MPO</Category>
+    <InputType>HEVC</InputType>    
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>MPO Playback #12:MSHDRef_Difficult_Edge_02_720x480p30f_1047kbps_randomaccess_main.mp4</Name>
+    <Description>MPO Playback #12:MSHDRef_Difficult_Edge_02_720x480p30f_1047kbps_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_1047kbps_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+</TestSuite>
+

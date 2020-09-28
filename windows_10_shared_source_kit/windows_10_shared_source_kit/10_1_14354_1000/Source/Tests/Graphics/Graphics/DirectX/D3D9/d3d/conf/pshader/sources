@@ -1,0 +1,19 @@
+!include ..\conf.mk
+
+TARGETNAME=PShader
+
+SOURCES=PShader.cpp \
+        PShader.rc \
+        opmod.cpp \
+        address.cpp \
+        register.cpp \
+        srcmod.cpp \
+        dstmod.cpp \
+        ReadShader.cpp \
+        VertShader.cpp \
+        limits.cpp \
+	legacy.cpp
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

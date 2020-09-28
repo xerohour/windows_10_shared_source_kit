@@ -1,0 +1,32 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=AlphaBld
+
+SOURCES= \
+        ..\AlphaBld.rc \
+        ..\AlphaBld.cpp \
+	..\BlendFactor.cpp \
+        ..\Both.cpp \
+        ..\DestAlpha.cpp \
+        ..\DestColor.cpp \
+        ..\Draw.cpp \
+        ..\False.cpp \
+	..\InvBlendFactor.cpp \
+        ..\InvDestAlpha.cpp \
+        ..\InvDestColor.cpp \
+        ..\InvSrcAlpha.cpp \
+        ..\InvSrcColor.cpp \
+        ..\One.cpp \
+        ..\SrcAlpha.cpp \
+        ..\SrcAlphaSat.cpp \
+        ..\SrcColor.cpp \
+	..\SwapEffect.cpp \
+        ..\Zero.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

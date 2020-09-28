@@ -1,0 +1,135 @@
+!include $(GRAPHICS_TST_ROOT)\common\adapterutil\adapterutil.mk
+
+!include ..\sources.inc
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WINBLUE)
+
+TARGETNAME=WirelessDisplayHCKTests
+TARGETTYPE=DYNLINK
+TARGET_DESTINATION=Graphics\wddm\bin
+DLLDEF=
+
+C_DEFINES=$(C_DEFINES) -D_UNICODE -DUNICODE -DWinClientOS
+
+USE_MSVCRT=1
+USE_STL=1
+STL_VER=100
+
+USE_NATIVE_EH=1
+USE_RTTI=1
+
+USE_ATL=1
+ATL_VER=70
+
+#NTTESTENV=1
+!undef CODE_SIGN_NONE
+#CODE_SIGN_INTERNAL=1
+TEST_CODE=1
+NT_SIGNCODE=1
+
+MC_FLAGS=$(MC_FLAGS) /w $(SDK_INC_PATH)\eventman.xsd
+
+EVENTS_MANIFEST=..\..\WirelessDisplay-ETW.man
+EVENTS_GENERATE_EVENTS_FOR_USERMODE=1
+EVENTS_GENERATE_EVENTS_FOR_DOWNLEVEL=0
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=MiracastHCKTests.h
+PRECOMPILED_PCH=stdafx.pch
+PRECOMPILED_INCLUDE_BASENAME=MiracastHCKTests
+
+INCLUDES=\
+    $(INCLUDES) \
+    $(BASE_INC_PATH); \
+    $(PUBLIC_ROOT)\internal\windows\inc; \
+    $(WINDOWS_INC_PATH); \
+    $(SDKTOOLS_INC_PATH)\WexTest\Tools; \
+    $(WINDOWS_TST_ROOT)\common\stringutils; \
+    $(WINDOWS_TST_ROOT)\graphics\common\TAEFTestBase\lib; \
+    $(SDKTOOLS_INC_PATH)\WEXTest\Sparta\Runtime\Wex.Common\Inc; \
+    $(SDKTOOLS_INC_PATH)\WexTest\CuE; \
+    $(WINDOWS_TST_ROOT)\common\VariationCore; \
+    $(WINDOWS_TST_ROOT)\common\stringConverters; \
+    $(WINDOWS_TST_ROOT)\common\regex; \
+    $(WINDOWS_TST_ROOT)\common\handle; \
+    $(WINDOWS_TST_ROOT)\common\tref; \
+    $(WINDOWS_TST_ROOT)\common\include; \
+    $(WINDOWS_TST_ROOT)\common\simplelog; \
+    $(WINDOWS_TST_ROOT)\Graphics\common\include; \
+    $(WINDOWS_TST_ROOT)\Graphics\common\powerutil; \
+    $(WINDOWS_TST_ROOT)\Graphics\common\opmutil; \
+    $(WINDOWS_TST_ROOT)\graphics\Base\common\monwmi; \
+    $(WINDOWS_TST_ROOT)\Graphics\Base\Tests\WirelessDisplays\MiracastUtils; \
+    $(WINDOWS_TST_ROOT)\Graphics\Base\Tests\WirelessDisplays\MiracastUtils\lib; \
+    $(WINDOWS_TST_ROOT)\graphics\Base\common\ccd\DisplayTopology; \
+    $(WINDOWS_TST_ROOT)\Graphics\Base\Tests\WirelessDisplays\VirtualSink\inc; \
+    $(WINDOWS_TST_ROOT)\Graphics\Base\Tests\WirelessDisplays; \
+
+TARGETLIBS=\
+    $(TARGETLIBS) \
+    $(SDK_LIB_PATH)\ntdll.lib \
+    $(SDK_LIB_PATH)\powrprof.lib \
+    $(SDK_LIB_PATH)\kernel32.lib \
+    $(SDK_LIB_PATH)\user32.lib \
+    $(SDK_LIB_PATH)\gdi32.lib \
+    $(SDK_LIB_PATH)\dxva2.lib \
+    $(SDK_LIB_PATH)\dxgi.lib \
+    $(WINDOWS_LIB_PATH)\netdispgrfxctl.lib \
+    $(SDK_LIB_PATH)\setupapi.lib \
+    $(SDK_LIB_PATH)\Advapi32.lib \
+    $(SDK_LIB_PATH)\wmip.lib \
+    $(SDK_LIB_PATH)\wbemuuid.lib \
+    $(SDK_LIB_PATH)\d3d10_1.lib \
+    $(SDK_LIB_PATH)\Tdh.lib \
+    $(MINCORE_SDK_LIB_VPATH)\api-ms-win-devices-swdevice-l1.lib \
+    $(MINCORE_SDK_LIB_VPATH)\..\api-ms-win-power-base-l1-1-0.lib \
+    $(MINCORE_SDK_LIB_VPATH)\..\api-ms-win-power-setting-l1-1-0.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\graphics\Base\tests\wirelessdisplays\MiracastUtils\lib\$O\MiracastUtils.lib \
+    $(SDKTOOLS_LIB_PATH)\WexTest\Tools\EtwProcessor.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\graphics\Base\common\ccd\DisplayTopology\$O\DisplayTopology.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\graphics\base\tests\wirelessdisplays\virtualsink\mcsink\$O\MCSINK.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\common\stringutils\$O\stringutils.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\graphics\common\TAEFTestBase\lib\$O\TAEFVariationGenerator.lib \
+    $(SDKTOOLS_LIB_PATH)\WexTest\CuE\TE.Common.lib \
+    $(SDKTOOLS_LIB_PATH)\WexTest\CuE\Wex.Common.lib \
+    $(SDKTOOLS_LIB_PATH)\WexTest\CuE\Wex.Logger.lib \
+    $(WINDOWS_LIB_PATH)\variationcore_unicode_one.lib  \
+    $(WINDOWS_LIB_PATH)\variationcore_unicode_two.lib  \
+    $(WINDOWS_TST_OBJ_ROOT)\common\stringconverters\unicode\$O\stringconverters_unicode.lib \
+    $(WINDOWS_LIB_PATH)\RegEx_one.lib \
+    $(WINDOWS_LIB_PATH)\RegEx_two.lib \
+    $(WINDOWS_LIB_PATH)\RegEx_three.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\common\handle\$O\handle.lib \
+    $(SDK_LIB_PATH)\Ole32.lib \
+    $(SDK_LIB_PATH)\OleAut32.lib \
+    $(SDK_LIB_PATH)\Ws2_32.lib \
+    $(SDK_LIB_PATH)\Mswsock.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\graphics\common\powerutil\$O\powerutil.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\graphics\base\common\monwmi\$O\monwmi.lib \
+    $(SDK_LIB_PATH)\crypt32.lib    \
+    $(SDK_LIB_PATH)\Bcrypt.lib     \
+    $(BASE_LIB_PATH)\sputilsu.lib  \
+    $(DS_LIB_PATH)\rsa32.lib       \
+    $(DS_LIB_PATH)\mincrypu.lib    \
+    $(DS_LIB_PATH)\mincrypt.lib    \
+    $(DS_LIB_PATH)\hashlib.lib     \
+    $(WINDOWS_TST_OBJ_ROOT)\graphics\common\opmutil\$O\opmutil.lib \
+    $(SDK_LIB_PATH)\mfuuid.lib \
+    $(SDK_LIB_PATH)\uuid.lib \
+    $(SDK_LIB_PATH)\mfplat.lib \
+    $(SDK_LIB_PATH)\mf.lib \
+    $(SDK_LIB_PATH)\evr.lib \
+    $(SDK_LIB_PATH)\mfreadwrite.lib \
+    $(NET_LIB_PATH)\wlanhlp.lib \
+    $(SDK_LIB_PATH)\d2d1.lib \
+    $(SDK_LIB_PATH)\d3d11.lib \
+    $(SDK_LIB_PATH)\windowscodecs.lib \
+    $(SDK_LIB_PATH)\Shell32.lib \
+    $(BASE_LIB_PATH)\devobj.lib \
+    $(WINDOWS_LIB_PATH)\gdi32p.lib \
+
+
+SOURCES=\
+    $(SOURCES) \
+    MiracastHCKTests.rc \
+    kitContent.kml \

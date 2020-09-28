@@ -1,0 +1,10 @@
+!include ..\..\conf.mk
+
+TARGETNAME=BasicTex
+
+SOURCES= \
+        ..\BasicTex.rc \
+        ..\Main.cpp \
+        ..\BasicTex.cpp \
+        ..\Mapping.cpp \
+        ..\AGP.cpp

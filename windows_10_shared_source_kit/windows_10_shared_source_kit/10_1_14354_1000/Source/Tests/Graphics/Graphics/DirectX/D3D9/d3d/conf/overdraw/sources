@@ -1,0 +1,19 @@
+!include ..\conf.mk
+
+
+TARGETNAME=Overdraw
+
+SOURCES= \
+        Alpha.cpp \
+        AlphaGrid.cpp \
+        Overdraw.rc \
+        Overdraw.cpp
+
+
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

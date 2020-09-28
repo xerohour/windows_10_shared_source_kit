@@ -1,0 +1,39 @@
+#include <ntverp.h>
+#include <winver.h>
+#include "resource.h"
+
+
+#define VER_FILETYPE VFT_APP
+#define VER_FILESUBTYPE VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR "Microsoft (R) Wireless Display Test"
+
+
+#define VER_INTERNALNAME_STR     "WirelessDisplayHCKTests.dll"
+
+#define VER_ORIGINALFILENAME_STR VER_INTERNALNAME_STR
+
+
+
+#include <common.ver>
+#include <WirelessDisplay-ETWEvents.rc>
+
+
+IDC_ARROW_128                CURSOR           "arrow_128.cur"
+IDC_ARROW_256                CURSOR           "arrow_256.cur"
+IDC_ARROW_64                 CURSOR           "arrow_64.cur"
+IDC_ARROW_IL_32              CURSOR           "arrow_il_32.cur"
+IDC_ARROW_IL_48              CURSOR           "arrow_il_48.cur"
+IDC_BEAM_IL_32               CURSOR           "beam_il_32.cur"
+IDC_BEAM_IL_48               CURSOR           "beam_il_48.cur"
+IDC_BUSY_IL_32               CURSOR           "busy_il_32.cur"
+IDC_BUSY_IL_48               CURSOR           "busy_il_48.cur"
+IDC_RANDOM_128               CURSOR           "random_128.cur"
+IDC_RANDOM_256               CURSOR           "random_256.cur"
+IDC_RANDOM_STRIP             CURSOR           "random_strip.cur"
+IDC_SINGLE_PIXEL             CURSOR           "single_pixel.cur"
+IDC_ARROW_L_32               CURSOR           "arrow_l_32.cur"
+IDC_ARROW_L_48               CURSOR           "arrow_l_48.cur"
+IDC_ARROW_XL_64              CURSOR           "arrow_xl_64.cur"
+IDC_MASK_XOR_48              CURSOR           "mask_xor_48.cur"
+IDC_MASK_64                  CURSOR           "mask_64.cur"
+IDC_ALPHA_TEST               CURSOR           "alpha.cur"

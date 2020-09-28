@@ -1,0 +1,95 @@
+4 ; This is the number of in register arguments
+;++
+;
+; Copyright (c) 2000 Microsoft Corporation
+;
+; Module Name:
+;
+;   systable.asm
+;
+; Abstract:
+;
+;   This module implements the system service dispatch table.
+;
+; Environment:
+;
+;    Kernel mode only.
+;
+;--
+
+#include "ksarm.h"
+
+        MACRO
+        TABLE_BEGIN1
+        MEND
+
+        MACRO
+        TABLE_BEGIN2
+        AREA |.text|, DATA, READONLY
+        MEND
+
+        MACRO
+        TABLE_BEGIN3
+        MEND
+
+        MACRO
+        TABLE_BEGIN4
+        EXPORT KiServiceTable
+KiServiceTable
+        MEND
+
+        MACRO
+        TABLE_BEGIN5
+        MEND
+
+        MACRO
+        TABLE_BEGIN6
+        MEND
+
+        MACRO
+        TABLE_BEGIN7
+        MEND
+
+        MACRO
+        TABLE_BEGIN8
+        MEND
+
+        MACRO
+        TABLE_ENTRY $l,$bias,$numargs
+        IMPORT Nt$l
+        DCD Nt$l
+        MEND
+
+        MACRO
+        TABLE_END $n
+        EXPORT KiServiceLimit
+KiServiceLimit
+        DCD     $n + 1
+        MEND
+
+        MACRO
+        ARGTBL_BEGIN
+        EXPORT KiArgumentTable
+        ALIGN  4
+KiArgumentTable
+        MEND
+
+        MACRO
+        ARGTBL_ENTRY $arg0, $arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7
+        DCB $arg0, $arg1, $arg2, $arg3, $arg4, $arg5, $arg6, $arg7
+        MEND
+
+        MACRO
+        ARGTBL_END
+        END
+        MEND
+
+        TABLE_BEGIN1
+        TABLE_BEGIN2
+        TABLE_BEGIN3
+        TABLE_BEGIN4
+        TABLE_BEGIN5
+        TABLE_BEGIN6
+        TABLE_BEGIN7
+        TABLE_BEGIN8
+

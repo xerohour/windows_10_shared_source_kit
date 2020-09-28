@@ -1,0 +1,20 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "PShader"
+#define VER_ORIGINALFILENAME_STR    "PSHADER.EXE"
+
+#include <common.ver>
+
+dxlogo.bmp          BITMAP DISCARDABLE "media\dxlogo.bmp"
+checker.bmp         BITMAP DISCARDABLE "media\checker.bmp"
+checker2.bmp        BITMAP DISCARDABLE "media\checker2.bmp"
+colorchecker.bmp    BITMAP DISCARDABLE "media\colorchecker.bmp"
+bem1.bmp            BITMAP DISCARDABLE "media\bem1.bmp"
+bem3.bmp            BITMAP DISCARDABLE "media\bem3.bmp"
+dp3.bmp             BITMAP DISCARDABLE "media\dp3.bmp"
+SHADER1              SHADERS DISCARDABLE "media\Shady.txt"

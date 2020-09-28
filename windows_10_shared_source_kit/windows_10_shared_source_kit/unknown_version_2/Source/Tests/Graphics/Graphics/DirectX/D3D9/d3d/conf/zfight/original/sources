@@ -1,0 +1,10 @@
+!include ..\..\conf.mk
+
+TARGETNAME=zfight
+
+SOURCES=..\zfight.rc \
+        ..\zfight.cpp
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

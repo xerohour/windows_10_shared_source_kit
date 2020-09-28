@@ -1,0 +1,32 @@
+# this line brings in 3dsg.lib.
+WANT_GRAPHICS_TESTCOMPONENTS_3DSG_LIBS=1
+# This line brings in PnPStopUtilLib.lib.
+WANT_GRAPHICS_PNPSTOPUTIL_LIBS=1
+
+!include ..\unicodetests.mk
+
+
+TARGETNAME=fpo_check
+
+UMTYPE=windows
+UMENTRY=main
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN7)
+
+
+INCLUDES=\
+    $(INCLUDES); \
+    $(BASE_VID_TST_ROOT)\common\include; \
+    $(BASE_VID_TST_ROOT)\common\etw; \
+
+
+TARGETLIBS=\
+    $(TARGETLIBS) \
+    $(SDK_LIB_PATH)\tdh.lib \
+
+
+SOURCES=\
+    Main.rc \
+    main.cpp \
+    listener.cpp \
+    kitContent.kml \

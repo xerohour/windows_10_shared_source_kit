@@ -1,0 +1,20 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=Anisotropic
+
+SOURCES= \
+        ..\Anisotropic.rc \
+        ..\Anisotropic.cpp \
+        ..\Drawing.cpp \
+        ..\MinMag.cpp
+
+
+
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

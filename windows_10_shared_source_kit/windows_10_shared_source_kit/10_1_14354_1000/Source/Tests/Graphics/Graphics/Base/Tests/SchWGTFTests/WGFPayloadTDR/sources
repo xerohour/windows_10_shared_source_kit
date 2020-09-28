@@ -1,0 +1,76 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DirectX.mk
+
+# Set the default binplace location
+!if "$(TARGET_DESTINATION)" == ""
+TARGET_DESTINATION=Graphics\wddm\bin
+!endif
+
+USE_RTTI=1
+
+TARGETNAME=WGFPayloadTDR
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+#C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN7)
+
+           			    
+INCLUDES= \
+	$(INCLUDES) \
+	$(BASE_VID_TST_ROOT)\common\include; \
+	$(BASE_VID_TST_ROOT)\common\ddiclient\include; \
+	$(BASE_VID_TST_ROOT)\common\monwmi; \
+	$(BASE_VID_TST_ROOT)\common\Modules\inc; \
+	$(BASE_VID_TST_ROOT)\common\CrossProcSharing\inc; \
+	$(BASE_VID_TST_ROOT)\common\TestComponents\I3D\basic; \
+	$(BASE_VID_TST_ROOT)\common\TestObjects\I3D; \
+	$(BASE_VID_TST_ROOT)\common\TestObjects\common; \
+	$(BASE_VID_TST_ROOT)\common\utillib; \
+        $(WINDOWS_TST_ROOT)\Common\ctl\inc; \
+        $(WINDOWS_TST_ROOT)\Common\etw\inc; \
+        $(WINDOWS_TST_ROOT)\Common\TestXKit\Include; \
+        $(WINDOWS_TST_ROOT)\common\etwConsumers\Dxgkernel\inc; \
+        $(WINDOWS_TST_ROOT)\Common\etwStatistics\base\inc; \
+        $(WINDOWS_TST_ROOT)\Common\etwStatistics\DxgKernel\inc; \
+        $(WINDOWS_TST_ROOT)\Graphics\DirectX\Common\WGFTestFramework\D3D11Test; \
+        
+
+# We need to link to ctlutil.lib, because CrossProcSharing is using wexception
+TARGETLIBS=$(TARGETLIBS) \
+	$(BASE_VID_TST_OBJ_ROOT)\common\CrossProcSharing\lib\unicode\$O\CrossProcSharing.lib \
+	$(BASE_VID_TST_OBJ_ROOT)\common\Modules\lib\unicode\$O\TestModules.lib \
+	$(WINDOWS_TST_COMMON)\CTL\util\$O\ctlutil.lib \
+        $(SDK_LIB_PATH)\d3d11.lib \
+        $(SDK_LIB_PATH)\dxgi.lib \
+        $(SDK_LIB_PATH)\d2d1.lib \
+        $(WINDOWS_LIB_PATH)\d3dcompiler_test.lib \
+        $(WINDOWS_LIB_PATH)\d3dx11_test.lib \
+        $(WINDOWS_TST_COMMON)\etw\lib\ANSI\$O\etw.lib\
+        $(WINDOWS_TST_COMMON)\etwConsumers\Dxgkernel\lib\ANSI\$O\etwDxgKernelConsumer.lib\
+        $(WINDOWS_TST_COMMON)\etwStatistics\Dxgkernel\lib\ANSI\$O\etwDXGKernelStatistics.lib\
+        $(WINDOWS_TST_COMMON)\etwStatistics\base\lib\ANSI\$O\etwBaseStatistics.lib\
+        $(DIRECTX_TST_OBJ_ROOT)\Common\WGFTestFramework\D3D11Test\$(O)\D3D11Test.lib \
+        $(SDK_LIB_PATH)\tdh.lib \
+        $(SDK_LIB_PATH)\d3dx10_test.lib \
+
+SOURCES= \
+        Compute_a_TDR.cpp \
+        etwPayload.cpp \
+        Graphics_TDR.cpp \
+        KernelAPIThunks.cpp \
+	WGFPayloadTDR.rc \
+	WGFPayloadTDR.cpp \
+        
+
+PASS_INDEPENDENT_BINPLACE=\
+    TdrLimitTimeLong.reg \
+    TdrLimitTimeNormal.reg \
+    TdrDelayTimeLong.reg \
+    TdrDelayTimeNormal.reg \
+    
+
+SOURCES=$(SOURCES) kitContent.kml
+
+

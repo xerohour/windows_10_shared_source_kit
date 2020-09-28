@@ -1,0 +1,12 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=HLUtils 
+
+SOURCES= \
+        D_Util.cpp \
+	CFlagCombinations.cpp \
+	CTestFactor.cpp
+
+
+

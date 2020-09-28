@@ -1,0 +1,18 @@
+!include ..\conf.mk
+
+
+TARGETNAME=WBuffer
+
+SOURCES= \
+        WBuffer.rc \
+        WBuffer.cpp
+
+
+
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

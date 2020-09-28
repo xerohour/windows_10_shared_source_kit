@@ -1,0 +1,28 @@
+// Copyright (C) Microsoft Corporation, 1996 - 2014.  All rights reserved.
+//
+// File Name:
+//
+//  version.rc
+//
+// Abstract:
+//
+//  version resources
+//
+// @@BEGIN_MSINTERNAL
+// @@END_MSINTERNAL
+// -------------------------------------------------------------------------------
+
+// Adding standardized versioning to WLK applications
+#include <winver.h>
+#include <ntverp.h>
+
+//
+// Version
+//
+#define VER_FILETYPE				VFT_APP
+#define VER_FILESUBTYPE				VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR		"AC3 Test"
+#define VER_INTERNALNAME_STR		"ac3test.exe"
+
+#include <common.ver>
+

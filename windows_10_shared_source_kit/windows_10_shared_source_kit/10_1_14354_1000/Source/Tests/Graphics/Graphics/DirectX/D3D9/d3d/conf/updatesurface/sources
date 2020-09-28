@@ -1,0 +1,19 @@
+!include ..\conf.mk
+
+TARGETNAME=UpdateSurface
+
+SOURCES= \
+		UpdateSurfaceTest.rc \
+		auxiliary.cpp \
+		dxfmt.cpp \
+		dxpool.cpp \
+		dxusage.cpp \
+		dxmultisample.cpp \
+		dims.cpp \
+		rects.cpp \
+		SurfaceTypes.cpp \
+		UpdateSurfaceTestMain.cpp \
+		UpdateSurfaceTest.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+

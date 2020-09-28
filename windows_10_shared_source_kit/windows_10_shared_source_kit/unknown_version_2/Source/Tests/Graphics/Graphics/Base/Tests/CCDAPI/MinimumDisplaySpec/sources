@@ -1,0 +1,98 @@
+!include $(GRAPHICS_TST_ROOT)\common\adapterutil\adapterutil.mk
+TARGETNAME=MinimumDisplaySpec
+TARGETTYPE=PROGRAM
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN7)
+
+TEST_CODE=1
+MSC_WARNING_LEVEL=/W3 /WX
+
+TARGET_DESTINATION=Graphics\wddm\bin
+
+C_DEFINES=$(C_DEFINES) -D_UNICODE -DUNICODE 
+
+
+USE_MSVCRT=1
+USE_STL=1
+STL_VER=100
+USE_NATIVE_EH=1
+UMTYPE=console
+UMENTRY=wmain
+USE_ATL=1
+ATL_VER=30
+
+
+INCLUDES=\
+    $(INCLUDES); \
+    .\; \
+    $(SDK_INC_PATH); \
+    $(DDK_INC_PATH); \
+    $(SDKTOOLS_INC_PATH); \
+    $(WINDOWS_TST_ROOT)\common\stringutils; \
+    $(WINDOWS_TST_ROOT)\common\regex; \
+    $(WINDOWS_TST_ROOT)\common\include; \
+    $(WINDOWS_TST_ROOT)\common\VariationCore; \
+    $(WINDOWS_TST_ROOT)\common\Handle; \
+    $(WINDOWS_TST_ROOT)\common\tref; \
+    $(WINDOWS_TST_ROOT)\common\SimpleLog; \
+    $(WINDOWS_TST_ROOT)\common\StringConverters; \
+    $(WINDOWS_TST_ROOT)\common\XMLDataMapping; \
+    $(WINDOWS_TST_ROOT)\graphics\Base\common\ccd\DisplayTopology; \
+    $(WINDOWS_TST_ROOT)\graphics\Base\common\monwmi; \
+    $(PUBLIC_ROOT)\internal\windows\inc; \
+    $(WINDOWS_TST_ROOT)\graphics\common\include; \
+
+
+
+TARGETLIBS=\
+    $(TARGETLIBS) \
+    $(WINDOWS_TST_OBJ_ROOT)\common\stringutils\$O\stringutils.lib \
+    $(WINDOWS_LIB_PATH)\RegEx_one.lib \
+    $(WINDOWS_LIB_PATH)\RegEx_two.lib \
+    $(WINDOWS_LIB_PATH)\RegEx_three.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\common\HelperFunctions\$O\HelperFunctions.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\common\Handle\$O\Handle.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\common\stringconverters\unicode\$O\StringConverters_Unicode.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\graphics\Base\common\ccd\DisplayTopology\$O\DisplayTopology.lib \
+    $(WINDOWS_LIB_PATH)\variationcore_unicode_one.lib  \
+    $(WINDOWS_LIB_PATH)\variationcore_unicode_two.lib  \
+    $(WINDOWS_TST_OBJ_ROOT)\common\XmlDataMapping\$O\XmlDataMapping.lib \
+    $(SDKTOOLS_LIB_PATH)\wttlog.lib \
+    $(SDK_LIB_PATH)\user32.lib \
+    $(SDK_LIB_PATH)\dxgi.lib \
+    $(SDK_LIB_PATH)\advapi32.lib \
+    $(SDK_LIB_PATH)\shell32.lib \
+    $(SDK_LIB_PATH)\comctl32.lib \
+    $(SDK_LIB_PATH)\uuid.lib \
+    $(SDK_LIB_PATH)\ole32.lib \
+    $(SDK_LIB_PATH)\oleacc.lib \
+    $(SDK_LIB_PATH)\oleaut32.lib \
+    $(SDK_LIB_PATH)\setupapi.lib \
+    $(SDK_LIB_PATH)\user32.lib \
+    $(SDK_LIB_PATH)\version.lib \
+    $(SDK_LIB_PATH)\wbemuuid.lib \
+    $(SDK_LIB_PATH)\winmm.lib \
+    $(SDK_LIB_PATH)\wintrust.lib \
+    $(SDK_LIB_PATH)\wmip.lib \
+    $(SDK_LIB_PATH)\msxml2.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\monwmi\$O\monwmi.lib  \
+
+
+SOURCES=\
+    AbstractAdapterTest.cpp \
+    AbstractTest.cpp \
+    Check10by7.cpp \
+    CheckAdapterReportedModes.cpp \
+    CheckColorDepth.cpp \
+    CheckDualResolution.cpp \
+    CheckPostAdapterBIOSColorDepth.cpp \
+    CheckTabletNativeResolution.cpp \
+    CustomTestFactors.cpp \
+    Display.Monitor.Modes.cpp \
+    EdidTestBase.cpp \
+    main.cpp \
+    MinimumMemoryTest.cpp \
+    MinimumResolutionTest.cpp \
+    MinimumResolutionTest.rc \
+    MonitorEdidInfo.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml

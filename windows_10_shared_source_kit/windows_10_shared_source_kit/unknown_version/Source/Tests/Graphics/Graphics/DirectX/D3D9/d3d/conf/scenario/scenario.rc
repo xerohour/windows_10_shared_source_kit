@@ -1,0 +1,25 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE             VFT_APP
+#define VER_FILESUBTYPE          VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR  "D3D conformance test"
+#define VER_INTERNALNAME_STR     "scenario.exe"
+#define VER_ORIGINALFILENAME_STR "SCENARIO.EXE"
+
+checker256.bmp BITMAP DISCARDABLE "media\checker256.bmp"
+checker128.bmp BITMAP DISCARDABLE "media\checker128.bmp"
+checker64.bmp  BITMAP DISCARDABLE "media\checker64.bmp"
+checker32.bmp  BITMAP DISCARDABLE "media\checker32.bmp"
+checker16.bmp  BITMAP DISCARDABLE "media\checker16.bmp"
+checker8.bmp   BITMAP DISCARDABLE "media\checker8.bmp"
+checker4.bmp   BITMAP DISCARDABLE "media\checker4.bmp"
+checker2.bmp   BITMAP DISCARDABLE "media\checker2.bmp"
+checker1.bmp   BITMAP DISCARDABLE "media\checker1.bmp"
+dxlogo.bmp     BITMAP DISCARDABLE "media\dxlogo.bmp"
+luminance.bmp  BITMAP DISCARDABLE "media\luminance.bmp"
+stripes.bmp    BITMAP DISCARDABLE "media\stripes.bmp"
+
+#include <common.ver>
+

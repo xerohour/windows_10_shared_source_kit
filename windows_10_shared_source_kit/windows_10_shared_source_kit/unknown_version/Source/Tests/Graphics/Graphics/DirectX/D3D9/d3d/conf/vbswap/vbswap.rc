@@ -1,0 +1,13 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Vertex Buffer Renaming Test"
+#define VER_INTERNALNAME_STR        "VBSwap.exe"
+#define VER_ORIGINALFILENAME_STR    "VBSWAP.EXE"
+
+#include <common.ver>
+
+TEXTURE_BMP BITMAP happy.bmp

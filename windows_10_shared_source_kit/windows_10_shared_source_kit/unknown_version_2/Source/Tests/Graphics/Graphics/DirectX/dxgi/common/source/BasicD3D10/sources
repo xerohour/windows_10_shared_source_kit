@@ -1,0 +1,13 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+TARGETNAME=BasicD3D10
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+UMENTRY=winmain
+
+
+SOURCES=\
+	BasicD3D10.cpp \
+
+
+TARGETLIBS=\

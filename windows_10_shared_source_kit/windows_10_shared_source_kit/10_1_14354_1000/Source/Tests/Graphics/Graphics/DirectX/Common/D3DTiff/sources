@@ -1,0 +1,27 @@
+TARGETNAME=D3DTiff
+TARGETTYPE=LIBRARY
+
+USE_MSVCRT=1
+
+USE_NATIVE_EH=1
+
+USE_STL=1
+STL_VER=100
+
+TEST_CODE=1
+MSC_WARNING_LEVEL=/W3 /WX
+
+INCLUDES=\
+	.\; \
+	$(DIRECTX_TST_ROOT)\Common\Include; \
+	$(WINDOWS_TST_ROOT)\Common\Handle; \
+	$(WINDOWS_TST_ROOT)\Common\StringUtils; \
+	$(INCLUDES) \
+
+SOURCES=\
+	D3DTiff.cpp \
+
+OBJLIBFILES = \
+        $(SDK_LIB_PATH)\Windowscodecs.lib \
+
+

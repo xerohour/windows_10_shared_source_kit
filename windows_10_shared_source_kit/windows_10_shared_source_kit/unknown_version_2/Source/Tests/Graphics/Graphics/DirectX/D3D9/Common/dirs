@@ -1,0 +1,11 @@
+DIRS=\
+	CPControl \
+	CResFile \
+	CShapes \
+	CSpline \
+	CStateCascade \
+	FlagCombinations \
+	FPState \
+	RNumber \
+	TestShapes \
+	MaxWinModeShim \

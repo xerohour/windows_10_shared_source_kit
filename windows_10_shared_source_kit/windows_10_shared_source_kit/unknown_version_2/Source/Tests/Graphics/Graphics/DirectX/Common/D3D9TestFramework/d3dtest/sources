@@ -1,0 +1,16 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CD3DTest 
+
+SOURCES= \
+        CD3DTest.cpp \
+        CManualTest.cpp \
+	CApiTest.cpp \
+	Wrappers.cpp
+
+
+PRECOMPILED_INCLUDE=D3DTestPCH.h
+PRECOMPILED_CXX=1
+
+

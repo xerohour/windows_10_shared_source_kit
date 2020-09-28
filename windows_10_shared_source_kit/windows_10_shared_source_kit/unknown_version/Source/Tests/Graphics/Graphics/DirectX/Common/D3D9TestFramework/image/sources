@@ -1,0 +1,12 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CImage
+
+SOURCES= CImage.cpp
+
+
+PRECOMPILED_INCLUDE=ImagePCH.h
+PRECOMPILED_CXX=1
+
+

@@ -1,0 +1,14 @@
+!include ..\Common.mk
+
+TARGETNAME=D3DConvert
+TARGETTYPE=LIBRARY
+
+SOURCES= \
+	d3dconvert.cpp
+
+C_DEFINES= $(C_DEFINES)"
+
+
+
+
+TARGETLIBS=\

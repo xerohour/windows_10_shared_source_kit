@@ -1,0 +1,34 @@
+//
+// ps.psh
+// Copyright (c) 2004 Microsoft Corporation. All rights reserved.
+//
+
+Texture2D myTexture;
+sampler samp;
+
+struct PSOut
+{
+	float4 Color : SV_Target;
+};
+
+struct PSIn
+{
+	float4 pos : SV_Position;
+	centroid float2 tex : tex;
+};
+
+cbuffer cb0 : register(b0)
+{
+	float4 inverseViewport;
+	float alpha;
+};
+
+PSOut main( PSIn input )
+{
+	PSOut output;
+	
+	//output.Color = float4( 0.25, 0.25, 0.25, 0.25 );	
+	output.Color = myTexture.Sample(samp, input.tex);
+	
+	return output;
+}

@@ -1,0 +1,9 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CEffect
+
+SOURCES= \
+        ceffect.cpp \
+        ceffect9.cpp \
+        cneffect.cpp

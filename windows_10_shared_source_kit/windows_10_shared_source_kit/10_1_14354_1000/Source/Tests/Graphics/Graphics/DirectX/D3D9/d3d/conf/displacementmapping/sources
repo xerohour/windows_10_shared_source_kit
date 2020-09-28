@@ -1,0 +1,15 @@
+!include ..\conf.mk
+
+
+TARGETNAME=DisplacementMapping
+
+SOURCES= DisplacementMapping.rc \
+                   default.cpp \
+                   DisplacementMapping.cpp \
+	     MipMapTest.cpp \
+                   AddressModes.cpp \
+                   BiasTest.cpp \
+                   MaxMipLevelTest.cpp \
+             
+SOURCES=$(SOURCES) kitContent.kml
+

@@ -1,0 +1,19 @@
+!include ..\unicodetests.mk
+
+TARGETNAME=SimulateTDR
+          
+UMTYPE=console
+UMENTRY=main
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WIN7)
+
+INCLUDES=\
+    $(INCLUDES); \
+
+SOURCES=\
+    Main.rc \
+    main.cpp \
+
+TARGETLIBS=\
+    $(TARGETLIBS) \
+    $(SDK_LIB_PATH)\psapi.lib \

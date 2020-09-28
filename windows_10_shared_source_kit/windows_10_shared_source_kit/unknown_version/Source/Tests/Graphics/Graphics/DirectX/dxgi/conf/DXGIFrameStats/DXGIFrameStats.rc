@@ -1,0 +1,4 @@
+#include <WGFTestUI.rc>
+
+ps.psh rcdata "ps.psh"
+vs.vsh rcdata "vs.vsh"

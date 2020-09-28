@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<TestSuite> 
+    <TEST testId="110"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #110: MPEG-4 Visual AdvancedSimple_at_L1 368x208</Name> 
+        <Description>Playback #110: MPEG-4 Visual AdvancedSimple_at_L1 368x208</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>33_H264_368x208_15_796kbps.3gp</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="111"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #111: MPEG-4 Visual AdvancedSimple_at_L5 1920x1080</Name> 
+        <Description>Playback #111: MPEG-4 Visual AdvancedSimple_at_L5 1920x1080</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>02_MPEG4_1920x1080_23976_7213kbps_Pro.avi</InputFile> 
+        <DXVAType>9and11</DXVAType>
+    </TEST> 
+ 
+    <TEST testId="118"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #118: MPEG-4 Visual AdvancedSimple_at_L5 720x576</Name> 
+        <Description>Playback #118: MPEG-4 Visual AdvancedSimple_at_L5 720x576</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>27_MSHDRef_Difficult_Edge_06_720x576i25f_h263_3080kbps.avi</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="125"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #125: MPEG-4 Visual AdvancedSimple_at_L5 320x240</Name> 
+        <Description>Playback #125: MPEG-4 Visual AdvancedSimple_at_L5 320x240</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>52_MSHDRef_Texture_High_01_320x240p30f_MPEG_850kbps.avi</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="129"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #129: MPEG-4 Visual AdvancedSimple_at_L3 1920x1080</Name> 
+        <Description>Playback #129: MPEG-4 Visual AdvancedSimple_at_L3 1920x1080</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Texture_SkinTones_05_352x288p15f_900k.mp4</InputFile> 
+    </TEST> 
+ 
+    <TEST testId="131"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #131: MPEG-4 Visual Simple_at_L3 352x288</Name> 
+        <Description>Playback #131: MPEG-4 Visual Simple_at_L3 352x288</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Texture_SkinTones_05_352x288p15f_900kbps_XVid_MP4.avi</InputFile> 
+    </TEST> 
+
+    <TEST testId="150"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #150: MJPEG 1920x1080</Name> 
+        <Description>Playback #150: MJPEG 1920x1080</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>22_AVI_MJPEG_1920x1080_44Mbps_2997_ADPCM_11025kHz.avi</InputFile> 
+        <DXVAType>9and11</DXVAType>
+    </TEST> 
+
+    <TEST testId="151"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #151: MJPEG 720x480</Name> 
+        <Description>Playback #151: MJPEG 720x480</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>23_AVI_MJPEG_720x480_10Mbps_2997_ADPCM_8kHz.avi</InputFile> 
+    </TEST> 
+
+    <TEST testId="152"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #152: MJPEG 1280x720</Name> 
+        <Description>Playback #152: MJPEG 1280x720</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>24_AVI_MJPEG_1280x720_21800Kbps_2997_ADPCM_11025kHz.avi</InputFile> 
+    </TEST> 
+
+    <TEST testId="153"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #153: MJPEG 1280x720</Name> 
+        <Description>Playback #153: MJPEG 1280x720</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>39_MOV_PhotoJPEG_1280x720_BEST_30_PCM_48kHz.mov</InputFile> 
+        <DXVAType>9and11</DXVAType>
+    </TEST> 
+
+    <TEST testId="154"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #154: MJPEG 1280x720</Name> 
+        <Description>Playback #154: MJPEG 1280x720</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>39_MOV_PhotoJPEG_1280x720_LOSSLESS_30_PCM_48kHz.mov</InputFile> 
+    </TEST> 
+
+    <TEST testId="155"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #155: MJPEG 144x176</Name> 
+        <Description>Playback #155: MJPEG 144x176</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MJPEG_144x176_15fps.avi</InputFile> 
+    </TEST> 
+
+    <TEST testId="156"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #156: MJPEG 320x240</Name> 
+        <Description>Playback #156: MJPEG 320x240</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MJPEG_320x240_30fps.avi</InputFile> 
+    </TEST> 
+
+    <TEST testId="157"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Playback #157: MJPEG 640x360</Name> 
+        <Description>Playback #157: MJPEG 640x360</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MJPEG_640x360_30fps.avi</InputFile> 
+    </TEST>
+
+  <TEST testId="160">
+    <Category>Playback</Category>
+    <InputType>
+      <MF_MT_SUBTYPE>MEDIASUBTYPE_H263</MF_MT_SUBTYPE>
+    </InputType>
+    <Name>Playback #160: H263 </Name>
+    <Description>Playback #160: H263 </Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>H263_704x480_30fps_VBR_AMR.3gp</InputFile>
+  </TEST>
+
+  <TEST testId="161">
+    <Category>Playback</Category>
+    <InputType>
+      <MF_MT_SUBTYPE>MEDIASUBTYPE_H263</MF_MT_SUBTYPE>
+    </InputType>
+    <Name>Playback #161: H263 </Name>
+    <Description>Playback #161: H263 </Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>H263_128X96_30fps_250k_VBR_AMR.3g2</InputFile>
+  </TEST>
+
+  <TEST testId="162">
+    <Category>Playback</Category>
+    <InputType>
+      <MF_MT_SUBTYPE>MEDIASUBTYPE_H263</MF_MT_SUBTYPE>
+    </InputType>
+    <Name>Playback #162: H263 </Name>
+    <Description>Playback #162: H263 </Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>H263_320X240_15fps_384k_CBR_AMR.3g2</InputFile>
+  </TEST>
+
+  <TEST testId="163">
+    <Category>Playback</Category>
+    <InputType>
+      <MF_MT_SUBTYPE>MEDIASUBTYPE_H263</MF_MT_SUBTYPE>
+    </InputType>
+    <Name>Playback #163: H263 </Name>
+    <Description>Playback #163: H263 </Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>H263_704x480_10fps_VBR_AMR.3gp</InputFile>
+  </TEST>
+
+  <TEST testId="421"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Multiple Instance Playback #421: MPEG-4 Visual Simple_at_L3 352x288</Name> 
+        <Description>Multiple Instance Playback #421: MPEG-4 Visual Simple_at_L3 352x288</Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Texture_SkinTones_05_352x288p15f_900kbps_XVid_MP4.avi</InputFile> 
+        <NumInstances>2</NumInstances> 
+    </TEST>
+
+  <TEST testId="432">
+    <Category>Playback</Category>
+    <InputType>
+      <MF_MT_SUBTYPE>MFVideoFormat_MJPG</MF_MT_SUBTYPE>
+    </InputType>
+    <Name>Multiple Instance Playback #432: MJPEG 320x240</Name>
+    <Description>Multiple Instance Playback #432: MJPEG 320x240</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MJPEG_320x240_30fps.avi</InputFile>
+    <NumInstances>2</NumInstances>
+  </TEST>
+
+  <TEST testId="444"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MEDIASUBTYPE_MP4V</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Stress Playback #444: MPEG4 </Name> 
+        <Description>Stress Playback #444: MPEG4 </Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_IYUV_30000kbps_XVid.mp4</InputFile> 
+	<RunTimeInSeconds>3600</RunTimeInSeconds>
+    </TEST> 
+
+    <TEST testId="450"> 
+        <Category>Playback</Category> 
+            <InputType> 
+                <MF_MT_SUBTYPE>MEDIASUBTYPE_MJPG</MF_MT_SUBTYPE> 
+            </InputType> 
+        <Name>Stress Playback #450: MPEG4 </Name> 
+        <Description>Stress Playback #450: MPEG4 </Description> 
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>22_AVI_MJPEG_1920x1080_44Mbps_2997_ADPCM_11025kHz.avi</InputFile> 
+	<RunTimeInSeconds>3600</RunTimeInSeconds>
+    </TEST> 
+
+</TestSuite> 

@@ -1,0 +1,276 @@
+#include "include.fx"
+$include "PShader.prep"
+${##################################################################################################
+
+# Factors to take into account:
+# 	comparison					- lstComparisons (OpMap maps comparison ops to functions that perform the comparison)
+#	write mask					- lstWriteMasks
+#	src reg type
+#	input value/sign			- lstInputCombinations (ValueMap maps symbols to values)
+#	source modifiers: neg, abs
+#	component swizzles			- lstSimpleSwizzles, lstArbitrarySwizzles, lstRandomSwizzles
+#								- lstUsedSwizzles: set of above three
+
+# Comparisons (6):
+# _gt Greater than 
+# _lt Less than 
+# _ge Greater than or equal 
+# _le Less than or equal 
+# _eq Equal to 
+# _ne Not equal to
+lstComparisons = 'gt,lt,ge,le,eq,ne'.split(',')
+
+### index the following with the comparison index and the result should be all true, used to test mask
+##lstInputsForTrueResults = [(a*4,b*4) for a,b in zip('000000', '-+000+')]
+##
+### Input Value (20):
+### Semi-hand crafted comparison sets
+###		|   |   |   |   |   |   |   |
+##pat = ['++00+-0--+0-', '+0+0-+-0-00--+']
+##lstInputCombinations = []
+##for n in range(20):
+##	i = (n*4) % (len(pat[0])-3)
+##	j = (n*4) % (len(pat[1])-3)
+##	lstInputCombinations.append((pat[0][i:i+4], pat[1][j:j+4]))
+##
+### mapping between codes and values:
+##ValueMap = dict(zip('-0+', (-1,0,1)))
+
+# Map comparison operation names to functions that perform the comparison
+OpMap = {
+	'gt': lambda a,b: a>b,
+	'lt': lambda a,b: a<b,
+	'ge': lambda a,b: a>=b,
+	'le': lambda a,b: a<=b,
+	'eq': lambda a,b: a==b,
+	'ne': lambda a,b: a!=b }
+
+values = [20, 0, 32, -12, -20, 0, 32, 16]
+fValues = [n/16.0 for n in values]
+src_defaults = fValues[:4], fValues[4:]
+fValues = [abs(n)/32.0 for n in values]
+color_defaults = fValues[:4], fValues[4:]
+del fValues
+
+default_result = 0
+
+if ps_3_0:
+	regcombos = [ 'rcv',
+				  'rvc' ]
+else:
+	regcombos = [ 'rcvt',
+				  'rvcr' ]
+regcombos = [c for c in apply(zip, regcombos)]
+
+SetupDefaults(src_defaults, color_defaults)
+
+def ExpandPredSrc(src):
+	if type(src) is not str:
+		return src
+	else:
+		return [ValueMap[c] for c in src]
+
+class Op_Setp(Operation):
+	def __init__(s, cmpop):
+		s.cmpop = cmpop
+		Operation.__init__(s, 'setp')
+		s.desc = 'setp_%s'
+	def __str__(s):
+		return s.desc % s.cmpop
+	def Apply(s, src0, src1):
+		result = [int(OpMap[s.cmpop](v0,v1)) for v0,v1 in zip(src0.Transform(), src1.Transform())]
+		return result
+
+class Inst_Setp(Instruction):
+	def __init__(s, op, dest, sources, result, verifymask):
+		Instruction.__init__(s, op, Predication(), dest, sources, result)
+		s.verifymask = verifymask
+		s.DeclareConstantsPerTestcase = True
+	def ClearOutputReg(s):
+		if s.verifymask:
+			s.write('CLEAR_P')
+	def SetEpsReg(s):
+		pass
+	def ResultConst(s):
+		pass
+	def VerifyResult(s):
+		s.write('mov r2, c0.y')
+		s.write('mov r2.gw, c0.x')
+		if s.verifymask:
+			checkresult = ['%s%s' % (c,r) for c,r in zip('XYZW', s.maskedresult)]
+		else:
+			checkresult = ['%s%s' % ('XYZW'[n],s.result[n]) for n in range(4) if s.outputmask[n]]
+		s.write(' '.join(checkresult))
+
+def WriteTestCase(
+	sat=0, pp=0, op=0, mask=0,						# instruction & destination modifiers
+	reg0='r', src0=None, neg0=0, abs0=0, swz0=0,	# source 0
+	reg1='r', src1=None, neg1=0, abs1=0, swz1=0,	# source 1
+	verifymask=0,									# whether to verify a masked result
+	**extra_params):
+	global curCount
+
+	assert op, 'must specify cmp operation to perform'
+
+	# Initialize sources:
+	sources = CollapseSources(locals(), 2)
+	sources = [apply(Source, src) for src in sources]
+	for src in sources:
+		src.value = ExpandPredSrc(src.value)
+
+	# Initialize other objects:
+	dest = Destination('p0', mask)
+	op = Op_Setp(op)
+	result = apply(op.Apply, sources)
+
+	# Instruction takes care of the code generation:
+	inst = Inst_Setp(op, dest, sources, result, verifymask)
+	inst.WriteTest()
+
+	curCount += 1
+
+	return inst.GetText()
+
+$}$#################################################################################################
+
+#define PS_SETUP \
+	$ps_ver_token \
+	def c0, 1.0, 0.0, -1.0, 0.0
+
+// following line sets p0 to 0000, mainly for write mask tests
+// we can rely on this since setp_eq will be tested separately
+#define CLEAR_P		setp_eq p0, c0.x, c0.y
+
+// Test macros.  These will set red or blue to 1 if a component is
+// set to the wrong value:
+// red set:  if component should be 0 but is 1
+$<'\n'.join(['#define %s0 (p0.%s) mov r2.r, c0.x' % (c.upper(), c) for c in 'xyzw'])$>
+// blue set: if component should be 1 but is 0
+$<'\n'.join(['#define %s1 (!p0.%s) mov r2.b, c0.x' % (c.upper(), c) for c in 'xyzw'])$>
+
+// The purpose of the two cmp ops is to remove green if either red or blue
+// channels are set.  This makes it more obvious that something was wrong:
+#define PS_END \
+	mov r2.ga, c0.x \
+	add_sat r2.g, r2.g, -r2.r \
+	add_sat r2.g, r2.g, -r2.b \
+	mov oC0, r2
+
+#define SET_VS \
+	VertexShaderConstant[0] = <mFinal>; \
+	VertexShader = <NormalVS>;
+
+#define SET_PS_CONSTANTS$# \
+$#	$< ' \\\n'.join(WritePSConstantDefaults(src_defaults).split('\n')) $>
+
+#define TESTCASE Technique < String Name =
+#define PASSBEGIN \
+	String Shape = "TinyQuad"; \
+	bool UsePredicate = true; \
+> { Pass P0 { 
+#define TESTBEGIN PixelShader = asm { PS_SETUP
+#define TESTEND PS_END }; SET_VS SET_PS_CONSTANTS } }
+
+$<WriteVS(src_defaults, color_defaults)$>
+
+// Tests:
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+// op * source registers * modifiers * swizzles
+${SetGroup('setp - Mixed ')
+lTests = []
+paramDict = {}
+params = {
+##	'op': [lstComparisons],
+	'reg0': [regcombos],
+	'neg0': [[0,1]],
+	'swz0': [[0]+lstBasicSwz],
+	'neg1': [[0,1]],
+	'swz1': [[0]+lstBasicSwz]
+	}
+if ps_3_0:
+	params.update({
+		'abs0': [[0,1]],
+		'abs1': [[0,1]]
+		})
+combos = ComputeCombinations(params)
+for op in lstComparisons:
+	paramDict['op'] = op
+	SetGroup('setp - %s ' % op)
+	for c in combos:
+		regs = c['reg0']
+		paramDict.update(c)
+		paramDict.update({'reg0':regs[0], 'reg1':regs[1]})
+		lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+// op * source registers * modifiers * swizzles
+${SetGroup('setp - Mask ')
+lTests = []
+truevals = {
+	'gt': [1,0],
+	'ge': [1,0],
+	'lt': [0,1],
+	'le': [0,1],
+	'eq': [0,0],
+	'ne': [1,0]
+	}
+paramDict = {
+	'verifymask': 1
+	}
+for op in lstComparisons:
+	paramDict['op'] = op
+	SetGroup('setp_%s Mask ' % op)
+	paramDict.update({
+		'src0': [truevals[op][0]]*4,
+		'src1': [truevals[op][1]]*4
+		})
+	for m in lstBasicWriteMasks:
+		paramDict['mask'] = m
+		lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+// op * source registers * modifiers * swizzles
+${SetGroup('setp - Mixed ')
+lTests = []
+paramDict = {
+	'verifymask': 1
+	}
+params = {
+	'op': [lstComparisons],
+	'mask': [lstBasicWriteMasks],
+	'reg0': [regcombos],
+	'neg0': [[0,1]],
+	'swz0': [[0]+lstBasicSwz],
+	'neg1': [[0,1]],
+	'swz1': [[0]+lstBasicSwz]
+	}
+if ps_3_0:
+	params.update({
+		'abs0': [[0,1]],
+		'abs1': [[0,1]]
+		})
+combos = ComputeCombinations(params)
+for c in combos:
+	regs = c['reg0']
+	paramDict.update(c)
+	paramDict.update({'reg0':regs[0], 'reg1':regs[1]})
+	lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+// End of file.  $curCount tests generated.

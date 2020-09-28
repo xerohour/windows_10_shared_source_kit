@@ -1,0 +1,9 @@
+DIRS=\
+	DXGIHybridPresent \
+	DXGIMultiPresent \
+	DXGIPresent_Lib \
+	DXGIPresent_Core \
+	DXGIPresentFlags \
+	DXGISwapEffect \
+	DXGIHybridPresentModern \
+    DXGISyncTransform \

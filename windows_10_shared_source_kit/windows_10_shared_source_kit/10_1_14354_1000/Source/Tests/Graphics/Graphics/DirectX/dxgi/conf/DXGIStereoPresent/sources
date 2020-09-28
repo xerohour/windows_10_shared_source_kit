@@ -1,0 +1,60 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\d3d\conf\conf11.mk
+
+TARGETNAME=DXGIStereoPresent
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+TARGET_DESTINATION=Graphics\D3D\Conf
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN8)
+
+LINKER_FLAGS = $(LINKER_FLAGS) -ignore:4217,4049  
+
+USE_ATL=1
+ATL_VER=70
+
+USE_RTTI=1
+
+LINK_TIME_CODE_GENERATION=0  
+USE_INCREMENTAL_LINKING=0  
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FormatHelper; \
+	$(GRAPHICS_TST_ROOT)\DirectX\DXGI\Common\Include; \
+	$(GRAPHICS_TST_ROOT)\Common\SmartPtr; \
+	$(GRAPHICS_TST_ROOT)\Common\DwmSlicer; \
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\d3d11.lib \
+	$(SDK_LIB_PATH)\dxgi.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\graphics\Common\SmartPtr\$(O)\SmartPtr.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\graphics\Common\DwmSlicer\$(O)\Rad.ImagePipeline.lib \
+	$(SDK_LIB_PATH)\advapi32.lib \
+	$(SDK_LIB_PATH)\d3d9.lib \
+	$(SDK_LIB_PATH)\d3d11.lib \
+	$(SDK_LIB_PATH)\dxgi.lib \
+	$(SDK_LIB_PATH)\gdi32.lib \
+	$(SDK_LIB_PATH)\kernel32.lib \
+	$(SDK_LIB_PATH)\magnification.lib \
+	$(SDK_LIB_PATH)\ole32.lib \
+	$(SDK_LIB_PATH)\shell32.lib \
+	$(SDK_LIB_PATH)\user32.lib \
+	$(SDK_LIB_PATH)\windowscodecs.lib \
+	$(WINDOWS_LIB_PATH)\d3dcompiler_test.lib \
+	$(WINDOWS_LIB_PATH)\user32p.lib \
+	$(WINDOWS_LIB_PATH)\dwmapip.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\DCompIsolation\$O\DCOMPIsolation.lib \
+
+C_DEFINES=$(C_DEFINES) -DWINVER=0x0600
+
+
+SOURCES= \
+	DXGIStereoPresent.cpp \
+	DXGIStereoPresentFS.cpp \
+	DXGIStereoPresentWin.cpp \
+	TestApp.cpp \
+	DXGIStereoPresent.rc \
+	kitContent.kml \

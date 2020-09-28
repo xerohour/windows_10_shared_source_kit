@@ -1,0 +1,19 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CSurface
+
+SOURCES= \
+        CSurface.cpp \
+        CSurface6.cpp \
+        CSurface7.cpp \
+        CSurface8.cpp \
+        CSurface9.cpp \
+        CnSurface.cpp \
+	CVolume.cpp \
+	CVolume8.cpp \
+	CVolume9.cpp \
+	FSurface.cpp
+
+PRECOMPILED_INCLUDE=SurfacePCH.h
+PRECOMPILED_CXX=1

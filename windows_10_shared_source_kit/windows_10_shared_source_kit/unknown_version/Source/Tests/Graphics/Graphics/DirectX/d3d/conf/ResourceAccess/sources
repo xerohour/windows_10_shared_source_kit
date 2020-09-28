@@ -1,0 +1,38 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_core.mk
+
+TARGETNAME=WGF11ResourceAccess
+
+USE_STATIC_ATL = 1
+ATL_VER = 70
+
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FormatHelper; \
+	$(INCLUDES)
+
+SOURCES= \
+	ResourceAccess.rc \
+	RectScenarios.cpp \
+	ResourceAccess.cpp \
+	D2DTileableCopy.cpp \
+	Compressed.cpp \
+	Multisample.cpp \
+	ResourceFlush.cpp \
+	Discard.cpp \
+	ClearView.cpp \
+	Planar.cpp
+
+
+SOURCES=$(SOURCES) kitContent.kml
+
+TARGETLIBS = 	$(TARGETLIBS) \
+		$(SDK_LIB_PATH)\d2d1.lib \
+		
+LINKER_STACKSIZE=/STACK:0x100000
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

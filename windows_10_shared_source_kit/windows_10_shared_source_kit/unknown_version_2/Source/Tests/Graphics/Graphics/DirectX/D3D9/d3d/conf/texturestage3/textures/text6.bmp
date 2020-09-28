@@ -1,0 +1,1411 @@
+===========================
+// float11
+//
+class float11
+{
+public:
+    // Conversion from 32-bit float
+    //
+    static float11 make(const float* pfvalue) // taking float* rather than copying so that SNaN doesn't get quashed to QNaN in a stack copy.
+    {
+        UINT u = *(UINT*)pfvalue;
+        UINT16 v;
+        UINT Sign = (u & 0x80000000);
+        UINT MagU = u & 0x7FFFFFFF;     // Absolute value
+        if( (u & (0xff<<23)) == (0xff<<23) )
+        {
+            // INF or NaN
+            v = (UINT16)(((1 << m_cExpBits) - 1)<<m_cFracBits);
+            if( (u & (~0xff800000)) != 0 )
+            {
+                // NaN - smash together the fraction bits to
+                //       keep the random 1's (in a way that keeps float16->float->float16
+                //       conversion invertible down to the bit level, even with NaN).
+                v = (UINT16)(v| (((u>>17)|(u>>11)|(u>>6)|(u))&0x0000003f));
+            }
+            else if( Sign ) // - INF
+            {
+                v = 0;
+            }
+        }
+        else if( Sign )
+        {
+            v = 0; // negative (float11 has no sign)
+        }
+        else if (MagU > m_wMaxNormal)
+        {
+            // Not representable by 11 bit float -> use flt11_max (due to round to zero)
+            v = (UINT16)(((((1 << m_cExpBits) - 2))<<m_cFracBits) | m_FracMask);
+        }
+        else if (MagU < m_wMinNormal)
+        {
+            // Denormalized value
+
+            // Make implicit 1 explicit
+            UINT Frac = (MagU & ((1<<23)-1)) | (1<<23);
+            int nshift = (m_eMin + 127 - (MagU >> 23));
+
+            if (nshift < 24)
+            {
+                MagU = Frac >> nshift;
+            }
+            else
+            {
+                MagU = 0;
+            }
+
+            // Round to zero
+            v = (UINT16)(MagU>>m_cFracBitsDiff);
+        }
+        else
+        {
+            // Normalize value with Round to zero
+            v = (UINT16)((MagU + m_BiasDiffo)>>m_cFracBitsDiff);
+        }
+        float11 val;
+        val.v = v;
+        return val;
+    }
+
+    UINT16 GetBits() {return v;}
+
+    // Conversion to 32-bit float
+    //
+    // Note: The infinity value (e=31) is converted the same way as any other
+    // normalized value
+    //
+    UINT toFloat32_AsUINT32Bits() const
+    {
+        UINT tmp;
+        UINT exp = v & m_ExpMask;
+        if( exp == 0 )
+        {
+            if ((v & m_FracMask) != 0)
+            {
+                // Normalizing the denormalized value
+                exp = m_eMin;
+                UINT frac = v & m_FracMask;
+                while ((frac & (m_FracMask + 1)) == 0)
+                {
+                    exp--;
+                    frac <<= 1;
+                }
+                frac &= ~(m_FracMask + 1); // Remove hidden bit
+                tmp = ((exp + 127) << 23) |     // Exponent
+                      (frac << m_cFracBitsDiff);  // Fraction
+            }
+            else
+            {
+                // Zero
+                tmp = 0;
+            }
+        }
+        else if( exp == m_ExpMask )
+        {
+            tmp =   0x7f800000 |                                       // Exponent
+                  ((v & m_FracMask) << m_cFracBitsDiff);               // Fraction
+        }
+        else
+        {
+            tmp = ((((v >> m_cFracBits) & ((1 << m_cExpBits) - 1)) -
+                    m_cExpBias + 127) << 23) |                        // Exponent
+                  ((v & m_FracMask) << m_cFracBitsDiff);               // Fraction
+        }
+        return tmp;
+    }
+
+    operator float32() const
+    {
+        UINT tmp = toFloat32_AsUINT32Bits();
+        return *(float32*)&tmp;
+    }
+
+    static const UINT m_cFracBits = 6;            // Number of fraction bits
+    static const UINT m_cExpBits = 5;             // Number of exponent bits
+    static const UINT m_FracMask = (1 << m_cFracBits) - 1;         // Fraction mask
+    static const UINT m_ExpMask = ((1<< m_cExpBits) - 1) << m_cFracBits; // Exponent mask
+    static const INT32  m_cExpBias = (1 << (m_cExpBits - 1)) - 1;     // Exponent bias
+    static const UINT m_eMax =  m_cExpBias;         // Max exponent
+    static const INT32  m_eMin = -m_cExpBias+1;       // Min exponent
+    static const UINT m_wMaxNormal = ((m_eMax+127) << 23) | 0x7E0000;
+    static const UINT m_wMinNormal = (m_eMin+127) << 23;
+    static const UINT m_BiasDiffo = (m_cExpBias-127) << 23;
+    static const UINT m_cFracBitsDiff = 23 - m_cFracBits;
+
+//protected:
+    UINT16 v;
+};
+
+//=================================================================================================================================
+// float10
+//
+class float10
+{
+public:
+    // Conversion from 32-bit float
+    //
+    static float10 make(const float* pfvalue) // taking float* rather than copying so that SNaN doesn't get quashed to QNaN in a stack copy.
+    {
+        UINT u = *(UINT*)pfvalue;
+        UINT16 v;
+        UINT Sign = (u & 0x80000000);
+        UINT MagU = u & 0x7FFFFFFF;     // Absolute value
+        if( (u & (0xff<<23)) == (0xff<<23) )
+        {
+            // INF or NaN
+            v = (UINT16)(((1 << m_cExpBits) - 1)<<m_cFracBits);
+            if( (u & (~0xff800000)) != 0 )
+            {
+                // NaN - smash together the fraction bits to
+                //       keep the random 1's (in a way that keeps float16->float->float16
+                //       conversion invertible down to the bit level, even with NaN).
+                v = (UINT16)(v| (((u>>18)|(u>>13)|(u>>8)|(u>>3)|(u))&0x0000001f));
+            }
+            else if( Sign ) // - INF
+            {
+                v = 0;
+            }
+        }
+        else if( Sign )
+        {
+            v = 0; // negative (float10 has no sign)
+        }
+        else if (MagU > m_wMaxNormal)
+        {
+            // Not representable by 10 bit float -> use flt10_max (due to round to zero)
+            v = (UINT16)(((((1 << m_cExpBits) - 2))<<m_cFracBits) | m_FracMask);
+        }
+        else if (MagU < m_wMinNormal)
+        {
+            // Denormalized value
+
+            // Make implicit 1 explicit
+            UINT Frac = (MagU & ((1<<23)-1)) | (1<<23);
+            int nshift = (m_eMin + 127 - (MagU >> 23));
+
+            if (nshift < 24)
+            {
+                MagU = Frac >> nshift;
+            }
+            else
+            {
+                MagU = 0;
+            }
+
+            // Round to zero
+            v = (UINT16)(MagU>>m_cFracBitsDiff);
+        }
+        else
+        {
+            // Normalize value with Round to zero
+            v = (UINT16)((MagU + m_BiasDiffo)>>m_cFracBitsDiff);
+        }
+        float10 val;
+        val.v = v;
+        return val;
+    }
+
+    UINT16 GetBits() {return v;}
+
+    // Conversion to 32-bit float
+    //
+    // Note: The infinity value (e=31) is converted the same way as any other
+    // normalized value
+    //
+    UINT toFloat32_AsUINT32Bits() const
+    {
+        UINT tmp;
+        UINT exp = v & m_ExpMask;
+        if( exp == 0 )
+        {
+            if ((v & m_FracMask) != 0)
+            {
+                // Normalizing the denormalized value
+                exp = m_eMin;
+                UINT frac = v & m_FracMask;
+                while ((frac & (m_FracMask + 1)) == 0)
+                {
+                    exp--;
+                    frac <<= 1;
+                }
+                frac &= ~(m_FracMask + 1); // Remove hidden bit
+                tmp = ((exp + 127) << 23) |     // Exponent
+                      (frac << m_cFracBitsDiff);  // Fraction
+            }
+            else
+            {
+                // Zero
+                tmp = 0;
+            }
+        }
+        else if( exp == m_ExpMask )
+        {
+            tmp =   0x7f800000 |                                       // Exponent
+                  ((v & m_FracMask) << m_cFracBitsDiff);               // Fraction
+        }
+        else
+        {
+            tmp = ((((v >> m_cFracBits) & ((1 << m_cExpBits) - 1)) -
+                    m_cExpBias + 127) << 23) |                        // Exponent
+                  ((v & m_FracMask) << m_cFracBitsDiff);               // Fraction
+        }
+        return tmp;
+    }
+
+    operator float32() const
+    {
+        UINT tmp = toFloat32_AsUINT32Bits();
+        return *(float32*)&tmp;
+    }
+
+    static const UINT m_cFracBits = 5;            // Number of fraction bits
+    static const UINT m_cExpBits = 5;             // Number of exponent bits
+    static const UINT m_FracMask = (1 << m_cFracBits) - 1;         // Fraction mask
+    static const UINT m_ExpMask = ((1<< m_cExpBits) - 1) << m_cFracBits; // Exponent mask
+    static const INT32  m_cExpBias = (1 << (m_cExpBits - 1)) - 1;     // Exponent bias
+    static const UINT m_eMax =  m_cExpBias;         // Max exponent
+    static const INT32  m_eMin = -m_cExpBias+1;       // Min exponent
+    static const UINT m_wMaxNormal = ((m_eMax+127) << 23) | 0x7C0000;
+    static const UINT m_wMinNormal = (m_eMin+127) << 23;
+    static const UINT m_BiasDiffo = (m_cExpBias-127) << 23;
+    static const UINT m_cFracBitsDiff = 23 - m_cFracBits;
+
+//protected:
+    UINT16 v;
+};
+
+inline INT32
+ClampSINT( INT32 x, UINT8 uiBits )
+{
+    assert( uiBits > 1 && uiBits <= 16 );
+
+    const UINT uiMask = UINT( ( UINT64( 0x1 ) << ( uiBits - 1 ) ) - 1 );
+
+    return ( x >= 0 ? min( x, INT32( uiMask ) ) : max( x, INT32( ~uiMask ) ) );
+}
+
+inline UINT32
+ClampUINT( UINT32 x, UINT8 uiBits )
+{
+    assert( uiBits > 0 && uiBits < 32 );
+
+    const UINT32 uiMask = UINT32( ( UINT64( 0x1 ) << uiBits ) - 1 );
+
+    return min( x, uiMask );
+}
+
+#pragma pack( push, 1 ) // Defining memory layout here:
+struct R32G32B32A32_FLOAT
+{
+    void Pack( float32 rr, float32 gg, float32 bb, float32 aa )
+    { r = rr; g = gg; b = bb; a = aa; }
+    float32 R() const
+    { return r; }
+    float32 G() const
+    { return g; }
+    float32 B() const
+    { return b; }
+    float32 A() const
+    { return a; }
+
+private:
+    float32 r, g, b, a;
+};
+
+struct R32G32B32A32_SINT
+{
+    void Pack( INT32 rr, INT32 gg, INT32 bb, INT32 aa )
+    { r = rr; g = gg; b = bb; a = aa; }
+    INT32 R() const
+    { return r; }
+    INT32 G() const
+    { return g; }
+    INT32 B() const
+    { return b; }
+    INT32 A() const
+    { return a; }
+
+private:
+    INT32 r, g, b, a;
+};
+
+struct R32G32B32A32_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb, UINT aa )
+    { r = rr; g = gg; b = bb; a = aa; }
+    UINT R() const
+    { return r; }
+    UINT G() const
+    { return g; }
+    UINT B() const
+    { return b; }
+    UINT A() const
+    { return a; }
+
+private:
+    UINT r, g, b, a;
+};
+
+struct R32G32B32_FLOAT
+{
+    void Pack( float32 rr, float32 gg, float32 bb )
+    { r = rr; g = gg; b = bb; }
+    float32 R() const
+    { return r; }
+    float32 G() const
+    { return g; }
+    float32 B() const
+    { return b; }
+
+private:
+    float32 r, g, b;
+};
+
+struct R32G32B32_SINT
+{
+    void Pack( INT32 rr, INT32 gg, INT32 bb )
+    { r = rr; g = gg; b = bb; }
+    INT32 R() const
+    { return r; }
+    INT32 G() const
+    { return g; }
+    INT32 B() const
+    { return b; }
+
+private:
+    INT32 r, g, b;
+};
+
+struct R32G32B32_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb )
+    { r = rr; g = gg; b = bb; }
+    UINT R() const
+    { return r; }
+    UINT G() const
+    { return g; }
+    UINT B() const
+    { return b; }
+
+private:
+    UINT r, g, b;
+};
+
+struct R16G16B16A16_FLOAT
+{
+    void Pack( float16 rr, float16 gg, float16 bb, float16 aa )
+    {
+        r = *reinterpret_cast< UINT16* >( &rr );
+        g = *reinterpret_cast< UINT16* >( &gg );
+        b = *reinterpret_cast< UINT16* >( &bb );
+        a = *reinterpret_cast< UINT16* >( &aa );
+    }
+    float16 R() const
+    { return *reinterpret_cast< const float16* >( &r ); }
+    float16 G() const
+    { return *reinterpret_cast< const float16* >( &g ); }
+    float16 B() const
+    { return *reinterpret_cast< const float16* >( &b ); }
+    float16 A() const
+    { return *reinterpret_cast< const float16* >( &a ); }
+
+private:
+    UINT16 r, g, b, a;
+};
+
+struct R16G16B16A16_SINT
+{
+    void Pack( INT32 rr, INT32 gg, INT32 bb, INT32 aa )
+    {
+        r = INT16( ClampSINT( rr, 16 ) ); g = INT16( ClampSINT( gg, 16 ) );
+        b = INT16( ClampSINT( bb, 16 ) ); a = INT16( ClampSINT( aa, 16 ) );
+    }
+    INT32 R() const
+    { return r; }
+    INT32 G() const
+    { return g; }
+    INT32 B() const
+    { return b; }
+    INT32 A() const
+    { return a; }
+
+private:
+    INT16 r, g, b, a;
+};
+
+struct R16G16B16A16_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb, UINT aa )
+    {
+        r = UINT16( ClampUINT( rr, 16 ) ); g = UINT16( ClampUINT( gg, 16 ) );
+        b = UINT16( ClampUINT( bb, 16 ) ); a = UINT16( ClampUINT( aa, 16 ) );
+    }
+    UINT R() const
+    { return r; }
+    UINT G() const
+    { return g; }
+    UINT B() const
+    { return b; }
+    UINT A() const
+    { return a; }
+
+private:
+    UINT16 r, g, b, a;
+};
+
+struct R32G32_FLOAT
+{
+    void Pack( float32 rr, float32 gg )
+    { r = rr; g = gg; }
+    float32 R() const
+    { return r; }
+    float32 G() const
+    { return g; }
+
+private:
+    float32 r, g;
+};
+
+struct R32G32_SINT
+{
+    void Pack( INT32 rr, INT32 gg )
+    { r = rr; g = gg; }
+    INT32 R() const
+    { return r; }
+    INT32 G() const
+    { return g; }
+
+private:
+    INT32 r, g;
+};
+
+struct R32G32_UINT
+{
+    void Pack( UINT rr, UINT gg )
+    { r = rr; g = gg; }
+    UINT R() const
+    { return r; }
+    UINT G() const
+    { return g; }
+
+private:
+    UINT r, g;
+};
+
+struct R32X8X24_FLOAT
+{
+	void Pack( float32 rr )
+	{ r = rr; }
+    float32 R() const
+    { return r; }
+
+private:
+    float32 r;
+    UINT8 x8;
+    UINT8 X1X;
+    UINT16 X2X;
+};
+
+struct R32X8X24_UINT
+{
+	void Pack( UINT32 rr )
+	{ r = rr; }
+	UINT32 R() const
+	{ return r; }
+
+private:
+	UINT32 r;
+	UINT8 x8;
+	UINT8 X1X;
+	UINT16 X2X;
+};
+
+struct X32G8X24_UINT
+{
+	void Pack( UINT8 gg )
+	{ g = gg; }
+    UINT G() const
+    { return g; }
+
+private:
+    UINT x32;
+    UINT8 g;
+    UINT8 X1X;
+    UINT16 X2X;
+};
+
+struct D32_FLOAT_S8X24_UINT
+{
+    void Pack( float32 dd, UINT ss )
+    { d = dd; s = UINT8( ss ); }
+    float32 R() const
+    { return d; }
+    UINT G() const
+    { return s; }
+
+private:
+    float32 d;
+    UINT8 s;
+    UINT8 X1X;
+    UINT16 X2X;
+};
+
+struct R16G16B16_FLOAT
+{
+    void Pack( float16 rr, float16 gg, float16 bb )
+    {
+        r = *reinterpret_cast< UINT16* >( &rr );
+        g = *reinterpret_cast< UINT16* >( &gg );
+        b = *reinterpret_cast< UINT16* >( &bb );
+    }
+    float16 R() const
+    { return *reinterpret_cast< const float16* >( &r ); }
+    float16 G() const
+    { return *reinterpret_cast< const float16* >( &g ); }
+    float16 B() const
+    { return *reinterpret_cast< const float16* >( &b ); }
+
+private:
+    UINT16 r, g, b;
+};
+
+struct R16G16B16_SINT
+{
+    void Pack( INT32 rr, INT32 gg, INT32 bb )
+    {
+        r = INT16( ClampSINT( rr, 16 ) ); g = INT16( ClampSINT( gg, 16 ) );
+        b = INT16( ClampSINT( bb, 16 ) );
+    }
+    INT32 R() const
+    { return r; }
+    INT32 G() const
+    { return g; }
+    INT32 B() const
+    { return b; }
+
+private:
+    INT16 r, g, b;
+};
+
+struct R16G16B16_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb )
+    {
+        r = UINT16( ClampUINT( rr, 16 ) ); g = UINT16( ClampUINT( gg, 16 ) );
+        b = UINT16( ClampUINT( bb, 16 ) );
+    }
+    UINT R() const
+    { return r; }
+    UINT G() const
+    { return g; }
+    UINT B() const
+    { return b; }
+
+private:
+    UINT16 r, g, b;
+};
+
+struct R8G8B8A8_SINT
+{
+    void Pack( INT32 rr, INT32 gg, INT32 bb, INT32 aa )
+    {
+        r = INT8( ClampSINT( rr, 8 ) ); g = INT8( ClampSINT( gg, 8 ) );
+        b = INT8( ClampSINT( bb, 8 ) ); a = INT8( ClampSINT( aa, 8 ) );
+    }
+    INT32 R() const
+    { return r; }
+    INT32 G() const
+    { return g; }
+    INT32 B() const
+    { return b; }
+    INT32 A() const
+    { return a; }
+
+private:
+    INT8 r, g, b, a;
+};
+
+struct R8G8B8A8_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb, UINT aa )
+    {
+        r = UINT8( ClampUINT( rr, 8 ) ); g = UINT8( ClampUINT( gg, 8 ) );
+        b = UINT8( ClampUINT( bb, 8 ) ); a = UINT8( ClampUINT( aa, 8 ) );
+    }
+    UINT R() const
+    { return r; }
+    UINT G() const
+    { return g; }
+    UINT B() const
+    { return b; }
+    UINT A() const
+    { return a; }
+
+private:
+    UINT8 r, g, b, a;
+};
+
+struct B8G8R8A8_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb, UINT aa )
+    {
+        r = UINT8( ClampUINT( rr, 8 ) ); g = UINT8( ClampUINT( gg, 8 ) );
+        b = UINT8( ClampUINT( bb, 8 ) ); a = UINT8( ClampUINT( aa, 8 ) );
+    }
+    UINT R() const
+    { return r; }
+    UINT G() const
+    { return g; }
+    UINT B() const
+    { return b; }
+    UINT A() const
+    { return a; }
+
+private:
+    UINT8 b, g, r, a;
+};
+
+struct B5G6R5_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb )
+    {
+        v = UINT16( ClampUINT( rr, 5 ) << 11 ) |
+            UINT16( ClampUINT( gg, 6 ) <<  5 ) |
+            UINT16( ClampUINT( bb, 5 ) <<  0 );
+    }
+    UINT R() const
+    { return ( v >> 11 ) & 0x1F; }
+    UINT G() const
+    { return ( v >>  5 ) & 0x3F; }
+    UINT B() const
+    { return ( v >>  0 ) & 0x1F; }
+
+private:
+    UINT16 v;
+};
+
+struct B5G5R5A1_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb, UINT aa )
+    {
+        v = ( ClampUINT( rr, 5 ) << 10 ) |
+            ( ClampUINT( gg, 5 ) <<  5 ) |
+            ( ClampUINT( bb, 5 ) <<  0 ) |
+            ( ClampUINT( aa, 1 ) << 15 );
+    }
+    UINT R() const
+    { return ( v >> 10 ) & 0x1F; }
+    UINT G() const
+    { return ( v >>  5 ) & 0x1F; }
+    UINT B() const
+    { return ( v >>  0 ) & 0x1F; }
+    UINT A() const
+    { return ( v >> 15 ) & 0x1;  }
+
+private:
+    UINT16 v;
+};
+
+struct B4G4R4A4_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb, UINT aa )
+    {
+        v = ( ClampUINT( rr, 4 ) <<  8 ) |
+            ( ClampUINT( gg, 4 ) <<  4 ) |
+            ( ClampUINT( bb, 4 ) <<  0 ) |
+            ( ClampUINT( aa, 4 ) << 12 );
+    }
+    UINT R() const
+    { return ( v >>  8 ) & 0xF; }
+    UINT G() const
+    { return ( v >>  4 ) & 0xF; }
+    UINT B() const
+    { return ( v >>  0 ) & 0xF; }
+    UINT A() const
+    { return ( v >> 12 ) & 0xF; }
+
+private:
+    UINT16 v;
+};
+
+struct R16G16_FLOAT
+{
+    void Pack( float16 rr, float16 gg )
+    {
+        r = *reinterpret_cast< UINT16* >( &rr );
+        g = *reinterpret_cast< UINT16* >( &gg );
+    }
+    float16 R() const
+    { return *reinterpret_cast< const float16* >( &r ); }
+    float16 G() const
+    { return *reinterpret_cast< const float16* >( &g ); }
+
+private:
+    UINT16 r, g;
+};
+
+struct R16G16_SINT
+{
+    void Pack( INT32 rr, INT32 gg )
+    { r = INT16( ClampSINT( rr, 16 ) ); g = INT16( ClampSINT( gg, 16 ) ); }
+    INT32 R() const
+    { return r; }
+    INT32 G() const
+    { return g; }
+
+private:
+    INT16 r, g;
+};
+
+struct R16G16_UINT
+{
+    void Pack( UINT rr, UINT gg )
+    { r = UINT16( ClampUINT( rr, 16 ) ); g = UINT16( ClampUINT( gg, 16 ) ); }
+    UINT R() const
+    { return r; }
+    UINT G() const
+    { return g; }
+
+private:
+    UINT16 r, g;
+};
+
+struct R8G8_SINT
+{
+    void Pack( INT32 rr, INT32 gg )
+    { r = INT8( ClampSINT( rr, 8 ) ); g = INT8( ClampSINT( gg, 8 ) ); }
+    INT32 R() const
+    { return r; }
+    INT32 G() const
+    { return g; }
+
+private:
+    INT8 r, g;
+};
+
+struct R8G8_UINT
+{
+    void Pack( UINT rr, UINT gg )
+    { r = UINT8( ClampUINT( rr, 8 ) ); g = UINT8( ClampUINT( gg, 8 ) ); }
+    UINT R() const
+    { return r; }
+    UINT G() const
+    { return g; }
+
+private:
+    UINT8 r, g;
+};
+
+struct R10G10B10A2_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb, UINT aa )
+    {
+        v = ( ClampUINT( aa,  2 ) << 30 ) |
+            ( ClampUINT( bb, 10 ) << 20 ) |
+            ( ClampUINT( gg, 10 ) << 10 ) |
+            ( ClampUINT( rr, 10 ) <<  0 );
+    }
+    UINT R() const
+    { return ( v >>  0 ) & 0x3FF; }
+    UINT G() const
+    { return ( v >> 10 ) & 0x3FF; }
+    UINT B() const
+    { return ( v >> 20 ) & 0x3FF; }
+    UINT A() const
+    { return ( v >> 30 ) & 0x3; }
+
+private:
+    UINT v;
+};
+
+struct R10G10B10_SINT_A2_UINT
+{
+    void Pack( INT32 rr, INT32 gg, INT32 bb, UINT aa )
+    {
+        v = ( ClampUINT( aa, 2 ) << 30 ) |
+            ( UINT( ClampSINT( bb, 10 ) & 0x3FF ) << 20 ) |
+            ( UINT( ClampSINT( gg, 10 ) & 0x3FF ) << 10 ) |
+            ( UINT( ClampSINT( rr, 10 ) & 0x3FF ) <<  0 );
+    }
+    INT32 R() const
+    { return INT16( v << 6 ) >> (  6 +  0 ); }
+    INT32 G() const
+    { return INT16( v >> 4 ) >> ( -4 + 10 ); }
+    INT32 B() const
+    { return INT32( v << 2 ) >> (  2 + 20 ); }
+    UINT A() const
+    { return ( v >> 30 ) & 0x3; }
+
+private:
+    UINT v;
+};
+
+struct R11G11B10_FLOAT
+{
+    void Pack( float11 rr, float11 gg, float10 bb )
+    {
+        v = ( ( bb.GetBits() & 0x3FF ) << 22 ) |
+            ( ( gg.GetBits() & 0x7FF ) << 11 ) |
+            ( ( rr.GetBits() & 0x7FF ) <<  0 );
+    }
+    float11 R() const
+    { UINT16 rr = (( v >>  0 ) & 0x7FF); return *reinterpret_cast< const float11* >(&rr); }
+    float11 G() const
+    { UINT16 gg = (( v >>  11 ) & 0x7FF); return *reinterpret_cast< const float11* >(&gg); }
+    float10 B() const
+    { UINT16 bb = (( v >>  22 ) & 0x3FF); return *reinterpret_cast< const float10* >(&bb); }
+
+private:
+    UINT v;
+};
+
+struct R9G9B9E5_UINT
+{
+    void Pack( UINT rr, UINT gg, UINT bb, UINT ee )
+    {
+        v = ( ClampUINT( ee, 5 ) << 27 ) |
+            ( ClampUINT( bb, 9 ) << 18 ) |
+            ( ClampUINT( gg, 9 ) <<  9 ) |
+            ( ClampUINT( rr, 9 ) <<  0 );
+    }
+    UINT R() const
+    { return ( v >>  0 ) & 0x1FF; }
+    UINT G() const
+    { return ( v >>  9 ) & 0x1FF; }
+    UINT B() const
+    { return ( v >> 18 ) & 0x1FF; }
+    UINT E() const
+    { return ( v >> 27 ) &  0x1F; }
+
+private:
+    UINT v;
+};
+
+struct R32_FLOAT
+{
+    void Pack( float32 rr )
+    { r = rr; }
+    float32 R() const
+    { return r; }
+
+private:
+    float32 r;
+};
+
+struct R32_SINT
+{
+    void Pack( INT32 rr )
+    { r = rr; }
+    INT32 R() const
+    { return r; }
+
+private:
+    INT32 r;
+};
+
+struct R32_UINT
+{
+    void Pack( UINT rr )
+    { r = rr; }
+    UINT R() const
+    { return r; }
+
+private:
+    UINT r;
+};
+
+struct R24X8_UINT
+{
+	void Pack( UINT r24 )
+	{ v = ClampUINT(r24, 24); }
+    UINT R() const
+    { return ( v >>  0 ) & 0xFFFFFF; }
+
+private:
+    UINT v;
+};
+
+struct X24G8_UINT
+{
+	void Pack( UINT8 gg )
+	{ v = ClampUINT(gg, 8) << 24; }
+    UINT G() const
+    { return ( v >> 24 ) &     0xFF; }
+
+private:
+    UINT v;
+};
+
+struct D24S8_UINT
+{
+    void Pack( UINT dd, UINT ss )
+    {
+        v = ( ( dd & 0xFFFFFF ) << 0 ) |
+            ( ( ss & 0xFF ) << 24 );
+    }
+    UINT R() const
+    { return ( v >>  0 ) & 0xFFFFFF; }
+    UINT G() const
+    { return ( v >> 24 ) &     0xFF; }
+
+private:
+    UINT v;
+};
+
+struct R16_FLOAT
+{
+    void Pack( float16 rr )
+    { r = *reinterpret_cast< UINT16* >( &rr ); }
+    float16 R() const
+    { return *reinterpret_cast< const float16* >( &r ); }
+private:
+    UINT16 r;
+};
+
+struct R16_SINT
+{
+    void Pack( INT32 rr )
+    { r = INT16( ClampSINT( rr, 16 ) ); }
+    INT32 R() const
+    { return r; }
+
+private:
+    INT16 r;
+};
+
+struct R16_UINT
+{
+    void Pack( UINT rr )
+    { r = UINT16( ClampUINT( rr, 16 ) ); }
+    UINT R() const
+    { return r; }
+
+private:
+    UINT16 r;
+};
+
+struct D16_UINT
+{
+    void Pack( UINT dd )
+    { d = UINT16( dd ); }
+    UINT R() const
+    { return d; }
+
+private:
+    UINT16 d;
+};
+
+struct R8_SINT
+{
+    void Pack( INT32 rr )
+    { r = INT8( ClampSINT( rr, 8 ) ); }
+    INT32 R() const
+    { return r; }
+
+private:
+    INT8 r;
+};
+
+struct R8_UINT
+{
+    void Pack( UINT rr )
+    { r = UINT8( ClampUINT( rr, 8 ) );  }
+    UINT R() const
+    { return r; }
+
+private:
+    UINT8 r;
+};
+
+struct A8_UINT
+{
+    void Pack( UINT aa )
+    { a = UINT8( ClampUINT( aa, 8 ) );  }
+    UINT A() const
+    { return a; }
+
+private:
+    UINT8 a;
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Typeless
+//
+////////////////////////////////////////////////////////////////////////////////
+union R32G32B32A32_TYPELESS
+{
+    R32G32B32A32_FLOAT FLOAT;
+    R32G32B32A32_SINT SINT;
+    R32G32B32A32_UINT UINT;
+};
+
+union R32G32B32_TYPELESS
+{
+    R32G32B32_FLOAT FLOAT;
+    R32G32B32_SINT SINT;
+    R32G32B32_UINT UINT;
+};
+
+union R16G16B16A16_TYPELESS
+{
+    R16G16B16A16_FLOAT FLOAT;
+    R16G16B16A16_SINT SINT;
+    R16G16B16A16_UINT UINT;
+};
+
+union R32G32_TYPELESS
+{
+    R32G32_FLOAT FLOAT;
+    R32G32_SINT SINT;
+    R32G32_UINT UINT;
+};
+
+union R32G8X24_TYPELESS
+{
+    R32X8X24_FLOAT R32_FLOAT;
+    X32G8X24_UINT G8_UINT;
+    D32_FLOAT_S8X24_UINT D32_FLOAT_S8_UINT;
+};
+
+union R16G16B16_TYPELESS
+{
+    R16G16B16_FLOAT FLOAT;
+    R16G16B16_SINT SINT;
+    R16G16B16_UINT UINT;
+};
+
+union R10G10B10A2_TYPELESS
+{
+    R10G10B10A2_UINT UINT;
+    R10G10B10_SINT_A2_UINT SINT_A2_UINT;
+};
+
+union R8G8B8A8_TYPELESS
+{
+    R8G8B8A8_SINT SINT;
+    R8G8B8A8_UINT UINT;
+};
+
+union R16G16_TYPELESS
+{
+    R16G16_FLOAT FLOAT;
+    R16G16_SINT SINT;
+    R16G16_UINT UINT;
+};
+
+union R32_TYPELESS
+{
+    R32_FLOAT FLOAT;
+    R32_SINT SINT;
+    R32_UINT UINT;
+};
+
+union R24G8_TYPELESS
+{
+    R24X8_UINT R24_UINT;
+    X24G8_UINT G8_UINT;
+    D24S8_UINT D24S8_UINT;
+};
+
+union R8G8_TYPELESS
+{
+    R8G8_SINT SINT;
+    R8G8_UINT UINT;
+};
+
+union R16_TYPELESS
+{
+    R16_FLOAT FLOAT;
+    R16_SINT SINT;
+    R16_UINT UINT;
+    D16_UINT D16_UINT;
+};
+
+union R8_TYPELESS
+{
+    R8_SINT SINT;
+    R8_UINT UINT;
+};
+
+union A8_TYPELESS
+{
+    A8_UINT UINT;
+};
+
+#pragma pack( pop )
+
+// End of file
+#include "stretchrecttest.h"
+#include "StretchRectTestMain.h"
+#include "StretchRectDepthStencil.h"
+#include "StretchRectKeepStates.h"
+
+
+CD3DWindowFramework_Limit_Failures	TestApp;
+
+CStretchRectTestMainNonMS			MainGroupNonMS;
+CStretchRectTestMainMS				MainGroupMS;
+CStretchRectTestMainLDDM			MainGroupLDDM;
+CStretchRectDepthStencil			tstStretchRectDepthStencil;
+CStretchRectColorWriteEnable		tstStretchRectColorWriteEnable;
+CStretchRectFillMode				tstStretchRectFillMode;
+CStretchRectShadeMode				tstStretchRectShadeMode;
+CStretchRectLastPixel				tstStretchRectLastPixel;
+CStretchRectSrcBlend				tstStretchRectSrcBlend;
+CStretchRectDitherEnable			tstStretchRectDitherEnable;
+CStretchRectSpecularEnable			tstStretchRectSpecularEnable;
+CStretchRectPixelFog				tstStretchRectPixelFog;
+CStretchRectVertexFog				tstStretchRectVertexFog;
+CStretchRectAmbient					tstStretchRectAmbient;
+/*==========================================================================;
+ *
+ *  Copyright (C) 1994-1996 Microsoft Corporation.  All Rights Reserved.
+ *
+ *  File:	Volume.h
+ *
+ ***************************************************************************/
+
+#ifndef __VOLUME_H__
+#define __VOLUME_H__
+
+#include "CD3DTest.h"
+#include "CTextures.h"
+
+const int MAX_TEXTURE_TESTS = 12;
+const int MAX_MIP_TESTS = 8;
+const int MAX_TEXGEN_TESTS = 12;
+const int MAX_FILTER_TESTS = 12;
+const int MAX_BLEND_TESTS = 5;
+const int MAX_ADDRESS_TESTS = 132;
+
+struct TLVertex {                   // Volume TL vertex with 3D texture coords
+    D3DVALUE     x;             
+    D3DVALUE     y;
+    D3DVALUE     z;
+    D3DVALUE     rhw;           
+    D3DCOLOR     color;        
+    D3DVALUE     tu;         
+    D3DVALUE     tv;
+    D3DVALUE     tw;
+};
+
+struct TVertex {				    // Volume vertex with 3D texture coords
+	D3DVECTOR v;
+	D3DVECTOR n;
+	D3DVECTOR t;
+};
+
+struct TGVertex {				    // Volume vertex without 3D texture coords
+	D3DVECTOR v;
+	D3DVECTOR n;
+};
+
+// Class definition
+class CVolumeTest: public CD3DTest
+{
+    // Data
+	private:
+	TVertex *       pTVertex;		// Sphere vertices with texture vectors
+	TGVertex *      pTGVertex;		// Sphere vertices without texture vectors
+ 	MATERIAL *      pMaterial;
+	int             nVertexMax;
+
+    // Data
+	public:
+	TLVertex        VertexList[6];  // Grid vertices with texture vectors
+	CnVolTexture *  pVolTexture;
+	bool			bMipMap, bTexGen;
+    TCHAR	        msgString[80];
+	TCHAR			szStatus[80];
+
+    public:
+	CVolumeTest();
+	~CVolumeTest();
+
+	// Framework functions
+    virtual bool SetDefaultMaterials(void);
+    virtual bool SetDefaultRenderStates(void);
+    virtual bool SetDefaultMatrices(void);
+	virtual bool ClearFrame(void);
+    virtual void SceneRefresh(void);
+    virtual void UpdateStatus(void);
+    virtual bool TestTerminate(void);
+
+    // Helper functions
+    void LoadSphere(void);
+    void LoadGrid(float u0, float v0, float w0, float u1, float v1, float w1);
+};
+
+// Texture Class definitions
+class CVolTexTest: public CVolumeTest
+{
+    // Data
+	public:
+	DWORD       dwLoadOption;
+
+	// Framework functions
+    bool SetDefaultMaterials(void) {return true;};
+    bool SetDefaultMatrices(void) {return true;};
+    bool SetDefaultRenderStates(void) {return true;};
+	UINT TestInitialize(void);
+	bool ExecuteTest(UINT);
+};
+
+// VolUpdateTex Class definitions
+class CVolUpdateTexTest: public CVolTexTest
+{
+	public:
+	CVolUpdateTexTest();
+};
+
+// VolLockCopy Class definitions
+class CVolLockCopyTest: public CVolTexTest
+{
+	public:
+	CVolLockCopyTest();
+};
+
+// MipMap Class definitions
+class CMipVolTest: public CVolumeTest
+{
+    // Data
+	public:
+	DWORD       dwLoadOption;
+	bool		bPointFilter;
+
+	// Framework functions
+	UINT TestInitialize(void);
+	bool ExecuteTest(UINT);
+};
+
+// MipVolUT Class definitions
+class CMipVolUTTest: public CMipVolTest
+{
+	public:
+	CMipVolUTTest();
+};
+
+// MipVolLC Class definitions
+class CMipVolLCTest: public CMipVolTest
+{
+	public:
+	CMipVolLCTest();
+};
+
+// TexGen Class definitions
+class CVolTexGenTest: public CVolumeTest
+{
+    // Data
+	private:
+	CnVolTexture *  pSingleVolTexture;
+
+    public:
+	CVolTexGenTest();
+	~CVolTexGenTest();
+
+	// Framework functions
+	bool SetDefaultMatrices(void);
+	UINT TestInitialize(void);
+	bool ExecuteTest(UINT);
+	bool TestTerminate(void);
+};
+
+// Filter Class definitions
+class CVolFilterTest: public CVolumeTest
+{
+    // Data
+	private:
+	CnVolTexture *  pMagVolTexture;
+	CnVolTexture *  pMipVolTexture;
+
+    public:
+	CVolFilterTest();
+	~CVolFilterTest();
+
+	// Framework functions
+	UINT TestInitialize(void);
+	bool ExecuteTest(UINT);
+	bool TestTerminate(void);
+
+    // Helper functions
+    UINT SetupFilterMode(int);
+};
+
+// Blend Class definitions
+class CVolBlendTest: public CVolumeTest
+{
+    // Data
+	private:
+	CnVolTexture *  pAlphaVolTexture;
+
+    public:
+	CVolBlendTest();
+	~CVolBlendTest();
+
+	// Framework functions
+    bool SetDefaultMaterials(void) {return true;};
+    bool SetDefaultMatrices(void) {return true;};
+    bool SetDefaultRenderStates(void);
+	UINT TestInitialize(void);
+	bool ExecuteTest(UINT);
+	bool TestTerminate(void);
+
+    // Helper functions
+    bool SetupBlendMode(int nMode);
+    void LoadBlendingGrid(int nMesh, bool bBlack);
+};
+
+// Address Class definitions
+class CVolAddressTest: public CVolumeTest
+{
+    // Data
+	public:
+	DWORD       dwAddressMode;
+
+ 	// Framework functions
+    bool SetDefaultMaterials(void) {return true;};
+    bool SetDefaultMatrices(void) {return true;};
+    bool SetDefaultRenderStates(void) {return true;};
+	UINT TestInitialize(void);
+	bool ExecuteTest(UINT);
+};
+
+// VolAddressWrap Class definitions
+class CVolAddressWrapTest: public CVolAddressTest
+{
+	public:
+	CVolAddressWrapTest();
+};
+
+// VolAddressMirror Class definitions
+class CVolAddressMirrorTest: public CVolAddressTest
+{
+	public:
+	CVolAddressMirrorTest();
+};
+
+// VolAddressClamp Class definitions
+class CVolAddressClampTest: public CVolAddressTest
+{
+	public:
+	CVolAddressClampTest();
+};
+
+// VolAddressBorder Class definitions
+class CVolAddressBorderTest: public CVolAddressTest
+{
+	public:
+	CVolAddressBorderTest();
+};
+
+// VolAddressMirrorOnce Class definitions
+class CVolAddressMirrorOnceTest: public CVolAddressTest
+{
+	public:
+	CVolAddressMirrorOnceTest();
+};
+
+#endif
+BM6À      6   (   €   €          À                  ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ            ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                           ÿÿÿ         ÿÿÿ         ÿÿÿ                        ÿÿÿ            ÿÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿ         ÿÿÿ                                                ÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ            ÿÿÿ               ÿÿÿ         ÿÿÿ            ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ            ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿ            ÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                     ÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿ               ÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿÿÿÿ            ÿÿÿ         ÿÿÿ               ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ   ÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ            ÿÿÿ      ÿÿÿ         ÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ   ÿÿÿ      ÿÿÿ   ÿÿÿÿÿÿ            ÿÿÿ            ÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ   ÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                     ÿÿÿ         ÿÿÿ                        ÿÿÿ                              ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                     ÿÿÿ         ÿÿÿÿÿÿ                        ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ         ÿÿÿ      ÿÿÿ            ÿÿÿ                        ÿÿÿÿÿÿÿÿÿÿÿÿ               ÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿ   ÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ            ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ            ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ            ÿÿÿÿÿÿÿÿÿ            ÿÿÿ                                 ÿÿÿÿÿÿ                     ÿÿÿ      ÿÿÿ         ÿÿÿÿÿÿ            ÿÿÿÿÿÿ            ÿÿÿ            ÿÿÿÿÿÿÿÿÿÿÿÿ            ÿÿÿ               ÿÿÿ                                 ÿÿÿÿÿÿ   ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿ            ÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ            ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿ               ÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿ               ÿÿÿÿÿÿ      ÿÿÿÿÿÿ            ÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ                     ÿÿÿÿÿÿ      ÿÿÿ         ÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿ               ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                     ÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿ               ÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿ         ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ            ÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿ   ÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿ         ÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿ      ÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿ               ÿÿÿÿÿÿ                                 ÿÿÿÿÿÿ                           ÿÿÿ      ÿÿÿÿÿÿÿÿÿ               ÿÿÿÿÿÿ         ÿÿÿÿÿÿ               ÿÿÿÿÿÿ               ÿÿÿ                  ÿÿÿ               ÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿ            ÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿ   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ                  ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ      ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ         ÿÿÿÿÿÿ         ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1Åj1ÿÿÿÅj1Åj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÅj1ÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÅj1Åj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1ÿÿÿÿÿÿÅj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1ÿÿÿÿÿÿÅj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÅj1ÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÅj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1Åj1ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ

@@ -1,0 +1,14 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=Lines
+
+SOURCES= ..\Lines.rc \
+                   ..\default.cpp \
+                   ..\Lines.cpp \
+	     ..\BasicTest.cpp \
+                   ..\PFogTest.cpp \
+                   ..\MultiTexTest.cpp \
+                   
+SOURCES=$(SOURCES) ..\kitContent.kml
+

@@ -1,0 +1,137 @@
+// Tests for Instruction: rsq
+#include "include.fx"
+$include "PShader.prep"
+${##################################################################################################
+
+if ps_3_0:
+	regcombos = [c for c in 'rcv']
+else:
+	regcombos = [c for c in 'rcvt']
+
+values = [-15, -57, 43, 63, 22, -8, -32, 39]
+fValues = [v/32.0 for v in values]
+src_defaults = [fValues[:4]]
+# now for <= 2.x color registers that are clamped 0-1:
+fValues = [abs(v)/64.0 for v in values]
+color_defaults = [fValues[4:8]]
+# don't need this anymore:
+del fValues
+
+SetupDefaults(src_defaults, color_defaults)
+
+class Op_rsq(Operation):
+	def __init__(s, sat=0, pp=0):
+		Operation.__init__(s, 'rsq', sat, pp)
+	def Apply(s, src):
+		src = src.Transform()
+		result = [1.0 / sqrt(abs(src[0]))] * 4
+		return Operation.Apply(s, result)
+
+def WriteTestCase(
+	sat=0, pp=0, mask=0,							# instruction & destination modifiers
+	pred=0, pnot=0, pswz=0,							# predication
+	reg0='r', src0=None, neg0=0, abs0=0, swz0=0,	# source 0
+	**extra_params):
+	global curCount
+
+	# Initialize sources:
+	sources = CollapseSources(locals(), 1)
+	sources = [apply(Source, src) for src in sources]
+
+	# Initialize other objects:
+	pred = Predication(value=pred, pnot=pnot, pswz=pswz)
+	dest = Destination('r0', mask)
+	op = Op_rsq(sat, pp)
+
+	# zero division is possible, don't currently know what to verify
+	# if this is the case
+	result = apply(op.Apply, sources)
+	
+	# Instruction takes care of the code generation:
+	inst = Instruction(op, pred, dest, sources, result)
+	inst.WriteTest()
+
+	curCount += 1
+
+	return inst.GetText()
+
+$}$#################################################################################################
+
+$[defineMACROS]
+
+#define SET_PS_CONSTANTS \
+	$< ' \\\n'.join(WritePSConstantDefaults(src_defaults).split('\n')) $>
+
+$<WriteVS(src_defaults, color_defaults)$>
+
+// Tests:
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// source registers * modifiers * swizzles
+${SetGroup('rsq - Standard ')
+lTests = []
+paramDict = {}
+params = {
+	'pp': [[0,1]],
+	'reg0': [regcombos],
+	'neg0': [[0,1]],
+	'swz0': [lstReplicateSwizzles]
+	}
+if ps_3_0:
+	params.update({
+		'abs0': [[0,1]]
+		})
+combos = ComputeCombinations(params)
+for c in combos:
+	paramDict.update(c)
+	lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// source registers * modifiers * swizzles
+${SetGroup('rsq - sat ')
+lTests = []
+paramDict = {'sat':1}
+params = {
+	'pp': [[0,1]],
+	'reg0': [regcombos],
+	'swz0': [lstReplicateSwizzles]
+	}
+combos = ComputeCombinations(params)
+for c in combos:
+	paramDict.update(c)
+	lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// masks & predication
+${SetGroup('rsq - Pred/Mask ')
+lTests = []
+paramDict = {}
+params = {
+	'mask': [[0]+lstBasicWriteMasks],
+	'reg0': [regcombos],
+	'swz0': [lstReplicateSwizzles]
+	}
+if predicate_support:
+	params.update({
+		'pred': [[0]+lstSomePredicateValues],
+		'pnot': [[0,1]],
+		'pswz': [[0]+lstReplicateSwizzles]
+		})
+combos = ComputeCombinations(params)
+for c in combos:
+	paramDict.update(c)
+	lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+// End of file.  $curCount tests generated.

@@ -1,0 +1,5 @@
+DIRS = \
+       Utilities \
+       DMAsplit \
+       Eviction \
+       Preemption \

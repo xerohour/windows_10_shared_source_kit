@@ -1,0 +1,18 @@
+struct PSIn
+{
+	float4 color : outColor;
+};
+
+struct PSOut
+{
+	float4 color : SV_Target;
+};
+
+
+PSOut main(PSIn input)
+{
+	PSOut output;
+	output.color = input.color;
+	return output;
+}
+

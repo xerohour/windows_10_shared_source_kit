@@ -1,0 +1,19 @@
+!include ..\conf.mk
+
+
+TARGETNAME=Gradient
+
+SOURCES= \
+        DrawGrid.cpp \
+        Gradient.rc \
+        Gradient.cpp \
+        TexSize.cpp 
+
+
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

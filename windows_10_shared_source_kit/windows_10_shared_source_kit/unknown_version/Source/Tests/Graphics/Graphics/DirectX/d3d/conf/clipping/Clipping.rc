@@ -1,0 +1,9 @@
+#include <WGFConsoleShell.rc>
+
+ps.psh rcdata "ps.psh"
+vs_clipdist.vsh rcdata "vs_clipdist.vsh"
+vs_culldist.vsh rcdata "vs_culldist.vsh"
+vs_depth_clip.vsh rcdata "vs_depth_clip.vsh"
+vs_w_clip.vsh rcdata "vs_w_clip.vsh"
+vs_pos_only.vsh rcdata "vs_pos_only.vsh"
+vs_clipcullmix.vsh rcdata "vs_clipcullmix.vsh"

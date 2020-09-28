@@ -1,0 +1,18 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WGFMultisample", "WGFMultisample.razzle.vcproj", "{436DF70D-6F96-4B7A-9225-11A34429295A}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Razzle = Razzle
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{436DF70D-6F96-4B7A-9225-11A34429295A}.Razzle.ActiveCfg = Razzle|Win32
+		{436DF70D-6F96-4B7A-9225-11A34429295A}.Razzle.Build.0 = Razzle|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,10 @@
+!include ..\..\pnp_tests.mk
+!include ..\..\unicodetests.mk
+
+TARGETNAME=PnPMultiModeSwitchTest       
+
+SOURCES=\
+    PnPMultiModeSwitchTest.cpp \
+    main.cpp \
+    Main.rc \
+    kitContent.kml \

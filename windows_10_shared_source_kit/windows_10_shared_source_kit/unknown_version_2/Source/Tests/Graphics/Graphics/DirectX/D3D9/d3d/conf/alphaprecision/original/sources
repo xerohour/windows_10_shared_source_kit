@@ -1,0 +1,11 @@
+!include ..\..\conf.mk
+
+TARGETNAME=alphaprecision
+
+SOURCES=..\alphaprecision.rc \
+        ..\alphaprecision.cpp \
+	..\alphafloatrt.cpp
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

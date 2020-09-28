@@ -1,0 +1,58 @@
+!include ..\sources.inc
+
+TARGETNAME=DXGISwap
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+C_DEFINES=$(C_DEFINES)
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\DXGITest; \
+	$(GRAPHICS_TST_ROOT)\Directx\DXGI\Conf\DXGIPresent\DXGIPresent_lib
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\d3d10.lib \
+  	$(SDK_LIB_PATH)\d3dx10_test.lib \
+	$(SDK_LIB_PATH)\d3d9.lib \
+	$(SDK_LIB_PATH)\dwmapi.lib \
+	$(WINDOWS_LIB_PATH)\dwmapip.lib \
+	$(SDK_LIB_PATH)\dxgi.lib \
+	$(SDK_LIB_PATH)\dxguid.lib \
+	$(SDK_LIB_PATH)\uuid.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\WGFTestFramework\DXGITest\$(O)\DXGITest.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\WGFTestFramework\D3DTest\$(O)\D3DTest.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\d3d10refutil\$O\D3D10RefUtil.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\d3d10swapchain\$O\D3D10SwapChain.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\devicewrapper\$O\DeviceWrapper.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgiwndclass\$O\DXGIWndClass.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgibbfmt\$O\DXGIBBFMT.LIB \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgifmt\$O\DXGIFMT.lib \
+        $(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\DXGISwapChainFlag\$O\DXGISwapChainFlag.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgiswapeffects\$O\DXGISwapEffects.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgipresentflagrecord\$O\dxgipresentflagrecord.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgisurfutils\$O\DXGISurfUtils.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\dxgiscanoutformats\$O\DXGIScanoutFormats.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\enummodesgdi\$O\EnumModesGDI.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\getdeviceinfo\$O\GetDeviceInfo9.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\modeset\$O\ModeSet.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\DCOMPIsolation\$O\DCompIsolation.lib \
+        $(DIRECTX_TST_OBJ_ROOT)\dxgi\conf\dxgipresent\dxgipresent_lib\$O\DXGIPresent.lib \
+
+TARGET_DESTINATION=Graphics\D3D\Conf
+
+USE_RTTI=1
+
+SOURCES=\
+	SEFSSequential.cpp \
+	FSWinTransitionSequential.cpp \
+	SEWinSequential.cpp \
+	TestApp.cpp \
+	DXGIPresent.rc
+
+	
+
+SOURCES=$(SOURCES) kitContent.kml
+

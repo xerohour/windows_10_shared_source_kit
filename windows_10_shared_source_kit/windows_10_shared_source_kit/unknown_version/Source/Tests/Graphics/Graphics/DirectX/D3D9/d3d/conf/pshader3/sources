@@ -1,0 +1,18 @@
+!include ..\conf.mk
+
+
+TARGETNAME=PShader3
+
+SOURCES= \
+	core.rc \
+        PShader.cpp \
+        Landscape.cpp \
+        Starburst.cpp \
+        PShader1x.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

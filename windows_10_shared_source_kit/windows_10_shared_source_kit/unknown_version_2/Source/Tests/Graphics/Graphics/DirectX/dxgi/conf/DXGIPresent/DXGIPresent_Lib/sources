@@ -1,0 +1,72 @@
+
+
+VS_CRITERIA VS_008_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_008_Desc = "vs_2_0 : frc source reg combination c0.z is allowed";
+string VS_008 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.z "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_009_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_009_Desc = "vs_2_0 : frc source reg combination c0.w is allowed";
+string VS_009 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.w "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_010_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_010_Desc = "vs_2_0 : frc source reg combination c0.yzxw is allowed";
+string VS_010 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.yzxw "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_011_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_011_Desc = "vs_2_0 : frc source reg combination c0.zxyw is allowed";
+string VS_011 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.zxyw "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_012_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_012_Desc = "vs_2_0 : frc source reg combination c0.wzyx is allowed";
+string VS_012 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.wzyx "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_013_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_013_Desc = "vs_2_0 : frc source reg combination c0.wyxz is allowed";
+string VS_013 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.wyxz "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_014_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_014_Desc = "vs_2_0 : frc source reg combination c0.xzyw is allowed";
+string VS_014 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.xzyw "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_015_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_015_Desc = "vs_2_0 : frc source reg combination c0.xywz is allowed";
+string VS_015 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, c0.xywz "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_016_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_016_Desc = "vs_2_0 : frc source reg combination c0.zyx is allowed";
+string VS_016 = 
+	"vs_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"frc r0, 

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9.00"
+	Name="10L9CreateDevice"
+	ProjectGUID="{463ACAFF-340D-4999-B0B1-26E7E4A9234E}"
+	RootNamespace="10L9CreateDevice"
+	Keyword="MakeFileProj"
+	TargetFrameworkVersion="131072"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="Razzle|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="0"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="build -ZI"
+				ReBuildCommandLine="build -cZI"
+				CleanCommandLine="build reset"
+				Output="$(OBJECT_ROOT)\testsrc\windowstest\graphics\directx\d3d\d3d10level9\CreateDevice\obj$(BUILD_ALT_DIR)/$(ArchDir)/10L9CreateDevice.exe"
+				PreprocessorDefinitions=""
+				IncludeSearchPath=""
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Tests"
+			>
+			<File
+				RelativePath=".\create.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\create.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="App"
+			>
+			<File
+				RelativePath=".\testapp.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\testapp.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Other"
+			>
+			<File
+				RelativePath=".\res.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\sources"
+				>
+			</File>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

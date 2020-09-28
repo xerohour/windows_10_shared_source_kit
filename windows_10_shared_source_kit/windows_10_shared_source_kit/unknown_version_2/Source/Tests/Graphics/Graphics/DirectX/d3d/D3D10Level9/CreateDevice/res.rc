@@ -1,0 +1,3 @@
+#include <WGFTestUI.rc>
+
+master.txt rcdata "master.txt"

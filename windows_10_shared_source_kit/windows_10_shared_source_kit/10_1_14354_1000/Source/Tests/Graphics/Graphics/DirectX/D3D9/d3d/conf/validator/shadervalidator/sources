@@ -1,0 +1,13 @@
+!include ..\..\conf.mk
+
+TARGETNAME=ShaderValidator
+TARGETTYPE=PROGRAM
+
+SOURCES=\
+        CShaderValidator.cpp \
+	CInclude.cpp \
+        Main.cpp \
+	ShaderValidator.rc
+
+UMTYPE=windows
+UMENTRY=winmain

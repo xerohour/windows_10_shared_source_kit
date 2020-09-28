@@ -1,0 +1,12 @@
+!include ..\conf.mk
+
+USE_RTTI=1
+USE_IOSTREAM=1
+
+TARGETNAME = DepthStencilReadback
+
+SOURCES = depthstencilreadback.rc \
+          depthstencilreadback.cpp \
+
+
+

@@ -1,0 +1,21 @@
+#include <windows.h>
+#include <ntverp.h>
+#include "resource.h"
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "multihead"
+#define VER_ORIGINALFILENAME_STR    "MultiHead.exe"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP1             BITMAP  DISCARDABLE     "WAVE.BMP"
+
+/////////////////////////////////////////////////////////////////////////////
+
+#include <common.ver>

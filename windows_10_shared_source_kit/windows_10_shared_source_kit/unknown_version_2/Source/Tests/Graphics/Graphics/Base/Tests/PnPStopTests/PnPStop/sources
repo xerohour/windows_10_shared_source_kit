@@ -1,0 +1,13 @@
+!include ..\..\pnp_tests.mk
+!include ..\..\unicodetests.mk
+
+TARGETNAME=PnPStop
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_VISTA)
+
+SOURCES=\
+    Main.rc \
+    main.cpp \
+    PnPStop.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml

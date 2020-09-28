@@ -1,0 +1,3 @@
+#include <WGFConsoleShell.rc>
+
+async.sh rcdata "async.sh"

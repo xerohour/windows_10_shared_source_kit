@@ -1,0 +1,165 @@
+// Tests for Instruction: mad
+#include "include.fx"
+$include "PShader.prep"
+${##################################################################################################
+#from PShader import *
+
+if ps_3_0:
+	regcombos = [ 'rcvrvcvc',
+				  'rrcvvvvc',
+				  'rvccrvvc' ]
+else:
+	regcombos = [ 'rvrctcrvtctvt',
+				  'rcvcrtcctvrvt',
+				  'rrcvcctvcvtvt' ]
+regcombos = [c for c in apply(zip, regcombos)]
+
+# default src values in range -2 < n < 2:
+values = [-63, -31, -54, 58, -57, 3, -15, 43, -52, -47, 20, -36]
+fValues = [v/32.0 for v in values]
+src_defaults = fValues[:4], fValues[4:8], fValues[8:]
+# now for <= 2.x color registers that are clamped 0-1:
+fValues = [abs(v)/64.0 for v in values]
+color_defaults = fValues[:4], fValues[4:8]
+# don't need this anymore:
+del fValues
+default_result = 0.0
+
+SetupDefaults(src_defaults, color_defaults)
+
+class Op_mad(Operation):
+	def __init__(s, sat=0, pp=0):
+		Operation.__init__(s, 'mad', sat, pp)
+	def Apply(s, src0, src1, src2):
+		result = map(lambda a,b,c: a*b+c, src0.Transform(), src1.Transform(), src2.Transform())
+		return Operation.Apply(s, result)
+
+# if you do not specify a value, the default will be used based on the register type
+# if you do specify a value, that value will be set through one of several ways based
+# on register type:
+#	r - def c reg in shader, mov r#, c#
+#	c, i, b - def c/i/b reg in shader, use that
+#	v, t - set VertexShaderConstant for corresponding output - ! NOT CURRENTLY SUPPORTED
+def WriteTestCase(
+	sat=0, pp=0, mask=0,							# instruction & destination modifiers
+	pred=0, pnot=0, pswz=0,							# predication
+	reg0='r', src0=None, neg0=0, abs0=0, swz0=0,	# source 0
+	reg1='r', src1=None, neg1=0, abs1=0, swz1=0,	# source 1
+	reg2='r', src2=None, neg2=0, abs2=0, swz2=0,	# source 2
+	**extra_params):
+	global curCount
+
+	# Initialize sources:
+	sources = CollapseSources(locals(), 3)
+	ValidateSources(sources)
+	sources = [apply(Source, src) for src in sources]
+
+	# Initialize other objects:
+	pred = Predication(value=pred, pnot=pnot, pswz=pswz)
+	dest = Destination('r0', mask)
+	op = Op_mad(sat, pp)
+	result = apply(op.Apply, sources)
+
+	# Instruction takes care of the code generation:
+	inst = Instruction(op, pred, dest, sources, result)
+	inst.WriteTest()
+
+	curCount += 1
+
+	return inst.GetText()
+
+$}$#################################################################################################
+
+$[defineMACROS]
+
+#define SET_PS_CONSTANTS \
+	$< ' \\\n'.join(WritePSConstantDefaults(src_defaults).split('\n')) $>
+
+$<WriteVS(src_defaults, color_defaults)$>
+
+// Tests:
+
+// Manual test cases:$<SetGroup('mad - Manual ')$>
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// source registers * modifiers * swizzles
+${SetGroup('mad - Standard ')
+lTests = []
+paramDict = {}
+params = {
+	'pp': [[0,1]],
+	'reg0': [regcombos],
+	'neg0': [[0,1]],
+	'swz0': [[0]+lstBasicSwz],
+	'neg1': [[0,1]],
+	'swz1': [[0]+lstBasicSwz],
+	'neg2': [[0,1]],
+	'swz2': [[0]+lstBasicSwz]
+	}
+if ps_3_0:
+	params.update({
+		'abs0': [[0,1]],
+		'abs1': [[0,1]],
+		'abs2': [[0,1]]
+		})
+combos = ComputeCombinations(params)
+for c in combos:
+	regs = c['reg0']
+	paramDict.update(c)
+	paramDict.update({'reg0':regs[0], 'reg1':regs[1], 'reg2':regs[2]})
+	lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// source registers * sat * pp
+${SetGroup('mad - sat ')
+lTests = []
+paramDict = {}
+params = {
+	'sat': [[0,1]],
+	'pp': [[0,1]],
+	'reg0': [regcombos],
+	}
+combos = ComputeCombinations(params)
+for c in combos:
+	regs = c['reg0']
+	paramDict.update(c)
+	paramDict.update({'reg0':regs[0], 'reg1':regs[1], 'reg2':regs[2]})
+	lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+// masks & predication
+${SetGroup('mad - Pred/Mask ')
+lTests = []
+paramDict = {}
+params = {
+	'mask': [[0]+lstBasicWriteMasks],
+	'sat': [[0,1]],
+	'pp': [[0,1]],
+	'reg0': [regcombos]
+	}
+if predicate_support:
+	params.update({
+		'pred': [[0]+lstSomePredicateValues],
+		'pnot': [[0,1]],
+		'pswz': [[0]+lstReplicateSwizzles]
+		})
+combos = ComputeCombinations(params)
+for c in combos:
+	regs = c['reg0']
+	paramDict.update(c)
+	paramDict.update({'reg0':regs[0], 'reg1':regs[1], 'reg2':regs[2]})
+	lTests.append(apply(WriteTestCase, (), paramDict))
+$}$#
+$<'\n'.join(lTests)$>
+
+
+// End of file.  $curCount tests generated.

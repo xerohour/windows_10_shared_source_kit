@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="SharedResources"
+	ProjectGUID="{FD7D47C7-BCCF-43F8-AECF-FC6232A6AA9D}"
+	RootNamespace="Viewports"
+	Keyword="MakeFileProj"
+	>
+	<Platforms>
+		<Platform
+			Name="Win32"
+		/>
+	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="0"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="build -ZI"
+				ReBuildCommandLine="build -cZI"
+				CleanCommandLine="build reset"
+				Output="$(OBJECT_ROOT)\testsrc\windowstest\graphics\DirectX\d3d\conf\SharedResources\objchk/i386/WGFSharedResources.exe"
+				PreprocessorDefinitions=""
+				IncludeSearchPath=""
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="0"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
+			>
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="build retail -Z"
+				ReBuildCommandLine="build retail -cZ"
+				CleanCommandLine="build reset"
+				Output="obj/i386/Viewports.exe"
+				PreprocessorDefinitions=""
+				IncludeSearchPath=""
+				ForcedIncludes=""
+				AssemblySearchPath=""
+				ForcedUsingAssemblies=""
+				CompileAsManaged=""
+			/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Sources"
+			>
+			<File
+				RelativePath=".\SharedResource.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SharedResourceChild.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Headers"
+			>
+			<File
+				RelativePath=".\SharedResource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SharedResourceChild.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resources"
+			>
+		</Filter>
+		<Filter
+			Name="Shaders"
+			>
+		</Filter>
+		<File
+			RelativePath=".\makefile"
+			>
+		</File>
+		<File
+			RelativePath=".\SharedResource.rc"
+			>
+		</File>
+		<File
+			RelativePath=".\sources"
+			>
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

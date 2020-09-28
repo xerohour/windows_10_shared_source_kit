@@ -1,0 +1,26 @@
+teria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string PS_021_Desc = "ps_2_0 : dp4 source reg combination t0.brga, c0 is allowed";
+string PS_021 = 
+	"ps_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"dcl t0 "
+	"dp4 r0, t0.brga, c0 "
+	"mov oC0, c0 ";
+
+PS_CRITERIA PS_022_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string PS_022_Desc = "ps_2_0 : dp4 source reg combination t0.abgr, c0 is allowed";
+string PS_022 = 
+	"ps_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"dcl t0 "
+	"dp4 r0, t0.abgr, c0 "
+	"mov oC0, c0 ";
+
+PS_CRITERIA PS_023_Criteria = { true, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string PS_023_Desc = "ps_2_0 : dp4 source reg combination t0, c0.r is allowed";
+string PS_023 = 
+	"ps_2_0 "
+	"def c0, 1, 1, 1, 1 "
+	"dcl t0 "
+	"dp4 r0, t0, c0.r "
+	"mo

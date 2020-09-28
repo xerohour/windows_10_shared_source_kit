@@ -1,0 +1,14 @@
+#define IDR_DIBFILETYPE_BACK0                101
+#define IDR_DIBFILETYPE_BACK1                102
+#define IDR_DIBFILETYPE_BACK2                103
+#define IDR_DIBFILETYPE_BACK3                104
+#define IDR_DIBFILETYPE_BACK4                105
+#define IDR_DIBFILETYPE_BACK5                106
+#define IDR_DIBFILETYPE_BACK6                107
+#define IDR_DIBFILETYPE_FORE0                108
+#define IDR_DIBFILETYPE_FORE1                109
+#define IDR_DIBFILETYPE_FORE2                110
+#define IDR_DIBFILETYPE_FORE3                111
+#define IDR_DIBFILETYPE_FORE4                112
+#define IDR_DIBFILETYPE_FORE5                113
+#define IDR_DIBFILETYPE_FORE6                114

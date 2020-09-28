@@ -1,0 +1,11 @@
+!include ..\sources.inc
+
+TARGETNAME=Present2_DX
+
+SOURCES=$(SOURCES)\
+	..\Present2_DX_EXEEntryPoint.cpp \
+	..\DialogBoxMode.cpp \
+	..\DirtyRegion.cpp \
+    ..\DirtyRegionFlipEx.cpp \
+	..\ClippingWindows.cpp \
+    ..\ClippingWindowsFlipEx.cpp \

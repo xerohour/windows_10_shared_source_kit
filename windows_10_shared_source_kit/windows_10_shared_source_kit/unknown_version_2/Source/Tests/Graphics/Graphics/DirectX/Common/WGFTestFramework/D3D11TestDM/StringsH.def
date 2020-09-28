@@ -1,0 +1,30 @@
+//-------------------------------------------------------------------------
+// ENUMDECL related declarations
+//-------------------------------------------------------------------------
+
+extern tstring D3DSTRINGSAPI ToString( ENUMDECL ENUMNAME );
+extern bool D3DSTRINGSAPI FromString( ENUMDECL *pENUMNAME, const tstring &str );
+
+// ENUMNAMEInfo - Structure that describes the properties of a D3DENUMNAMECAP
+struct ENUMNAMEInfo
+{
+	ENUMDECL ENUMNAME;
+	const TCHAR *szName;
+};
+
+// CENUMNAMEInfoMap - Static singleton object used to lookup info given a D3DENUMNAME.
+// THIS CLASS SHOULD NOT BE DIRECTLY INSTANTIATED !!!
+class CENUMNAMEInfoMap : public CNamedFlagsTable32
+{
+public:
+	CENUMNAMEInfoMap();
+
+	static size_t GetENUMNAMEInfoTableSize();
+
+	static const ENUMNAMEInfo CENUMNAMEInfoMap::m_ENUMNAMEInfoTable[];
+	
+	static CENUMNAMEInfoMap &Get() { return m_this; }
+
+protected:
+	static CENUMNAMEInfoMap m_this;
+};

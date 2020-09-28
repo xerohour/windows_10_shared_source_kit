@@ -1,0 +1,11 @@
+!include ..\conf.mk
+
+TARGETNAME=LHFonts
+
+SOURCES= \
+        Longfonts.rc  \
+        Longfonts.cpp  \
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

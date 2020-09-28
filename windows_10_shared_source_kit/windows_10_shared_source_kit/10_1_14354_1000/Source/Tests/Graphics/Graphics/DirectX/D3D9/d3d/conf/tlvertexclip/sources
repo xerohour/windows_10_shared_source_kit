@@ -1,0 +1,12 @@
+!include ..\conf.mk
+
+TARGETNAME=TLVertexClip
+
+SOURCES=TLVertexClip.rc \
+        TLVertexClip.cpp \
+        edge.cpp \
+        quad.cpp
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

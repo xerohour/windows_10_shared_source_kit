@@ -1,0 +1,22 @@
+// RenderTargets Pixel Shader(s)
+
+struct PSIn
+{
+	float4	vPos	: SV_Position;
+	float2	vTexCoords : texCoord;
+};
+
+struct PSOut
+{
+	float4 vColor : SV_Target;
+};
+
+Texture2D pTex;
+SamplerState s;
+
+PSOut PShaderMain( PSIn input )
+{
+	PSOut output;
+	output.vColor = pTex.Sample( s, float2( input.vTexCoords.x, input.vTexCoords.y ) );
+	return output;
+}

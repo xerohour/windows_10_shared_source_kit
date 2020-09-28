@@ -1,0 +1,19 @@
+!include ..\conf.mk
+
+
+TARGETNAME=PalAlpha
+TARGETTYPE=PROGRAM
+
+SOURCES= \
+        PalAlpha.rc \
+        PalAlpha.cpp \
+        PalUtils.cpp \
+        PalUtils8.cpp
+
+UMTYPE=windows
+
+UMENTRY=winmain
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

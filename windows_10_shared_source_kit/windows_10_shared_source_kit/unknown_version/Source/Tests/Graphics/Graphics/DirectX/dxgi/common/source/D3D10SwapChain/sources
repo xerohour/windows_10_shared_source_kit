@@ -1,0 +1,17 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+TARGETNAME=D3D10SwapChain
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+UMENTRY=winmain
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\DXGITest; \
+
+
+SOURCES=\
+	D3D10SwapChain.cpp \
+
+
+TARGETLIBS=\

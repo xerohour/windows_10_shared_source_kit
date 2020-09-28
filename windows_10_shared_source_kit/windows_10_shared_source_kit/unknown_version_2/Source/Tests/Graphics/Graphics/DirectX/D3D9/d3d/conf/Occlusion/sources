@@ -1,0 +1,35 @@
+!include ..\..\..\d3d9.mk
+
+TARGETNAME=Occlusion
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+TARGET_DESTINATION=Graphics\D3D\Conf
+
+INCLUDES=\
+	$(DDK_INC_PATH); \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\AddOns\CustomTestApp; \
+	$(WINDOWS_TST_ROOT)\common\MessagePipe; \
+	$(INCLUDES)
+
+SOURCES=\
+	Occlusion.rc \
+	Occlusion.cpp
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\WGFTestFramework\AddOns\CustomTestApp\$O\CustomTestApp.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\common\MessagePipe\$O\MessagePipe.lib \
+	$(SDK_LIB_PATH)\d3d9.lib \
+	$(SDK_LIB_PATH)\ddraw.lib \
+	$(SDK_LIB_PATH)\winmm.lib \
+	$(SDK_LIB_PATH)\ntdll.lib \
+	$(SDK_LIB_PATH)\rpcrt4.lib \
+	$(SDK_LIB_PATH)\wtsapi32.lib
+
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_VISTA)
+
+
+USE_RTTI=1

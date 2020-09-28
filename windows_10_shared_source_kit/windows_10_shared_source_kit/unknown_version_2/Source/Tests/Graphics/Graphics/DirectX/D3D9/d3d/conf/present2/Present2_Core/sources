@@ -1,0 +1,15 @@
+!include ..\sources.inc
+
+TARGETNAME=Present2
+
+SOURCES=$(SOURCES)\
+	..\Present2_EXEEntryPoint.cpp \
+	..\Present.cpp \
+	..\PresentFlipEx.cpp \
+	..\ColorConverting.cpp \
+	..\ColorConvertingFlipEx.cpp \
+	..\GammaPresent.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+C_DEFINES = $(C_DEFINES) /DFAST_TEST

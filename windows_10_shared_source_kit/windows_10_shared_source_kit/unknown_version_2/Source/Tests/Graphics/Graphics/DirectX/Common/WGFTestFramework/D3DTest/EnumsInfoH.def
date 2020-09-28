@@ -1,0 +1,45 @@
+, -1, -1, 0, -1, 0.f };
+string VS_084_Desc = "vs_2_0 : pow source reg combination oT0, a0 is NOT allowed";
+string VS_084 = 
+	"vs_2_0 "
+	"mova a0.x, c0.x "
+	"pow r0, oT0, a0 "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_085_Criteria = { false, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_085_Desc = "vs_2_0 : pow source reg combination oT0, b0 is NOT allowed";
+string VS_085 = 
+	"vs_2_0 "
+	"defb b0, true "
+	"pow r0, oT0, b0 "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_086_Criteria = { false, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_086_Desc = "vs_2_0 : pow source reg combination oT0, i0 is NOT allowed";
+string VS_086 = 
+	"vs_2_0 "
+	"defi i0, 0, 0, 0, 0 "
+	"pow r0, oT0, i0 "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_087_Criteria = { false, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_087_Desc = "vs_2_0 : pow source reg combination oT0, aL is NOT allowed";
+string VS_087 = 
+	"vs_2_0 "
+	"mova aL.x, c0.x "
+	"pow r0, oT0, aL "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_088_Criteria = { false, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_088_Desc = "vs_2_0 : pow source reg combination oT0, oPos is NOT allowed";
+string VS_088 = 
+	"vs_2_0 "
+	"pow r0, oT0, oPos "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_089_Criteria = { false, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_089_Desc = "vs_2_0 : pow source reg combination oT0, oFog is NOT allowed";
+string VS_089 = 
+	"vs_2_0 "
+	"pow r0, oT0, oFog "
+	"mov oPos, c0 

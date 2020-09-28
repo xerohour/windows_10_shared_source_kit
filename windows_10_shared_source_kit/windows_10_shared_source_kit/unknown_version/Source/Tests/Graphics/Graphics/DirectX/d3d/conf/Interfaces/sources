@@ -1,0 +1,33 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_core.mk
+
+TARGETNAME=WGF11Interfaces
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(PROJECT_LIB_PATH)\d3dcompiler_test.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\Shader\$O\shaderutils.lib
+
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\sdk\int\inc; \
+	$(INCLUDES)
+
+SOURCES= \
+	WGFInterfaces.rc \
+	WGFInterfaces.cpp \
+	CInterfaceFlowControl.cpp \
+	ResourceIndexing.cpp \
+	TextureIndexing.cpp \
+	SamplerIndexing.cpp \
+	ConstantBufferIndexing.cpp \
+	FcallLimits.cpp \
+
+
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

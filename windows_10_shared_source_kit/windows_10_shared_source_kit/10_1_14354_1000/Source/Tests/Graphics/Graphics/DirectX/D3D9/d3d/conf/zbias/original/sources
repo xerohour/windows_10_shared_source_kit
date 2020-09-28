@@ -1,0 +1,12 @@
+!include ..\..\conf.mk
+
+TARGETNAME=zbias
+
+SOURCES=..\zbias.rc \
+        ..\zbias.cpp \
+        ..\zbuffer.cpp \
+        ..\wbuffer.cpp
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

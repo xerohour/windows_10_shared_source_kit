@@ -1,0 +1,21 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D stress test"
+#define VER_INTERNALNAME_STR        "StateBeast.exe"
+#define VER_ORIGINALFILENAME_STR    "STATEBEAST.EXE"
+
+CHECKER.BMP BITMAP DISCARDABLE "checker.bmp"
+ROCKS.BMP BITMAP DISCARDABLE "rocks.bmp"
+POKO0.BMP BITMAP DISCARDABLE "poko0.bmp"
+POKO1.BMP BITMAP DISCARDABLE "poko1.bmp"
+POKO2.BMP BITMAP DISCARDABLE "poko2.bmp"
+POKO3.BMP BITMAP DISCARDABLE "poko3.bmp"
+POKO4.BMP BITMAP DISCARDABLE "poko4.bmp"
+POKO5.BMP BITMAP DISCARDABLE "poko5.bmp"
+POKO6.BMP BITMAP DISCARDABLE "poko6.bmp"
+POKO7.BMP BITMAP DISCARDABLE "poko7.bmp"
+#include <common.ver>

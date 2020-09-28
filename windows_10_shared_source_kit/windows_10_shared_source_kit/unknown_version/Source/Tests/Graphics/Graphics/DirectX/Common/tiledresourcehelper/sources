@@ -1,0 +1,58 @@
+######################################################################
+#
+# Build flags
+#
+######################################################################
+
+TARGETNAME=TiledResourceHelper 
+TARGETTYPE=LIBRARY
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_VISTA)
+
+USE_MSVCRT=1
+
+USE_ATL=1
+ATL_VER=80
+USE_STL=1
+STL_VER=100
+
+USE_NATIVE_EH=1
+
+TEST_CODE=1
+MSC_WARNING_LEVEL=/W3 /WX
+
+######################################################################
+#
+# Includes
+#
+######################################################################
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(COMMON_TST_INC_PATH); \
+        $(SDKTOOLS_INC_PATH); \
+        $(WINDOWS_INC_PATH); \
+        $(WINDOWS_INC_PATH)\d3dpri; \
+        $(WINDOWS_TST_ROOT)\Common\Include; \
+        $(WINDOWS_TST_ROOT)\Common\StringUtils; \
+        $(WINDOWS_TST_ROOT)\Common\StringConverters; \
+        $(WINDOWS_TST_ROOT)\Common\Properties; \
+        $(WINDOWS_TST_ROOT)\Common\SimpleLog; \
+        $(WINDOWS_TST_ROOT)\Graphics\Common\Include; \
+        $(WINDOWS_TST_ROOT)\Graphics\Common\D3DStrings; \
+        $(WINDOWS_TST_ROOT)\Graphics\DirectX\Common\Include; \
+
+######################################################################
+#
+# Libraries
+#
+######################################################################
+
+
+######################################################################
+#
+# Source Files
+#
+######################################################################
+SOURCES=\
+	TiledResourceHelper.cpp \

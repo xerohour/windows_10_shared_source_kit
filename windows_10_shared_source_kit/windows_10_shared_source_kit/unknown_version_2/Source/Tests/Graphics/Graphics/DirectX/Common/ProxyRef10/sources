@@ -1,0 +1,26 @@
+!include ..\common.mk
+
+TARGETNAME=ProxyRef10
+TARGETTYPE=LIBRARY
+
+!IF $(FREEBUILD)
+LIBTAG=
+!else
+LIBTAG=d
+!endif
+
+# This is needed for the longhorn ddi includes
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_VISTA)
+
+TARGETLIBS=\
+
+
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\tools\D3D10ProxyDriver; \
+	$(INCLUDES); \
+    $(DDK_INC_PATH);\
+    $(D3D10_DDK_INC_PATH)
+
+SOURCES=\
+	ProxyRef10.cpp \

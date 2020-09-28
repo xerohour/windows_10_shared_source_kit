@@ -1,0 +1,33 @@
+!include ..\..\unicodetests.mk
+!include ..\..\..\common\dmmapi\DmmApi.mk
+!include ..\..\ccd.mk
+
+TARGETTYPE=PROGRAM
+TARGETNAME=SetDisplayConfig
+
+INCLUDES=\
+    $(BASE_VID_TST_OBJ_ROOT)\common\include; \
+    $(INCLUDES); \
+    $(OAK_INC_PATH); \
+    $(DDK_INC_PATH); \
+    $(BASE_VID_TST_OBJ_ROOT)\common\dmmapi\src\$O; \
+    $(WINDOWS_INC_PATH); \
+    $(WINDOWS_TST_ROOT)\common\stringutils; \
+
+SOURCES=\
+    main.cpp \
+    SetDisplayConfig.cpp \
+    SetDisplayConfig.rc \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+USE_NATIVE_EH=ASYNC
+USE_ATL=1
+ATL_VER=30
+
+TARGETLIBS=$(TARGETLIBS)\
+    $(WINDOWS_TST_OBJ_ROOT)\common\XmlDataMapping\$O\XmlDataMapping.lib \
+    $(WINDOWS_TST_COMMON)\processutils\$O\processutils.lib \
+    $(WINDOWS_TST_OBJ_ROOT)\common\StringUtils\$O\StringUtils.lib \
+    $(SDK_LIB_PATH)\Dwmapi.lib \
+

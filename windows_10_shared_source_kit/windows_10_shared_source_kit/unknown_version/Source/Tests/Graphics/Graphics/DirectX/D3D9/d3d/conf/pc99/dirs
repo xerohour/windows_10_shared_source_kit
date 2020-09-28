@@ -1,0 +1,3 @@
+DIRS=MultiTexture \
+     specular \
+     TextureSizes

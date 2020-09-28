@@ -1,0 +1,42 @@
+# this line brings in 3dsg.lib.
+WANT_GRAPHICS_TESTCOMPONENTS_3DSG_LIBS = 1
+
+!include ..\unicodetests.mk
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN7)
+
+TARGETNAME=SchBillboard
+
+UMTYPE=windows
+UMENTRY=main
+
+#
+# To include another path in the search, uncomment the following and add the header
+# file location.
+#
+INCLUDES=$(INCLUDES);\
+         $(BASE_VID_TST_ROOT)\common\CrossProcSharing\inc; \
+         $(BASE_VID_TST_ROOT)\common\Modules\inc;
+#
+# To link to any private libraries, uncomment the following and add the library.
+#
+TARGETLIBS=$(TARGETLIBS) \
+    $(PUBLIC_ROOT)\internal\windows\lib\*\unicode\etwBaseStatistics.lib \
+    $(PUBLIC_ROOT)\internal\windows\lib\*\unicode\etwDxgkernelStatistics.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\CrossProcSharing\lib\unicode\$O\CrossProcSharing.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\Modules\lib\unicode\$O\TestModules.lib \
+
+SOURCES=\
+    main.cpp \
+    schsecurity.cpp \
+    overcommit.cpp \
+    allocoverhead.cpp \
+    pager.cpp \
+    billboard.cpp \
+    badapp.cpp \
+    preempt.cpp \
+    resource.rc \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+

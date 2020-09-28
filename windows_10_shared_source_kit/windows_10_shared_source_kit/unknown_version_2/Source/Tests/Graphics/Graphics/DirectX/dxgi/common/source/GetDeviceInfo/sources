@@ -1,0 +1,17 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+TARGETNAME=GetDeviceInfo9
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+UMENTRY=winmain
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\DXGITest; \
+
+
+SOURCES=\
+	GetDeviceInfo9.cpp \
+
+
+TARGETLIBS=\

@@ -1,0 +1,14 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "PC99specular.exe"
+#define VER_ORIGINALFILENAME_STR    "PC99SPECULAR.EXE"
+
+256x256SmallChecker.bmp BITMAP DISCARDABLE "media\\256x256SmallChecker.bmp"
+
+#include <common.ver>
+

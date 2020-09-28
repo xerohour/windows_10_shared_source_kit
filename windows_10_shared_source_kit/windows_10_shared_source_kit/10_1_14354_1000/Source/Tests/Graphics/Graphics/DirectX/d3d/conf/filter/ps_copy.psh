@@ -1,0 +1,83 @@
+Texture2D myTex2D;
+Texture2DMS<float4,4> myTex2DMS;
+sampler samp;
+
+cbuffer cb0 : register(b0)
+{
+	float4 inverseViewport;
+};
+
+cbuffer cb1 : register(b1)
+{
+	float4 texCoords[4];
+};
+
+struct VSIn
+{
+	float2 pos : pos;
+};
+
+struct PSIn
+{
+	float4 pos : SV_Position;
+	float4 tex : tex0;
+};
+
+struct PSOut
+{
+	float4 color : SV_Target;
+};
+
+PSIn vs_main(VSIn input, uint vertNum : SV_VertexID)
+{
+	PSIn output;
+	
+	output.pos = float4( 0, 0, 0, 1.0 );
+	output.pos.xy = input.pos * inverseViewport.zw + inverseViewport.xy;
+	
+	output.tex.xyz = texCoords[vertNum].xyz;
+	output.tex.w = 1.0;
+	
+	return output;
+}
+
+PSOut ps_main(PSIn input)
+{
+	PSOut output;
+	float4 newCoord = input.tex;
+	newCoord.x *= 2.0;
+	if (newCoord.x < 1.0)
+	{
+		output.color = myTex2D.Sample(samp, newCoord);
+	}
+	else
+	{
+		newCoord.x -= 1.0;
+		output.color.rgb = myTex2D.Sample(samp, newCoord).aaa;
+	}
+	output.color.a = 1.0;
+	return output;
+}
+
+PSOut ps_main_ms(PSIn input)
+{
+	PSOut output;
+	float4 newCoord = input.pos;
+	newCoord.xy *= inverseViewport.zw * 16 / 2;
+	//newCoord.x *= 2.0;
+	newCoord.y *= -1.0;
+	int3 newCoordInt = int3(newCoord.xy, 0);
+	if (newCoordInt.x < 16)
+	{
+		for (int n = 0; n < 4; ++n)
+			output.color = myTex2DMS.Load(newCoordInt, n);
+	}
+	else
+	{
+		newCoordInt.x -= 16;
+		for (int n = 0; n < 4; ++n)
+			output.color.rgb = myTex2DMS.Load(newCoordInt, n).aaa;
+	}
+	output.color.a = 1.0;
+	return output;
+}

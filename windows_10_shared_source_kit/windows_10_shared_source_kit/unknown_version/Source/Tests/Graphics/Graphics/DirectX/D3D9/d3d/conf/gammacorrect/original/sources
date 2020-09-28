@@ -1,0 +1,12 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=GammaCorrect
+
+SOURCES= ..\GammaCorrect.rc \
+                   ..\default.cpp \
+                   ..\GammaCorrect.cpp \
+                   ..\GenerateTextures.cpp \
+       
+SOURCES=$(SOURCES) ..\kitContent.kml
+

@@ -1,0 +1,38 @@
+	}
+
+	return true;
+}
+
+bool CVolFilterTest::TestTerminate()
+{
+    CVolumeTest::TestTerminate();
+
+    // Cleanup textures
+    RELEASE(pMagVolTexture);
+    RELEASE(pMipVolTexture);
+
+    return true;
+}
+
+UINT CVolFilterTest::SetupFilterMode(int nMode)
+{
+    DWORD dwVolumeTextureFilterCaps;
+
+	// Check the caps we are interested in
+   	dwVolumeTextureFilterCaps = m_pSrcDevice->GetCaps()->dwVolumeTextureFilterCaps;
+
+    switch (nMode)
+    {
+        case 0:
+        case 4:
+            if (!(dwVolumeTextureFilterCaps & D3DPTFILTERCAPS_MINFPOINT))       
+            {
+	            WriteToLog("\nDevice capability not supported: VolumeTextureFilter MinFPoint.\n");
+                return D3DTESTINIT_ABORT;
+            }
+
+            if (!(dwVolumeTextureFilterCaps & D3DPTFILTERCAPS_MAGFPOINT))       
+            {
+	            WriteToLog("\nDevice capability not supported: VolumeTextureFilter MagFPoint.\n");
+                return D3DTESTINIT_ABORT;
+   

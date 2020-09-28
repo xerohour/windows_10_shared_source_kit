@@ -1,0 +1,26 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_Core.mk
+
+TARGETNAME=WGF11DepthStencil
+
+INCLUDES=\
+	.\; \
+	$(INCLUDES)
+
+SOURCES= \
+	res.rc \
+	testapp.cpp \
+	views.cpp \
+	depth.cpp \
+	state.cpp \
+	clamp.cpp \
+	bias.cpp \
+	Stencil.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

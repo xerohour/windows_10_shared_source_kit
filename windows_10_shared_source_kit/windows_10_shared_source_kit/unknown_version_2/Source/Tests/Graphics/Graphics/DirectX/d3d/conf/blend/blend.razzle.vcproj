@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="WGFBlend"
+	ProjectGUID="{96F283DB-93DA-4237-A1B9-BDE81300BC2D}"
+	RootNamespace="WGFBlend"
+	Keyword="MakeFileProj">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Razzle|Win32"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="0">
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="build -ZI"
+				ReBuildCommandLine="build -cZI"
+				CleanCommandLine="build reset"
+				Output="$(OBJECT_ROOT)\testsrc\multimediatest\wggt\DXG\d3d\conf\Blend\obj$(BUILD_ALT_DIR)/i386/WGFBlend.exe"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Sources"
+			Filter="">
+			<File
+				RelativePath=".\BasicBlend.cpp">
+			</File>
+			<File
+				RelativePath=".\Blend.cpp">
+			</File>
+			<File
+				RelativePath=".\BlendCode.cpp">
+			</File>
+		</Filter>
+		<Filter
+			Name="Headers"
+			Filter="">
+			<File
+				RelativePath=".\Blend.h">
+			</File>
+			<File
+				RelativePath=".\FormatDesc.hpp">
+			</File>
+		</Filter>
+		<Filter
+			Name="Resources"
+			Filter="">
+			<File
+				RelativePath=".\Blend.rc">
+			</File>
+			<File
+				RelativePath=".\ps_blend.psh">
+			</File>
+			<File
+				RelativePath=".\ps_copy.psh">
+			</File>
+			<File
+				RelativePath=".\vs.vsh">
+			</File>
+		</Filter>
+		<Filter
+			Name="Other"
+			Filter="">
+			<File
+				RelativePath=".\makefile">
+			</File>
+			<File
+				RelativePath=".\sources">
+			</File>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

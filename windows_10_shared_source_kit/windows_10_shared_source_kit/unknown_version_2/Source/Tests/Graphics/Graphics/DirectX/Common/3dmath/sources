@@ -1,0 +1,13 @@
+!include ..\common.mk
+
+
+TARGETNAME=3DMath 
+
+SOURCES=3DMath.cpp
+
+
+
+
+
+
+TARGETLIBS=\

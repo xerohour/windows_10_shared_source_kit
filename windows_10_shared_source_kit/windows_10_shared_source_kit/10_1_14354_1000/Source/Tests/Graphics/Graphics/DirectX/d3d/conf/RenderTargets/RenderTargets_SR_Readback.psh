@@ -1,0 +1,59 @@
+// RenderTargets Pixel Shader(s)
+
+#define RESOURCE_BUFFER				0
+#define RESOURCE_TEXTURE1D_ARRAY	1
+#define RESOURCE_TEXTURE2D_ARRAY	2
+#define RESOURCE_TEXTURE3D			3
+
+struct PSIn
+{
+	float4	vPos	: SV_Position;
+	float2	vTexCoords : texCoord;
+};
+
+struct PSOut
+{
+	PS_OUTPUT_TYPE vColor : SV_Target;
+};
+
+cbuffer cb0 : register( b0 )
+{	
+	float4x4	mxTrans;
+	float		fWidth;
+	float		fHeight;
+	int			iRTIndex;
+	int			iRes;	
+};
+
+Buffer			pBuffer;
+Texture1DArray<TEX_INPUT_TYPE>	pTex1DArr;
+Texture2DArray<TEX_INPUT_TYPE>	pTex2DArr;
+Texture3D<TEX_INPUT_TYPE>		pTex3D;
+
+SamplerState s;
+
+PSOut PShaderMain( PSIn input )
+{
+	PSOut output;
+	
+	output.vColor = PS_OUTPUT_TYPE( 0, 0, 0, 0 );
+	
+	if( iRes == RESOURCE_BUFFER )
+	{
+		output.vColor = pBuffer.Load( input.vTexCoords.x );
+	}
+	else if( iRes == RESOURCE_TEXTURE1D_ARRAY )
+	{
+		output.vColor = pTex1DArr.Load( float3( input.vTexCoords.x, 0.f, 0.f ) );
+	}
+	else if( iRes == RESOURCE_TEXTURE2D_ARRAY )
+	{
+		output.vColor = pTex2DArr.Load( float4( input.vTexCoords.x, input.vTexCoords.y, 0.f, 0.f ) );
+	}
+	else if( iRes == RESOURCE_TEXTURE3D )
+	{
+		output.vColor = pTex3D.Load( float4( input.vTexCoords.x, input.vTexCoords.y, 0.f, 0.f ) );
+	}
+	 
+	return output;
+}

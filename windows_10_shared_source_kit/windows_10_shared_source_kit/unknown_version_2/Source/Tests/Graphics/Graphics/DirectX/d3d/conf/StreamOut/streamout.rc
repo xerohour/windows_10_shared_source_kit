@@ -1,0 +1,9 @@
+#include <WGFConsoleShell.rc>
+
+//////////////////////////////////////////////////////////////////////////
+// IDR_SHADER_SOURCE
+//////////////////////////////////////////////////////////////////////////
+ShaderClear.sh		RCDATA		"ShaderClear.sh"
+ShaderSource.sh		RCDATA		"ShaderSource.sh"
+ShaderSourceMulti.sh	RCDATA		"ShaderSourceMulti.sh"
+PassThroughVS.fx	RCDATA	"PassThroughVS.fx"

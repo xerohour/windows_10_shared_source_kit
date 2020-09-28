@@ -1,0 +1,13 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+TARGETNAME=ModeSet
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+UMENTRY=winmain
+
+
+SOURCES=\
+	ModeSet.cpp \
+
+
+TARGETLIBS=\

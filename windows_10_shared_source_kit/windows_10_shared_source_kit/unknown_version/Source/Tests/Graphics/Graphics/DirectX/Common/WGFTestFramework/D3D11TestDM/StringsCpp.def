@@ -1,0 +1,48 @@
+//////////////////////////////////////////////////////////////////////////
+// ENUMDECL related definitions
+//////////////////////////////////////////////////////////////////////////
+
+tstring D3DSTRINGSAPI ToString( ENUMDECL ENUMNAME )
+{
+	return CENUMNAMEInfoMap::Get().ToString((UINT) ENUMNAME);
+}
+
+//------------------------------------------------------------------------
+
+bool D3DSTRINGSAPI FromString( ENUMDECL *pENUMNAME, const tstring &str )
+{
+	return CENUMNAMEInfoMap::Get().FromString((UINT *) pENUMNAME, str);
+}
+
+//------------------------------------------------------------------------
+
+const ENUMNAMEInfo CENUMNAMEInfoMap::m_ENUMNAMEInfoTable[] =
+{
+ENUMVALUES
+};
+
+//------------------------------------------------------------------------
+
+// Instantiate the singleton
+CENUMNAMEInfoMap CENUMNAMEInfoMap::m_this;
+
+//------------------------------------------------------------------------
+
+
+size_t CENUMNAMEInfoMap::GetENUMNAMEInfoTableSize()
+{
+	return _countof(CENUMNAMEInfoMap::m_ENUMNAMEInfoTable);
+}
+
+// Construct the lookup table.
+CENUMNAMEInfoMap::CENUMNAMEInfoMap()
+{
+	size_t count = GetENUMNAMEInfoTableSize();
+
+	for(size_t i = 0; i < count; i++ )
+	{
+		AddValue(m_ENUMNAMEInfoTable[i].szName, m_ENUMNAMEInfoTable[i].ENUMNAME);
+	}
+}
+
+//------------------------------------------------------------------------

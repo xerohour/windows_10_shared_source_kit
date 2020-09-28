@@ -1,0 +1,54 @@
+!include ..\tests.mk
+
+TARGETNAME=brightness
+TARGETTYPE=PROGRAM
+TARGET_DESTINATION=Graphics\wddm\bin
+
+UMTYPE=console
+UMENTRY=main
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WIN7)
+
+
+USE_MSVCRT=1
+
+PRECOMPILED_CXX=1
+PRECOMPILED_INCLUDE=brightnesspch.h
+
+USE_STL=1
+STL_VER=100
+
+USE_ATL=1
+ATL_VER=30
+
+INCLUDES=\
+    $(INCLUDES); \
+    $(SDK_INC_PATH); \
+    $(BASE_VID_TST_ROOT)\common\VidWttLog; \
+    $(BASE_VID_TST_ROOT)\common\include; \
+    $(SDKTOOLS_INC_PATH); \
+     
+
+TARGETLIBS=\
+    $(TARGETLIBS) \
+    $(SDK_LIB_PATH)\advapi32.lib \
+    $(SDK_LIB_PATH)\ole32.lib \
+    $(SDK_LIB_PATH)\oleaut32.lib \
+    $(SDK_LIB_PATH)\powrprof.lib \
+    $(SDK_LIB_PATH)\user32.lib \
+    $(SDK_LIB_PATH)\version.lib \
+    $(SDK_LIB_PATH)\Wbemuuid.lib \
+    $(SDK_LIB_PATH)\wmip.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\VidWttLog\$O\VidWttLog.lib \
+    $(SDKTOOLS_LIB_PATH)\WttLog.lib \
+
+      
+SOURCES=\
+    WMIHelper.cpp \
+    BrightnessTest.cpp \
+    Brightness.rc \
+    brightness.cpp \
+    dlist.cpp \
+    kitContent.kml \
+
+LANGUAGE_NEUTRAL=0

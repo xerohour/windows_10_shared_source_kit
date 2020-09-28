@@ -1,0 +1,23 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=GetDC
+TARGETTYPE=PROGRAM
+TARGETLIBS=$(TARGETLIBS) \
+			$(SDK_LIB_PATH)\shell32.lib
+
+SOURCES= \
+		..\GetDC.rc \
+		..\GetDC.cpp \
+		..\GetDCTests.cpp \
+		..\GetDCUtilities.cpp \
+		..\GetDCValidate.cpp \
+		..\CasesManager.cpp
+
+UMTYPE=windows
+
+UMENTRY=winmain
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

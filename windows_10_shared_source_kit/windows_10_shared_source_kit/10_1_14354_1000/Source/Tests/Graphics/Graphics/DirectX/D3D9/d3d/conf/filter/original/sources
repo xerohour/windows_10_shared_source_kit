@@ -1,0 +1,21 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=Filter
+
+SOURCES= \
+        ..\Filter.rc \
+        ..\Filter.cpp \
+        ..\PyramidalFilter.cpp \
+        ..\GaussianFilter.cpp \
+        ..\FloatFilter.cpp \
+        ..\LinearFilter.cpp \
+        ..\PointFilter.cpp
+
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

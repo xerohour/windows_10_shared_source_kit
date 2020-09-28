@@ -1,0 +1,33 @@
+//
+// ps_odepth.psh
+// Copyright (c) 2004 Microsoft Corporation. All rights reserved.
+//
+
+struct PSIn
+{
+	float4 pos : SV_Position;
+	float2 tex : tex;
+};
+
+struct PSOut
+{
+	float4 Color : SV_Target;
+	float Depth : SV_Depth;
+};
+
+cbuffer cb0 : register(b0)
+{
+	float4 inverseViewport;
+	float alpha;
+	float depth;
+};
+
+PSOut main(PSIn input)
+{
+	PSOut output;
+		
+	output.Color = float4( 1.0, 1.0, 1.0, alpha );
+	output.Depth = input.pos.z/input.pos.w;
+	
+	return output;
+}

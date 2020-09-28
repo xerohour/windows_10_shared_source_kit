@@ -1,0 +1,24 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\d3d\conf\conf11.mk
+
+TARGETNAME=DXGITrimMemory
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FormatHelper; \
+	$(INCLUDES);
+    
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\d3d9.lib \
+	$(SDK_LIB_PATH)\d3d10.lib \
+	$(SDK_LIB_PATH)\d3d10_1.lib \
+
+SOURCES=\
+	DXGITrimMemory.cpp \
+	DXGITrimMemoryTest.cpp \
+	DXGITrimMemory.rc
+
+SOURCES=$(SOURCES) kitContent.kml

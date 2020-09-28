@@ -1,0 +1,17 @@
+!include ..\Vidmm_tests.mk
+
+TARGETNAME=LockConfirm
+
+UMTYPE=console
+UMENTRY=main
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WIN7)
+
+LARGE_ADDRESS_AWARE=1
+
+SOURCES=\
+    Main.rc \
+    main.cpp \
+    LockConfirm.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml

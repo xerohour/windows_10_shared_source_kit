@@ -1,0 +1,10 @@
+#include <WGFConsoleShell.rc>
+
+vs.vsh rcdata "vs.vsh"
+ps_copy.psh rcdata "ps_copy.psh"
+ps_blend.psh rcdata "ps_blend.psh"
+logic.sh rcdata "logic.sh"
+
+vs_fl9x.vsh rcdata "vs_fl9x.vsh"
+ps_blend_fl9x.psh rcdata "ps_blend_fl9x.psh"
+

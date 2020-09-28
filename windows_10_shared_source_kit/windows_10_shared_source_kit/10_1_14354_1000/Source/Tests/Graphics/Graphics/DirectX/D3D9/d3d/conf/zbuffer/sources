@@ -1,0 +1,16 @@
+!include ..\conf.mk
+
+TARGETNAME=ZBuffer
+
+SOURCES= \
+	Discard.cpp \
+        Enable.cpp \
+        Print.cpp \
+	Never.cpp \
+        Verify.cpp \
+        ZBuffer.rc \
+        ZBuffer.cpp
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

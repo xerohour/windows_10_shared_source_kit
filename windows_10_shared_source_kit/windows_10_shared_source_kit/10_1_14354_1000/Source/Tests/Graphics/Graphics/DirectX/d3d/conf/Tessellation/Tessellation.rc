@@ -1,0 +1,3 @@
+#include <WGFConsoleShell.rc>
+
+vs_vertid.sh rcdata "vs_vertid.sh"

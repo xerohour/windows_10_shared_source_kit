@@ -1,0 +1,12 @@
+!include ..\..\conf.mk
+
+TARGETNAME=LockDpth
+
+SOURCES= \
+        ..\LockDepth.rc  \
+        ..\LockDepth.cpp  \
+	..\PerlinNoise.cpp \
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

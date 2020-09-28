@@ -1,0 +1,21 @@
+!include ..\conf.mk
+
+
+TARGETNAME=Volume
+
+SOURCES= \
+        Address.cpp \
+        Blend.cpp \
+        Draw.cpp \
+        Filter.cpp \
+        MipMap.cpp \
+        TexGen.cpp \
+        Texture.cpp \
+        Volume.rc \
+        Volume.cpp
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

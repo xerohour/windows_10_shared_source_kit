@@ -1,0 +1,23 @@
+!include ..\Common.mk
+
+
+TARGETNAME=CShapes 
+
+SOURCES= \
+        CShapes.cpp \
+        CShapesFVF.cpp \
+        Boid.cpp \
+        Box.cpp \
+        Cone.cpp \
+        Cylinder.cpp \
+        Icosohedron.cpp \
+        Mesh.cpp \
+        Pyramid.cpp \
+        Sphere.cpp \
+	Teapot.cpp
+
+
+PRECOMPILED_INCLUDE=CShapesPCH.h
+PRECOMPILED_CXX=1
+
+

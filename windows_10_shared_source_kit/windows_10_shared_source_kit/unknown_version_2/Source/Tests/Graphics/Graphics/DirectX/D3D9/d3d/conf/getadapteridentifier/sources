@@ -1,0 +1,8 @@
+!include ..\conf.mk
+
+TARGETNAME=GetAdapterIdentifier
+
+SOURCES= \
+		GetAdapterIdentifier.rc \
+		GetAdapterIdentifierMain.cpp \
+		GetAdapterIdentifier.cpp \

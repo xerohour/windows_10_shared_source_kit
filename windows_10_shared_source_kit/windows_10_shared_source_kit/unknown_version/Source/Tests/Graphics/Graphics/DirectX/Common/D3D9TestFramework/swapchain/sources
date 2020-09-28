@@ -1,0 +1,15 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CSwapChain
+
+SOURCES= \
+        CSwapChain.cpp \
+        CnSwapChain.cpp \
+        CSwapChain9.cpp \
+        CSwapChain8.cpp \
+        CSwapChain7.cpp \
+        CSwapChain6.cpp
+
+PRECOMPILED_INCLUDE=SwapChainPCH.h
+PRECOMPILED_CXX=1

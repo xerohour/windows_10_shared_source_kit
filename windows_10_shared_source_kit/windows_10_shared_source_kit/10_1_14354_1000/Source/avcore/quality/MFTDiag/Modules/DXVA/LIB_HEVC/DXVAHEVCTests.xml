@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- categories: Playback, MultiInstance, Stress, Quality
+     subtype: H264, WMV1, WMV2, WMV3, WVC1, MPEG2
+     component clsid:
+          Microsoft MPEG Video Decoder MFT {2D709E52-123F-49B5-9CBC-9AF5CDE28FB9}
+          Microsoft H264 Video Decoder MFT {62CE7E72-4C71-4D20-B15D-452831A87D9D}
+          WMVideo Decoder MFT              {82D353DF-90BD-4382-8BC2-3F6192B76E34} 
+          HEVC Decoder MFT                 {420A51A3-D605-430C-B4FC-45274FA6C562} -->
+
+<TestSuite>
+  <TEST testId="50">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #50: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_lowlevel_main.mp4</Name>
+    <Description>Playback #50: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_lowlevel_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_lowlevel_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="51">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #51: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_3834kbps_randomaccess_main.mp4</Name>
+    <Description>Playback #51: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_3834kbps_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_3834kbps_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="52">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #52: MSHDRef_Texture_High_01_320x240p30f_lowdelay_main.mp4</Name>
+    <Description>Playback #52: MSHDRef_Texture_High_01_320x240p30f_lowdelay_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_High_01_320x240p30f_lowdelay_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="53">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #53: MSHDRef_Texture_SkinTones_05_352x288p15f_intra_main.mp4</Name>
+    <Description>Playback #53: MSHDRef_Texture_SkinTones_05_352x288p15f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_05_352x288p15f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="54">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #54: MSHDRef_Texture_SkinTones_05_352x288p15f_randomaccess_main.mp4</Name>
+    <Description>Playback #54: MSHDRef_Texture_SkinTones_05_352x288p15f_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_05_352x288p15f_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="55">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #55: MSHDRef_Texture_SkinTones_05_352x288p25f_lowdelay_P_main.mp4</Name>
+    <Description>Playback #55: MSHDRef_Texture_SkinTones_05_352x288p25f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_05_352x288p25f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="56">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #56: MSHDRef_Texture_SkinTones_08_320x240p24f_lowdelay_P_main.mp4</Name>
+    <Description>Playback #56: MSHDRef_Texture_SkinTones_08_320x240p24f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_08_320x240p24f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="57">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #57: MSHDRef_Difficult_Edge_02_720x480i30f_intra_main.mp4</Name>
+    <Description>Playback #57: MSHDRef_Difficult_Edge_02_720x480i30f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480i30f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="58">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #58: MSHDRef_Difficult_Edge_02_720x480p30f_1739kbps_randomaccess_main.mp4</Name>
+    <Description>Playback #58: MSHDRef_Difficult_Edge_02_720x480p30f_1739kbps_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_1739kbps_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="59">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #59: MSHDRef_Difficult_Edge_06_720x576i25f_lowdelay_P_main.mp4</Name>
+    <Description>Playback #59: MSHDRef_Difficult_Edge_06_720x576i25f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576i25f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="60">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #60: MSHDRef_Difficult_Edge_06_720x576p25f_randomaccess_main.mp4</Name>
+    <Description>Playback #60: MSHDRef_Difficult_Edge_06_720x576p25f_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576p25f_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="61">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #61: MSHDRef_Motion_DifDirect_01_1280x720p24f_2983kbps_randomaccess_main.mp4</Name>
+    <Description>Playback #61: MSHDRef_Motion_DifDirect_01_1280x720p24f_2983kbps_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_DifDirect_01_1280x720p24f_2983kbps_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="62">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #62: MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_intra_main.mp4</Name>
+    <Description>Playback #62: MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="63">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #63: MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_lowdelay_P_main.mp4</Name>
+    <Description>Playback #63: MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="64">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #64: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_intra_main.mp4</Name>
+    <Description>Playback #64: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="65">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #65: modechange.mp4</Name>
+    <Description>Playback #65: modechange.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>modechange.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="66">
+    <Category>Playback</Category>
+    <InputType>HEVC10</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Playback #66: 4K_10bit.mp4</Name>
+    <Description>Playback #66: 4K_10bit.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>4K_10bit.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="120">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Fuzz #120: MSHDRef_Difficult_Edge_06_720x576i25f_intra_main_fuzzed.mp4</Name>
+    <Description>Fuzz #120: MSHDRef_Difficult_Edge_06_720x576i25f_intra_main_fuzzed.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576i25f_intra_main_fuzzed.mp4</InputFile>
+  </TEST>
+  <TEST testId="121">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Fuzz #121: MSHDRef_Difficult_Edge_06_720x576p25f_lowdelay_main_fuzzed.mp4</Name>
+    <Description>Fuzz #121: MSHDRef_Difficult_Edge_06_720x576p25f_lowdelay_main_fuzzed.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576p25f_lowdelay_main_fuzzed.mp4</InputFile>
+  </TEST>
+  <TEST testId="122">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Fuzz #122 MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_lowdelay_main_fuzzed.mp4</Name>
+    <Description>Fuzz #122: MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_lowdelay_main_fuzzed.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_lowdelay_main_fuzzed.mp4</InputFile>
+  </TEST>
+  <TEST testId="123">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Fuzz #123: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_randomacess_fuzzed.mp4</Name>
+    <Description>Fuzz #123: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_randomacess_fuzzed.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_randomacess_fuzzed.mp4</InputFile>
+  </TEST>
+  <TEST testId="124">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Fuzz #124: MSHDRef_Texture_High_01_320x240p30f_lowdelay_main_fuzzed.mp4</Name>
+    <Description>Fuzz #124: MSHDRef_Texture_High_01_320x240p30f_lowdelay_main_fuzzed.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_High_01_320x240p30f_lowdelay_main_fuzzed.mp4</InputFile>
+  </TEST>
+  <TEST testId="125">
+    <Category>Playback</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Fuzz #125: MSHDRef_Texture_SkinTones_08_320x240p24f_lowlevel_main_fuzzed.mp4</Name>
+    <Description>Fuzz #125: MSHDRef_Texture_SkinTones_08_320x240p24f_lowlevel_main_fuzzed.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_08_320x240p24f_lowlevel_main_fuzzed.mp4</InputFile>
+  </TEST>
+  <TEST testId="230">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #230: MSHDRef_Difficult_Edge_02_720x480i30f_lowdelay_main.mp4</Name>
+    <Description>Quality #230: MSHDRef_Difficult_Edge_02_720x480i30f_lowdelay_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480i30f_lowdelay_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="231">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #231: MSHDRef_Difficult_Edge_02_720x480i30f_lowdelay_P_main.mp4</Name>
+    <Description>Quality #231: MSHDRef_Difficult_Edge_02_720x480i30f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480i30f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="232">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #232: MSHDRef_Difficult_Edge_02_720x480p24f_lowdelay_P_main.mp4</Name>
+    <Description>Quality #232: MSHDRef_Difficult_Edge_02_720x480p24f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480p24f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="233">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #233: MSHDRef_Difficult_Edge_02_720x480p30f_560kbps_randomaccess_main.mp4</Name>
+    <Description>Quality #233: MSHDRef_Difficult_Edge_02_720x480p30f_560kbps_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_560kbps_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="234">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #234: MSHDRef_Difficult_Edge_02_720x480p30f_intra_main.mp4</Name>
+    <Description>Quality #234: MSHDRef_Difficult_Edge_02_720x480p30f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="235">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #235: MSHDRef_Difficult_Edge_02_720x480p30f_lowdelay_main.mp4</Name>
+    <Description>Quality #235: MSHDRef_Difficult_Edge_02_720x480p30f_lowdelay_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_lowdelay_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="236">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #236: MSHDRef_Difficult_Edge_02_720x480p30f_lowdelay_P_main.mp4</Name>
+    <Description>Quality #236: MSHDRef_Difficult_Edge_02_720x480p30f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="237">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #237: MSHDRef_Difficult_Edge_02_720x480p30f_1047kbps_randomaccess_main.mp4</Name>
+    <Description>Quality #237: MSHDRef_Difficult_Edge_02_720x480p30f_1047kbps_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_1047kbps_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="238">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #238: MSHDRef_Difficult_Edge_06_720x576i25f_intra_main.mp4</Name>
+    <Description>Quality #238: MSHDRef_Difficult_Edge_06_720x576i25f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576i25f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="239">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #239: MSHDRef_Difficult_Edge_06_720x576i25f_randomaccess_main.mp4</Name>
+    <Description>Quality #239: MSHDRef_Difficult_Edge_06_720x576i25f_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576i25f_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="240">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #240: MSHDRef_Difficult_Edge_06_720x576p25f_intra_main.mp4</Name>
+    <Description>Quality #240: MSHDRef_Difficult_Edge_06_720x576p25f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576p25f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="241">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #241: MSHDRef_Difficult_Edge_06_720x576p25f_lowdelay_main.mp4</Name>
+    <Description>Quality #241: MSHDRef_Difficult_Edge_06_720x576p25f_lowdelay_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576p25f_lowdelay_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="242">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #242: MSHDRef_Motion_DifDirect_01_1280x720p24f_intra_main.mp4</Name>
+    <Description>Quality #242: MSHDRef_Motion_DifDirect_01_1280x720p24f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_DifDirect_01_1280x720p24f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="243">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #243: MSHDRef_Motion_DifDirect_01_1280x720p24f_lowdelay_P_main.mp4</Name>
+    <Description>Quality #243: MSHDRef_Motion_DifDirect_01_1280x720p24f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_DifDirect_01_1280x720p24f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="244">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #244: MSHDRef_Motion_DifDirect_01_1280x720p24f_2340kbps_randomaccess_main.mp4</Name>
+    <Description>Quality #244: MSHDRef_Motion_DifDirect_01_1280x720p24f_2340kbps_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_DifDirect_01_1280x720p24f_2340kbps_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="245">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #245: MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_lowdelay_main.mp4</Name>
+    <Description>Quality #245: MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_lowdelay_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080i30f_lowdelay_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="246">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #246: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_5760kbps_randomaccess_main.mp4</Name>
+    <Description>Quality #246: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_5760kbps_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_5760kbps_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="247">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #247: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_lowdelay_P_main.mp4</Name>
+    <Description>Quality #247: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="248">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #248: MSHDRef_Texture_High_01_320x240p30f_randomaccess_main.mp4</Name>
+    <Description>Quality #248: MSHDRef_Texture_High_01_320x240p30f_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_High_01_320x240p30f_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="249">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #249: MSHDRef_Texture_SkinTones_05_352x288p15f_lowdelay_main.mp4</Name>
+    <Description>Quality #249: MSHDRef_Texture_SkinTones_05_352x288p15f_lowdelay_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_05_352x288p15f_lowdelay_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="250">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #250: MSHDRef_Texture_SkinTones_05_352x288p15f_lowdelay_P_main.mp4</Name>
+    <Description>Quality #250: MSHDRef_Texture_SkinTones_05_352x288p15f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_05_352x288p15f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="251">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #251: MSHDRef_Texture_SkinTones_05_352x288p25f_intra_main.mp4</Name>
+    <Description>Quality #251: MSHDRef_Texture_SkinTones_05_352x288p25f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_05_352x288p25f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="252">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #252: MSHDRef_Texture_SkinTones_05_352x288p25f_lowdelay_main.mp4</Name>
+    <Description>Quality #252: MSHDRef_Texture_SkinTones_05_352x288p25f_lowdelay_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_05_352x288p25f_lowdelay_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="253">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #253: MSHDRef_Texture_SkinTones_08_320x240p24f_lowlevel_main.mp4</Name>
+    <Description>Quality #253: MSHDRef_Texture_SkinTones_08_320x240p24f_lowlevel_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_08_320x240p24f_lowlevel_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="254">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #254: MSHDRef_Texture_SkinTones_08_320x240p24f_randomaccess_main.mp4</Name>
+    <Description>Quality #254: MSHDRef_Texture_SkinTones_08_320x240p24f_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_08_320x240p24f_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="255">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #255: HEVC_3840x2160_64tiles_sao_cross_tile.mp4</Name>
+    <Description>Quality #255: HEVC_3840x2160_64tiles_sao_cross_tile.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>HEVC_3840x2160_64tiles_sao_cross_tile.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="256">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #256: HEVC_3840x2160_64tiles_sao_no_cross_tile.mp4</Name>
+    <Description>Quality #256: HEVC_3840x2160_64tiles_sao_no_cross_tile.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>HEVC_3840x2160_64tiles_sao_no_cross_tile.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="257">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #257: HEVC_4096x2160_64tiles_sao_cross_tile.mp4</Name>
+    <Description>Quality #257: HEVC_4096x2160_64tiles_sao_cross_tile.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>HEVC_4096x2160_64tiles_sao_cross_tile.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="258">
+    <Category>Quality</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #258: HEVC_4096x2160_64tiles_sao_no_cross_tile.mp4</Name>
+    <Description>Quality #258: HEVC_4096x2160_64tiles_sao_no_cross_tile.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>HEVC_4096x2160_64tiles_sao_no_cross_tile.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="259">
+    <Category>Quality</Category>
+    <InputType>HEVC10</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <Name>Quality #259: 4K_10bit.mp4</Name>
+    <Description>Quality #259: 4K_10bit.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>4K_10bit.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="310">
+    <Category>Stress</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <RunTimeInSeconds>900</RunTimeInSeconds>
+    <Name>Stress #310: MSHDRef_Difficult_Edge_06_720x576p25f_lowdelay_P_main.mp4</Name>
+    <Description>Stress #310: MSHDRef_Difficult_Edge_06_720x576p25f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576p25f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="311">
+    <Category>Stress</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <RunTimeInSeconds>3600</RunTimeInSeconds>
+    <Name>Stress #311: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_4278kbps_randomaccess_main.mp4</Name>
+    <Description>Stress #311: MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_4278kbps_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Motion_FastCam_Action_03_1920x1080p24f_4278kbps_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="312">
+    <Category>Stress</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <RunTimeInSeconds>3600</RunTimeInSeconds>
+    <Name>Stress #312: MSHDRef_Texture_High_01_320x240p30f_lowdelay_P_main.mp4</Name>
+    <Description>Stress #312: MSHDRef_Texture_High_01_320x240p30f_lowdelay_P_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_High_01_320x240p30f_lowdelay_P_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="410">
+    <Category>MultiInstance</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <NumInstances>4</NumInstances>
+    <Name>MultiInstance #410: MSHDRef_Difficult_Edge_02_720x480i30f_randomaccess_main.mp4</Name>
+    <Description>MultiInstance #410: MSHDRef_Difficult_Edge_02_720x480i30f_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480i30f_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="411">
+    <Category>MultiInstance</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <NumInstances>4</NumInstances>
+    <Name>MultiInstance #411: MSHDRef_Difficult_Edge_02_720x480p24f_intra_main.mp4</Name>
+    <Description>MultiInstance #411: MSHDRef_Difficult_Edge_02_720x480p24f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_02_720x480p24f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="412">
+    <Category>MultiInstance</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <NumInstances>4</NumInstances>
+    <Name>MultiInstance #412: MSHDRef_Difficult_Edge_06_720x576i25f_lowdelay_main.mp4</Name>
+    <Description>MultiInstance #412: MSHDRef_Difficult_Edge_06_720x576i25f_lowdelay_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Difficult_Edge_06_720x576i25f_lowdelay_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="413">
+    <Category>MultiInstance</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <NumInstances>4</NumInstances>
+    <Name>MultiInstance #413: MSHDRef_Texture_High_01_320x240p30f_intra_main.mp4</Name>
+    <Description>MultiInstance #413: MSHDRef_Texture_High_01_320x240p30f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_High_01_320x240p30f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="414">
+    <Category>MultiInstance</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <NumInstances>4</NumInstances>
+    <Name>MultiInstance #414: MSHDRef_Texture_SkinTones_05_352x288p25f_randomaccess_main.mp4</Name>
+    <Description>MultiInstance #414: MSHDRef_Texture_SkinTones_05_352x288p25f_randomaccess_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_05_352x288p25f_randomaccess_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+  <TEST testId="415">
+    <Category>MultiInstance</Category>
+    <InputType>HEVC</InputType>
+    <Component_CLSID>{420A51A3-D605-430C-B4FC-45274FA6C562}</Component_CLSID>
+    <NumInstances>4</NumInstances>
+    <Name>MultiInstance #415: MSHDRef_Texture_SkinTones_08_320x240p24f_intra_main.mp4</Name>
+    <Description>MultiInstance #415: MSHDRef_Texture_SkinTones_08_320x240p24f_intra_main.mp4</Description>
+    <TimeoutSec>0</TimeoutSec>
+    <InputFile>MSHDRef_Texture_SkinTones_08_320x240p24f_intra_main.mp4</InputFile>
+    <DXVAType>11</DXVAType>
+  </TEST>
+</TestSuite>

@@ -1,0 +1,12 @@
+!include ..\conf.mk
+
+TARGETNAME=WaitVBl
+
+SOURCES= \
+	WaitVBL.rc \
+	qpc.cpp \
+	WaitVBl.cpp \
+	main.cpp
+
+SOURCES=$(SOURCES) kitContent.kml
+

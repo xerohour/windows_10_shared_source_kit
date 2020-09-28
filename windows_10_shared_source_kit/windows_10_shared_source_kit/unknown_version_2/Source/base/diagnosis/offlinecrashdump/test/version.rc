@@ -1,0 +1,13 @@
+//
+// Version
+//
+
+#include <verrsrc.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE    VFT_APP
+#define VER_FILESUBTYPE VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "OfflineDump Tool EXECUTABLE"
+#define VER_INTERNALNAME_STR        "offdumptool.exe"
+
+#include "common.ver"

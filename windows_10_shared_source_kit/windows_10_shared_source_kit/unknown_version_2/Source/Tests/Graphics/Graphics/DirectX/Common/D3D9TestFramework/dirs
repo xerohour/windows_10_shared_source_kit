@@ -1,0 +1,24 @@
+DIRS = \
+        Buffers \
+        CommandLine \
+        D3D \
+        D3DX \
+        D3DTest \
+        Device \
+        Resource \
+	DXGLogger \
+        Effect \
+	Handle \
+	Image \
+	ImageCompare \
+        Object \
+	SwapChain \
+        TestManager \
+        Window \
+        WindowFramework \
+        TestUtils \
+	HLUtils \
+	Textures \
+	Surface \
+        Query \
+        link

@@ -1,0 +1,27 @@
+DXVER=8
+
+!include ..\..\Conf.mk
+
+C_DEFINES=-DBUILD_DX$(DXVER)
+
+TARGETNAME=gammarmp8
+TARGETTYPE=PROGRAM
+
+SOURCES=\
+	..\main.cpp \
+	..\dxfmt.cpp \
+	..\gammarmp.rc
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\winmm.lib \
+	$(SDK_LIB_PATH)\comdlg32.lib \
+	$(SDK_LIB_PATH)\comctl32.lib \
+	$(SDK_LIB_PATH)\ole32.lib \
+	$(SDK_LIB_PATH)\shell32.lib \
+	$(SDK_LIB_PATH)\kernel32.lib \
+	$(SDK_LIB_PATH)\d3d$(DXVER).lib \
+	$(SDK_LIB_PATH)\uuid.lib
+
+UMENTRY=winmain
+UMTYPE=windows

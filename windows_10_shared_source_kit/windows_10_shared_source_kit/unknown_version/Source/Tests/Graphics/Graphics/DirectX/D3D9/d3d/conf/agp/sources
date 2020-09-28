@@ -1,0 +1,17 @@
+!include ..\conf.mk
+
+
+TARGETNAME=Agp
+
+SOURCES= \
+        Agp.rc \
+        Agp.cpp \
+        DrawGrid.cpp \
+        TexSize.cpp 
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

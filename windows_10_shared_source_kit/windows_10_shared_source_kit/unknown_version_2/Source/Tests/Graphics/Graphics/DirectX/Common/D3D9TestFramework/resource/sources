@@ -1,0 +1,11 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CResource
+
+SOURCES= \
+        CResource.cpp \
+        CResource9.cpp
+
+PRECOMPILED_INCLUDE=ResourcePCH.h
+PRECOMPILED_CXX=1

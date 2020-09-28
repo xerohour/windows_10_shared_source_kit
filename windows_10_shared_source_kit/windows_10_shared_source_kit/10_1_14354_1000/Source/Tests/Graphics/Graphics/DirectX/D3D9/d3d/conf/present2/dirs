@@ -1,0 +1,7 @@
+DIRS = \
+	Present2_Lib \
+	Present2_Core \
+	Present2_DX \
+	Present2_FullScreen \
+	Present2_LH \
+	Present2_Clip \

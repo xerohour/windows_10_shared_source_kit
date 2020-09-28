@@ -1,0 +1,152 @@
+$NoOutput
+
+This file defines common blocks used by the various instruction test code generators
+
+The code is defined in module PShader.py
+${
+# Execute PShader in this namespace:
+execfile('PShader.py', globals(), locals())
+$}
+
+$[vs_3_0_template(dcls,defs,movs)]{$#
+VertexShader NormalVS =
+	asm
+	{
+		vs_3_0
+		dcl_position	v0
+		dcl_position	o0
+		$dcls
+		$defs
+		m4x4 o0, v0, c0
+		$movs
+	};
+$}$#
+$[vs_2_0_template(defs,movs)]{$#
+VertexShader NormalVS =
+	asm
+	{
+		vs_2_0
+		dcl_position	v0
+		$defs
+		m4x4 oPos, v0, c0
+		$movs
+	};
+$}$#
+
+The following is the common macro definition block:
+You must define SET_PS_CONSTANTS.
+$[defineMACROS]{$#
+#define PS_SETUP \
+	$ps_ver_token$# \
+$#	def c0, 1.0, 0.0, $eps, $eps_pp
+
+#define SET_PRED \
+	mov r0, c2 \
+	setp_gt p0, r0, c0.y
+
+// sets green, then removes green if either red or blue channels are set:
+#define PS_END \
+	mov r2.ga, c0.x \
+	add_sat r2.g, r2.g, -r2.r \
+	add_sat r2.g, r2.g, -r2.b \
+	mov oC0, r2
+
+#define SET_VS \
+	VertexShaderConstant[0] = <mFinal>; \
+	VertexShader = <NormalVS>;
+
+#define SET_MAIN_PS_CONST \
+	PixelShaderConstant[0] = {1.0, 0.0, $eps, $eps_pp};
+
+// Standard verify result macro, outputs to r1 0-right and 1-wrong, per component:
+$# 												(res,exp,eps,out,tmp,one,zero)
+#define VERIFY_RESULT \
+	$<' \\\n'.join(ProcessBlock('verifyResult', 'r0,c1,r2,r1,r3,c0.x,c0.y'.split(',')).split('\n'))$> \
+	mov r2, c0.y
+
+// The following can be used to verify each component individually, since some
+// instructions or macros may write to extra components and you do not want to verify those.
+$<'\n'.join(['#define V_%s add_sat r2.r, r2.r, r1.%s' % (c.upper(), c) for c in 'xyzw'])$>
+
+$< ps_2_x and '#define USEPREDICATE bool UsePredicate = true;\n' or '' $>$#
+$< ps_2_x and '#define USEARBSWZ bool UseArbSwizzle = true;\n' or '' $>$#
+#define TESTCASE \
+Technique \
+< \
+	String Shape = "TinyQuad"; \
+	String Name = 
+#define PASSBEGIN \
+> \
+{ \
+	Pass P0 \
+	{
+#define TESTBEGIN \
+		PixelShader = asm { \
+			PS_SETUP
+#define TESTEND \
+			PS_END \
+		}; \
+		SET_VS \
+		SET_MAIN_PS_CONST \
+		SET_PS_CONSTANTS \
+	} \
+}
+$}$#
+
+$[verifyResult(res,exp,eps,out,tmp,one,zero)]{$#	Verification code for shader.
+$# input is registers for result, expected, epsilon, output, temporary, and one and zero values
+$# note: swizzles not allowed on tmp and out
+$# typical input: r0, c2, c0.z, r0, r1, c0.x, c0.y
+$# where:
+$#	r0	- holds result, then output
+$#	r1	- temporary
+$#	c0	- useful contants: (1, 0, eps, ?)
+$#	c2	- expected result (c1 probably used as input value)
+add $out, $res, -$exp
+cmp $out, $out, $out, -$out
+$# scale eps by expected result: (minimum scale at 1.0)
+mov $tmp, $exp
+cmp $tmp, $tmp, $tmp, -$tmp
+max $tmp, $tmp, $one
+mul $tmp, $eps, $tmp
+$# subtract absolute difference from absolute scaled eps, now anything >= 0 is right:
+add $out, $tmp, -$out
+cmp $out, $out, $zero, $one   $# Output: 1 if wrong, zero if right, per component
+$}
+
+Old Notes for reference:
+"""--------------------Notes-----------------------
+math instruction testcase layout:
+	- test description:
+		- instruction, modifiers
+		- optional predicate, value
+		- destination, mask
+		- source values, modifiers, swizzles * sources
+		- result value description
+		- epsilon used (not doing in description because for now '_pp' tells you what you need to know)
+	- register initialization:
+		- predicate initialization
+		- destination initialization - all components to constant value like 0 from c0
+		- epsilon initialization
+		- source initialization * sources
+	- test instruction:
+		- predicate modifier
+		- instruction, modifiers
+		- destination, mask
+		- source register, modifiers, swizzles * sources
+	- result verification
+		- input: result (r#), expected (can be c#), epsilon (r#), one (c0.x), zero (c0.y)
+		- output: output (r#), can be same as result but not epsilon
+		- needs temp reg (r#), can be the same as epsilon or result, but will overwrite
+math instruction testcase register mappings:
+	- constant registers:
+		c0 - useful global constants: 1, 0, eps, eps_pp -- placed in .fx setup macro
+		c1 - expected result
+		c2 - values to initialize predicate components
+		c4 and on - source values
+	- temp. registers:
+		r0 - destination register (used temporarily to set predicate reg)
+		r1 - output register for verification (separate from dest reg so it lives past verification, in case we still need it)
+		r2 - epsilon register & temp. register for verification & output color register
+		r4 and on - source registers
+"""

@@ -1,0 +1,19 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=SubPixel
+
+SOURCES= \
+        ..\DrawGrid.cpp \
+        ..\SubPixel.rc \
+        ..\SubPixel.cpp
+
+
+
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

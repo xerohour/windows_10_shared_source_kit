@@ -1,0 +1,16 @@
+!include ..\Common.mk
+
+
+TARGETNAME=ShaderUtils 
+
+SOURCES= \
+        CShaderDebugger.cpp \
+        ShaderUtils.cpp \
+
+INCLUDES=.\; \
+         $(DIRECTX_TST_ROOT)\inc; \
+         $(INCLUDES)
+
+
+
+TARGETLIBS=\

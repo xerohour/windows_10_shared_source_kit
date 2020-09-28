@@ -1,0 +1,348 @@
+// This is an example text file that can be used by pshaders readshader group
+// type: can be one of the following
+// tex - four textures are loaded
+//		Stage 0 m_pDXLogoTex		
+//		Stage 1 m_pColorCheckerTex
+//		Stage 2 m_pBrickTex
+//		Stage 3 m_pStripesTex
+//		All using 0 TC (tex coords) and a simple quad. 
+//		Shader type is plain
+//
+// bump - two textures are loaded
+//		Stage 0 m_pSineTex
+//		Stage 1 m_pStripesTex
+//		Stage 2 m_pBrickTex
+//		All using 0 TC (tex coords) and a simple quad. 
+//		Shader type is bump
+//
+// bump2
+//
+// tex14
+//
+// *************************** Version 1.0 ***************************
+	// Scale tex0 by color0 and add to tex1
+	type:tex
+	name:Scale t0*v0+t1
+	ps.1.0
+	tex t0
+	tex t1
+	mov r1, t1
+	mad r0, v0, t0, r1
+	end:
+
+	// Add tex0, tex1, color0, and color1
+	type:tex
+	name:t0+t1+v0+v1
+	ps.1.0
+	tex t0
+	tex t1
+	add r0, t0, v1
+	add r0, r0, t1
+	add r0, r0, v0
+	end:
+
+	//Max ins test
+	type:tex
+	name:Max Ins
+	ps.1.0
+	def c0, 0.5, 0.5, 0.5, 0.5
+	tex t0
+	tex t1
+	tex t2
+	tex t3
+	add r0, t0, v1
+	add r0, r0, t1
+	add r0, r0, v0
+	sub_sat r0, r0, c0
+	mul r1, r0, v1
+	mad r1, r0, r1, t3
+	lrp_sat r0, c0, r1, r0
+	add r0, r0, t2
+	end:	
+
+// *************************** Version 1.1 ***************************
+	
+	// Blend between tex0 and tex1
+	type:tex
+	name:Blend t0/t1
+	ps.1.1	
+	tex t0
+	tex t1
+	lrp r0, v0, t0, t1
+	end:
+
+	//Test for co-issue 3 port restriction.
+	type:tex
+	name:Co-issue 3 port
+	ps.1.1
+	def c0, 0.1, 0.1, 0.1, 0.6
+	tex t0
+	tex t1
+	tex t2
+	tex t3
+	mad t0.rgb, t1, t2, c0
+	+ mov t0.a, t3.a
+	mov r0, t0
+	end:	
+
+	//re-use the source to a tex op 
+	type:tex
+	name:Re-use the texop source
+	ps.1.1
+	tex t0
+	texreg2ar t1, t0
+	mul r0, t1, t0
+	end:
+
+	//Test that cnd is > 0.5
+	type:tex
+	name:cnd r0.a > 0.5
+	ps.1.1
+	def c0, 0.5, 0.5, 0.5, 0.5
+	tex t0
+	tex t1
+	mov r0.a, c0
+	cnd r0, r0.a, t0, t1
+	end:
+	
+	type:tex
+	name:mul_x2_sat
+	ps.1.1
+	tex t0
+    mul_x2_sat r0, t0, v0
+	mov_d2 r0, r0
+	end:
+
+	type:tex
+	name:mad_x4_sat
+	ps.1.1
+	def c0, 0.5, 0.5, 0.5, 0.5
+	tex t0
+    mad_x4_sat r0, t0, c0, t0
+	mov_d2 r0, r0
+	end:
+
+	type:tex
+	name:sub_d2_sat
+	ps.1.1
+	def c0, 0.5, 0.5, 0.5, 0.5
+	tex t0
+    sub_d2_sat r0, t0, c0
+	add r0, r0, c0
+	end:
+	
+	type:tex
+	name:diff arg mod in each pipe
+	ps.1.1
+	tex t0
+    mov r0.rgb, 1-t0
+	+ mov r0.a, t0_bias
+	end:
+
+    type:tex
+	name:diff reg in each pipe
+	ps.1.1
+	tex t0
+    tex t2
+    mov r1.a, t0
+    mov r1.rgb, 1-t0
+	+ mov r0.a, t0_bias
+    cnd r0, r0.a, t0, r1
+	end:
+    
+	// neg and bx2 the same constant. 
+	type:tex
+	name:Neg, bx2 and bias of constant
+	ps.1.1
+	def c3, -0.25, 0.75, 0.75, 1
+    tex t0
+	mad r0, t0, c3_bx2, -c3_bias
+	end:
+
+// *************************** Version 1.2 **************************
+
+	//From 1.2 spec
+	//There is a maximum limit of 3 cmp instructions as validated
+	//this is a validation error in 8.1
+	//However in reality each cmp just counts as 2 instructions
+	//allowed in a single pixel shader.
+	type:tex
+	name:cmp validation max 
+	ps.1.2
+	tex t0
+    tex t1
+    cmp_x2 r0, t0_bx2, v0, t1
+	cmp_sat r1, t1_bx2, r0, t1
+	cmp r0, v0_bx2, r1, t0
+	end:	
+	
+	//Test that cmp is >= 0.0
+	type:tex
+	name:cmp >= 0.0
+	ps.1.2
+	def c0, 0.4, 0.5, 0.5, 0.4
+	tex t0
+	tex t1
+	cmp r0, c0_bx2, t0, t1
+	end:
+
+	//There is a maximum of 4 dp4 commands are allowed in a single pixel shader
+	//as validated in 8.1 this is an error.
+	//Reality is that each dp4 instruction counts as 2 instructions
+	type:tex
+	name:3 x dp4
+	ps.1.2
+    tex t0
+	tex t1
+	tex t2
+	dp4_sat r0, t1, t0
+	dp4_sat r1, t2, t1
+	mad t3, t0, r1, r0
+	dp4_sat r0, t2, t3
+	mad r0, -r1, v0, r0
+	end:                 
+
+	//re-use the source to a tex op 
+	type:bump2
+	name:Re-use the texop source 2 x texbem
+	ps.1.2
+	tex t0
+	texbem t1, t0
+	texbem t2, t0
+	mad r0, t2, t1, t0
+	end:
+
+	//re-use the source to a tex op 
+	//uses bump format in texreg2ar op.
+	type:bump2
+	name:Re-use the texop source
+	ps.1.2
+	tex t0
+	texreg2ar t1, t0
+	mul r0, t1, t0
+	end:	
+
+// *************************** Version 1.3 ***************************
+	//texm3x2depth out of order regs
+	type:needz
+	name:texm3x2depth out of order regs
+	ps.1.3
+	tex t0
+	tex t1
+	texm3x2pad t2, t0
+	texm3x2depth t3, t0
+	mov r0, t1
+	end:
+
+// *************************** Version 1.4 ***************************
+
+	//Max ins test
+	type:tex14
+	name:Max Ins
+	ps.1.4
+	def c0, 0.25, 0.25, 0.25, 0.25
+	texld r0, t0
+	texld r1, t1
+	texld r2, t2
+	texld r3, t3
+	texld r4, t4
+	texld r5, t5	
+	add r0, r0, r0
+	add r0, r0, r1
+	add r0, r0, r3
+	sub r0, r0, c0
+	mul r1, r0, r4
+	mad r1, r0, -r1, r3
+	lrp r0, c0, r1, r2
+	add_x4 r0, r0, r0
+	phase
+	texld r0, r0
+	texld r1, t1
+	texld r2, t2
+	texld r3, t3
+	texld r4, t4
+	texld r5, t5	
+	add r0, -r0, v1
+	add r0, r0, r1
+	add r0, r0, -v0
+	sub r0, r0, c0
+	mul r1, r0, v1
+	mad r1, r0, r1, r3
+	lrp r0, c0, r1, r2
+	add r0, r0, r5
+	end:
+
+	// texld re-use coords.
+	type:tex14
+	name:re-use coords
+	ps.1.4
+	texld r0, t0
+	texld r5, t0
+	mul r0, r5, r0
+	end:
+
+	// texcrd then re-use reg
+	type:tex14
+	name:texcrd re-use reg
+	ps.1.4
+	def c0, 1.0, 0.25, 0.25, 1.0
+	texcrd r0.rgb, t0
+	texld r2, t0	
+	mov r0.a, c0.a
+	mul r0, r2, r0
+	mov r0.a, c0.a
+	end:
+
+	//Test for co-issue 3 port restriction.
+	type:tex14
+	name:Co-issue 3 port + write masks
+	ps.1.4
+	def c1, 0.5, 0.25, 0.25, 0.8
+	def c2, 0.25, 0.5, 0.25, 0.5
+	def c3, 0.25, 0.25, 0.5, 0.2
+	texld r5, t0 
+	mad r0.rb, r5, c1, c3
+	+ mov r0.a, c2.a
+	mov r0.g, c2
+	end:
+
+	// texld re-use coords _dw
+	type:proj14
+	name:re-use coords proj _dw
+	ps.1.4
+	texld r0, t0_dw.xyw
+	texld r5, t0.xyw
+	mul r0, r5, r0
+	end:
+
+	// texld re-use coords _dz
+	type:proj14
+	name:re-use coords proj _dz
+	ps.1.4
+	texcrd r5.rgb, t0
+	phase
+	texld r0, r5_dz.xyz
+	texld r1, r5.xyz
+	mul r0, r1, r0
+	end:
+
+    type:tex
+    name:lrp_x8_sat
+    ps.1.4
+    def c0, 0.25, 0.25, 0.25, 0.25
+    texld r0, t0
+    texld r3, t3
+    lrp_x8_sat r0, c0, r0, r3
+    mov_d2 r0, r0
+    end:
+
+	type:tex
+	name:diff arg mod in each pipe
+    ps.1.4
+    texld r0, t0
+    mov r0.gb, 1-r0
+    + mov r0.a, r0_bias
+    mov r0.r, r0.r
+    end:
+
+//EOF

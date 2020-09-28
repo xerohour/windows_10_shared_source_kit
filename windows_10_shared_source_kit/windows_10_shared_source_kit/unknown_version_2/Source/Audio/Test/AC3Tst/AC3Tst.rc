@@ -1,0 +1,33 @@
+// ------------------------------------------------------------------------------
+//
+// Copyright (C) Microsoft. All rights reserved.
+//
+// File Name:
+//
+//  ac3tst.rc
+//
+// Abstract:
+//
+//  ac3tst resources
+//
+
+
+
+// -------------------------------------------------------------------------------
+
+#include <windows.h>
+#include <shell98.rc>
+#include "resource.h"
+#include "version.rc"
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+APPICON     ICON    DISCARDABLE     res\AC3Tst.ico
+
+/////////////////////////////////////////////////////////////////////////////
+// This is _the_ content that will be played for every test case in this
+// app.  It is a 48khz, 16bit, stereo AC3 file
+WR_AC3      WAVE        res\ac3.wav
+WR_PCM      WAVE        res\pcm.wav

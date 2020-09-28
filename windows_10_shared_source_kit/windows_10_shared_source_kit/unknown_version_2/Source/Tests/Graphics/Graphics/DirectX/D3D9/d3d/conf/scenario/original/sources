@@ -1,0 +1,10 @@
+!include ..\..\conf.mk
+
+TARGETNAME=scenario
+
+SOURCES=..\scenario.rc \
+        ..\scenario.cpp
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

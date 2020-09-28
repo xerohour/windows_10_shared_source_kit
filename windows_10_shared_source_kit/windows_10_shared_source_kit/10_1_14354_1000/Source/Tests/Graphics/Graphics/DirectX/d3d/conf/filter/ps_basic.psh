@@ -1,0 +1,179 @@
+Texture1D myTex1D;
+Texture1DArray myTex1Da;
+Texture2D myTex2D;
+Texture2DArray myTex2Da;
+Texture3D myTex3D;
+TextureCube myTexCube;
+sampler samp;
+
+cbuffer cb0 : register(b0)
+{
+	float4 inverseViewport;
+};
+
+cbuffer cb1 : register(b1)
+{
+	float4 texCoords[4];
+};
+
+struct PSIn
+{
+	float4 pos : SV_Position;
+};
+
+struct PSOut
+{
+	float4 color : SV_Target;
+};
+
+float4 interpolate(float2 pos)
+{
+	float dx = pos.x * inverseViewport.z * 0.5;
+	float dy = pos.y * -inverseViewport.w * 0.5;
+	
+	float4 topVals = texCoords[0] * (1-dx) + texCoords[1] * dx;
+	float4 botVals = texCoords[3] * (1-dx) + texCoords[2] * dx;
+	float4 finalVal = topVals * (1-dy) + botVals * (dy);
+	
+	return finalVal;
+}
+
+int4 calcOffset(float4 pos)
+{
+	int4 offset = {(int)(pos.x * 15 - 8), (int)(pos.y * 15 - 8), (int)(pos.z * 15 - 8), 0};
+	offset = min(int4(7,7,7,7),offset);
+	offset = max(int4(-8,-8,-8,-8),offset);
+	return offset;
+}
+
+PSOut main(PSIn input)
+{
+	PSOut output;
+	output.color = float4( 1.0, 1.0, 1.0, 1.0 );
+	return output;
+}
+
+PSOut main_1(PSIn input)
+{
+	PSOut output;
+	float1 tex = interpolate(input.pos);
+	output.color = myTex1D.Sample(samp, tex);
+	return output;
+}
+
+PSOut main_1_aoff(PSIn input)
+{
+	PSOut output;
+	float1 tex = interpolate(input.pos);
+	if (input.pos.x < 1/inverseViewport.z)
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex1D.Sample(samp, tex, int3(-1,0,-1));
+		else
+			output.color = myTex1D.Sample(samp, tex, int3(0,-1, 0));
+	}
+	else
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex1D.Sample(samp, tex, int3(1,1,2));
+		else
+			output.color = myTex1D.Sample(samp, tex, int3(0,2,1));
+	}
+	return output;
+}
+
+PSOut main_1a(PSIn input)
+{
+	PSOut output;
+	uint width, numElements;
+	myTex1Da.GetDimensions(width, numElements);
+	float4 texcoord = interpolate(input.pos);
+	texcoord.y *= (float)numElements;
+	output.color = myTex1Da.Sample(samp, texcoord);
+	return output;
+}
+
+PSOut main_2(PSIn input)
+{
+	PSOut output;
+	float2 tex = interpolate(input.pos);
+	output.color = myTex2D.Sample(samp, tex);
+	return output;
+}
+
+PSOut main_2_aoff(PSIn input)
+{
+	PSOut output;
+	float2 tex = interpolate(input.pos);
+	if (input.pos.x < 1/inverseViewport.z)
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex2D.Sample(samp, tex, int3(-1,0,-1));
+		else
+			output.color = myTex2D.Sample(samp, tex, int3(0,-1, 0));
+	}
+	else
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex2D.Sample(samp, tex, int3(1,1,2));
+		else
+			output.color = myTex2D.Sample(samp, tex, int3(0,2,1));
+	}
+	return output;
+}
+
+PSOut main_2a(PSIn input)
+{
+	PSOut output;
+	uint width, height, numElements;
+	myTex2Da.GetDimensions(width, height, numElements);
+	float4 texcoord = interpolate(input.pos);
+	texcoord.z *= (float)numElements;
+	output.color = myTex2Da.Sample(samp, texcoord);
+	return output;
+}
+
+PSOut main_2_sampfreq(PSIn input, uint sampIdx : SV_SampleIndex )
+{
+	PSOut output;
+	float2 tex = interpolate(input.pos);
+	output.color = myTex2D.Sample(samp, tex);
+	return output;
+}
+
+PSOut main_3(PSIn input)
+{
+	PSOut output;
+	float3 tex = interpolate(input.pos);
+	output.color = myTex3D.Sample(samp, tex);
+	return output;
+}
+
+PSOut main_3_aoff(PSIn input)
+{
+	PSOut output;
+	float3 tex = interpolate(input.pos);
+	if (input.pos.x < 1/inverseViewport.z)
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex3D.Sample(samp, tex, int3(-1,0,-1));
+		else
+			output.color = myTex3D.Sample(samp, tex, int3(0,-1, 0));
+	}
+	else
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex3D.Sample(samp, tex, int3(1,1,2));
+		else
+			output.color = myTex3D.Sample(samp, tex, int3(0,2,1));
+	}
+	return output;
+}
+
+PSOut main_4(PSIn input)
+{
+	PSOut output;
+	float3 tex = interpolate(input.pos);
+	output.color = myTexCube.Sample(samp, tex);
+	return output;
+}

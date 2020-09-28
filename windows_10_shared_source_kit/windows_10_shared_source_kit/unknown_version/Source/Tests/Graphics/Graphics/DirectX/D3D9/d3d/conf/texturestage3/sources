@@ -1,0 +1,23 @@
+!include ..\conf.mk
+
+TARGETNAME=TextureStage3
+
+
+SOURCES=\
+\
+TextureStage3.cpp\
+TextureStage3.rc\
+\
+TSStestCasesOneStage.cpp\
+TSStestCasesTwoStage.cpp\
+TSStestCasesThreeStage.cpp\
+TSStestCasesFourStage.cpp\
+TSStestCasesFiveStage.cpp\
+TSStestCasesSixStage.cpp\
+TSStestCasesSevenStage.cpp\
+TSStestCasesEightStage.cpp\
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

@@ -1,0 +1,59 @@
+ the case were the frequency is aliased back we should get a negative Snr
+			if (fNormalFrequency >= 1)
+			{
+				float f = fNormalFrequency;
+				while (f>=1) f-=1;
+				fNormalFrequency= f;
+			}
+            double dSNR=0;
+            double* pf64Filter=NULL;
+            KAISER_INFO kinfo;
+			//
+			// Design Kaiser notch filter
+            if (!KaiserNotchDesign(fNormalFrequency, wfx.wBitsPerSample, &pf64Filter, kinfo))
+            {
+                SLOG(eError, "INTERNAL ERROR: Out of memory or filter design bug");
+                return FNS_PENDING;
+            }
+
+#ifdef _DEBUG
+			//
+			// Debug dump fo the input/output/filter
+            KaiserDumpText(L"C:\\MATLABR11\\WORK\\InputBuffer.m", 
+                        (float*)graph.GetInputData(), 
+                        (UINT32)1024);
+            KaiserDumpText(L"C:\\MATLABR11\\WORK\\OutputBuffer.m", 
+                        (float*)(((LPBYTE)graph.GetOutputData()) + nOffset*wfx.nBlockAlign), 
+                        (UINT32)2048);
+            KaiserDumpText(L"C:\\MATLABR11\\WORK\\KaiserDesign.m", 
+                        (double*)pf64Filter, 
+                        kinfo.M + 1);
+#endif
+
+			//
+            // calculate the SNR
+            if (fir_snr(((LPBYTE)graph.GetOutputData()) + nOffset*wfx.nBlockAlign, // data to analyze
+                        nFrames, // number of frames to analyze
+                        &wfx,    // data type
+                        pf64Filter,  // filter to use
+                        kinfo.M + 1, // number of taps
+                        &dSNR))
+            {
+                SLOG(eInfo1, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+                SLOG(eInfo1, "");
+                SLOG(eInfo1, "SNR calculated in time domain: ^^ %4.2lf ^^", dSNR);
+                SLOG(eInfo1, "");
+                SLOG(eInfo1, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+
+                aTestMatrix[u][v].dSNR = dSNR;
+            }
+            else
+            {
+                SLOG(eError, "INTERNAL ERROR: Out of memory");
+                return FNS_PENDING;
+            }
+        }
+
+    //
+    // Print headers 
+    TCHAR  szHe

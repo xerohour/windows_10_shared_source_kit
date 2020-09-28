@@ -1,0 +1,2 @@
+copy /v /y /z %sdxroot%.binaries.%build.arch%%build.type%\nttest\Windowstest\graphics\d3d\conf\WGF11Tessellation.exe %sdxroot%.TestBin\%build.arch%%build.type%\*
+copy /v /y /z %sdxroot%.binaries.%build.arch%%build.type%\Symbols.pri\nttest\WINDOWSTEST\graphics\exe\WGF11Tessellation.pdb %sdxroot%.TestBin\%build.arch%%build.type%\*

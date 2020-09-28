@@ -1,0 +1,14 @@
+!include ..\conf.mk
+
+TARGETNAME=VBSwap
+
+SOURCES= \
+        VBSwap.rc  \
+        VBSwap.cpp 
+#    CMesh.cpp    \
+
+PASS0_BINPLACE=\
+    VBSwap.x \
+
+SOURCES=$(SOURCES) kitContent.kml
+

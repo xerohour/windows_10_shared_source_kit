@@ -1,0 +1,25 @@
+!include ..\..\conf.mk
+
+TARGETNAME=stencil
+
+SOURCES=..\stencil.rc \
+        ..\stencil.cpp \
+        ..\cap.cpp \
+        ..\clear.cpp \
+        ..\clearccw.cpp \
+        ..\cullone.cpp \
+        ..\culltwo.cpp \
+        ..\func.cpp \
+        ..\funcccw.cpp \
+        ..\ignore.cpp \
+        ..\ignoreccw.cpp \
+        ..\op.cpp \
+        ..\opccw.cpp \
+        ..\scorrupt.cpp \
+        ..\scorruptccw.cpp \
+        ..\zcorrupt.cpp \
+        ..\zcorruptccw.cpp
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

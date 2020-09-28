@@ -1,0 +1,27 @@
+will set red or blue to 1 if a component is
+// set to the wrong value:
+// red set:  if component should be 0 but is 1
+$<'\n'.join(['#define %s0 (p0.%s) mov r2.r, c0.x' % (c.upper(), c) for c in 'xyzw'])$>
+// blue set: if component should be 1 but is 0
+$<'\n'.join(['#define %s1 (!p0.%s) mov r2.b, c0.x' % (c.upper(), c) for c in 'xyzw'])$>
+
+// The purpose of the two cmp ops is to remove green if either red or blue
+// channels are set.  This makes it more obvious that something was wrong:
+#define PS_END \
+	mov r2.ga, c0.x \
+	add_sat r2.g, r2.g, -r2.r \
+	add_sat r2.g, r2.g, -r2.b \
+	mov oC0, r2
+
+#define SET_VS \
+	VertexShaderConstant[0] = <mFinal>; \
+	VertexShader = <NormalVS>;
+
+#define SET_PS_CONSTANTS$# \
+$#	$< ' \\\n'.join(WritePSConstantDefaults(src_defaults).split('\n')) $>
+
+#define TESTCASE Technique < String Name =
+#define PASSBEGIN \
+	String Shape = "TinyQuad"; \
+	bool UsePredicate = true; \
+> { Pas

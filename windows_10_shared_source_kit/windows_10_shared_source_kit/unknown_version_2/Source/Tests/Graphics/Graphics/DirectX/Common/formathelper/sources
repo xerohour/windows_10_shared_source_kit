@@ -1,0 +1,15 @@
+!include ..\Common.mk
+
+TARGETNAME=FormatHelper
+TARGETTYPE=LIBRARY
+
+SOURCES= \
+	FormatDescImpl.cpp \
+	FormatHelper.cpp
+
+C_DEFINES= $(C_DEFINES) /DD3D11DLLNAME=\"d3d11$(DX_BETA_NAMING).dll\"
+
+OBJLIBFILES = \
+        $(DIRECTX_TST_OBJ_ROOT)\common\D3DFormatConverter\$O\D3DFormatConverter.lib \
+
+TARGETLIBS=\

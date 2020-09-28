@@ -1,0 +1,13 @@
+!include ..\..\conf.mk
+
+TARGETNAME=clear
+
+SOURCES=..\clear.rc \
+	..\clear.cpp \
+        ..\DerivedClasses.cpp \
+        ..\describe.cpp \
+        ..\helper_fns.cpp
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

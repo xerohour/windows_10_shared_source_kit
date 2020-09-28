@@ -1,0 +1,169 @@
+Texture1D myTex1D;
+Texture2D myTex2D;
+Texture3D myTex3D;
+TextureCube myTexCube;
+sampler samp;
+
+cbuffer cb0 : register(b0)
+{
+	float4 inverseViewport;
+};
+
+cbuffer cb1 : register(b1)
+{
+	float4 texCoords[4];
+};
+
+struct PSIn
+{
+	float4 pos : SV_Position;
+};
+
+struct PSOut
+{
+	float4 color : SV_Target;
+};
+
+float4 interpolate(float2 pos)
+{
+	float dx = pos.x * inverseViewport.z * 0.5;
+	float dy = pos.y * -inverseViewport.w * 0.5;
+	
+	float4 topVals = texCoords[0] * (1-dx) + texCoords[1] * dx;
+	float4 botVals = texCoords[3] * (1-dx) + texCoords[2] * dx;
+	float4 finalVal = topVals * (1-dy) + botVals * (dy);
+	
+	return finalVal;
+}
+
+float3 interpolateDerivX(float4 pos, float4 tex)
+{
+	float2 pos2 = float2(pos.x + 1, pos.y);
+	float4 tex2 = interpolate(pos2);
+	float3 diff = (tex2 - tex).xyz;
+	return diff;
+}
+
+float3 interpolateDerivY(float4 pos, float4 tex)
+{
+	float2 pos2 = float2(pos.x, pos.y + 1);
+	float4 tex2 = interpolate(pos2);
+	float3 diff = (tex2 - tex).xyz;
+	return diff;
+}
+
+PSOut main(PSIn input)
+{
+	PSOut output;
+	output.color = float4( 1.0, 1.0, 1.0, 1.0 );
+	return output;
+}
+
+PSOut main_1(PSIn input)
+{
+	PSOut output;
+	float4 tex = interpolate(input.pos);
+	float3 dx = interpolateDerivX(input.pos, tex);
+	float3 dy = interpolateDerivY(input.pos, tex);
+	output.color = myTex1D.SampleGrad(samp, tex, dx, dy);
+	return output;
+}
+
+PSOut main_2(PSIn input)
+{
+	PSOut output;
+	float4 tex = interpolate(input.pos);
+	float3 dx = interpolateDerivX(input.pos, tex);
+	float3 dy = interpolateDerivY(input.pos, tex);
+	output.color = myTex2D.SampleGrad(samp, tex, dx, dy);
+	return output;
+}
+
+PSOut main_3(PSIn input)
+{
+	PSOut output;
+	float4 tex = interpolate(input.pos);
+	float3 dx = interpolateDerivX(input.pos, tex);
+	float3 dy = interpolateDerivY(input.pos, tex);
+	output.color = myTex3D.SampleGrad(samp, tex, dx, dy);
+	return output;
+}
+
+PSOut main_4(PSIn input)
+{
+	PSOut output;
+	float4 tex = interpolate(input.pos);
+	float3 dx = interpolateDerivX(input.pos, tex);
+	float3 dy = interpolateDerivY(input.pos, tex);
+	output.color = myTexCube.SampleGrad(samp, tex, dx, dy);
+	return output;
+}
+
+PSOut main_1_aoff(PSIn input)
+{
+	PSOut output;
+	float4 tex = interpolate(input.pos);
+	float3 dx = interpolateDerivX(input.pos, tex);
+	float3 dy = interpolateDerivY(input.pos, tex);
+	if (input.pos.x < 1/inverseViewport.z)
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex1D.SampleGrad(samp, tex, dx, dy, int3(-1,0,-1));
+		else
+			output.color = myTex1D.SampleGrad(samp, tex, dx, dy, int3(0,-1, 0));
+	}
+	else
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex1D.SampleGrad(samp, tex, dx, dy, int3(1,1,2));
+		else
+			output.color = myTex1D.SampleGrad(samp, tex, dx, dy, int3(0,2,1));
+	}
+	return output;
+}
+
+PSOut main_2_aoff(PSIn input)
+{
+	PSOut output;
+	float4 tex = interpolate(input.pos);
+	float3 dx = interpolateDerivX(input.pos, tex);
+	float3 dy = interpolateDerivY(input.pos, tex);
+	if (input.pos.x < 1/inverseViewport.z)
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex2D.SampleGrad(samp, tex, dx, dy, int3(-1,0,-1));
+		else
+			output.color = myTex2D.SampleGrad(samp, tex, dx, dy, int3(0,-1, 0));
+	}
+	else
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex2D.SampleGrad(samp, tex, dx, dy, int3(1,1,2));
+		else
+			output.color = myTex2D.SampleGrad(samp, tex, dx, dy, int3(0,2,1));
+	}
+	return output;
+}
+
+PSOut main_3_aoff(PSIn input)
+{
+	PSOut output;
+	float4 tex = interpolate(input.pos);
+	float3 dx = interpolateDerivX(input.pos, tex);
+	float3 dy = interpolateDerivY(input.pos, tex);
+	if (input.pos.x < 1/inverseViewport.z)
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex3D.SampleGrad(samp, tex, dx, dy, int3(-1,0,-1));
+		else
+			output.color = myTex3D.SampleGrad(samp, tex, dx, dy, int3(0,-1, 0));
+	}
+	else
+	{
+		if (input.pos.y < -1/inverseViewport.w)
+			output.color = myTex3D.SampleGrad(samp, tex, dx, dy, int3(1,1,2));
+		else
+			output.color = myTex3D.SampleGrad(samp, tex, dx, dy, int3(0,2,1));
+	}
+	return output;
+}

@@ -1,0 +1,43 @@
+//-------------------------------------------------------------------------
+// ENUMDECL related declarations
+//-------------------------------------------------------------------------
+
+extern tstring WGFTESTAPI ToString( ENUMDECL ENUMNAME );
+extern bool WGFTESTAPI FromString( ENUMDECL *pENUMNAME, const tstring &str );
+
+// ENUMNAMEInfo - Structure that describes the properties of a D3DENUMNAMECAP
+struct ENUMNAMEInfo
+{
+	ENUMDECL ENUMNAME;
+	const TCHAR *szName;
+};
+
+// CENUMNAMEInfoMap - Static singleton object used to lookup info given a D3DENUMNAME.
+// THIS CLASS SHOULD NOT BE DIRECTLY INSTANTIATED !!!
+class CENUMNAMEInfoMap
+{
+public:
+	static const ENUMNAMEInfo &GetENUMNAMEInfo( size_t nIndex ) { return m_ENUMNAMEInfoTable[nIndex]; }
+		// Returns the D3DENUMNAMEInfo at nIndex in the internal table.
+	
+	static const ENUMNAMEInfo *Find( ENUMDECL ENUMNAME );
+	static const ENUMNAMEInfo *Find( const tstring &Desc );
+		// Returns a pointer to the D3DENUMNAMEInfo associated with the given string value.
+		
+	static const size_t GetENUMNAMEInfoTableSize();
+		// Returns number on entries in m_ENUMNAMEInfoTable
+		
+private:
+	CENUMNAMEInfoMap();
+
+	typedef	std::map< ENUMDECL, const ENUMNAMEInfo *> ByValue;
+	ByValue m_ByValue;
+	
+	typedef std::map< tcistring, const ENUMNAMEInfo *> ByDesc;
+	ByDesc m_ByDesc;
+	
+	static CENUMNAMEInfoMap m_Map;	
+	friend class CENUMNAMEInfoMap;
+	
+	static const ENUMNAMEInfo m_ENUMNAMEInfoTable[];
+};

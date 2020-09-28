@@ -1,0 +1,14 @@
+!include ..\Common.mk
+
+
+TARGETNAME=shapelib
+
+SOURCES= \
+        shapelib.cpp
+
+
+
+
+
+
+TARGETLIBS=\

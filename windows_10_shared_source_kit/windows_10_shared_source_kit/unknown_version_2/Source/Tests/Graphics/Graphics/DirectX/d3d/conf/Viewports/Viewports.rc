@@ -1,0 +1,10 @@
+#include <WGFConsoleShell.rc>
+ps.psh			RCDATA "ps.psh"
+ps_wIndex.psh		RCDATA "ps_wIndex.psh"
+
+vs.vsh			RCDATA "vs.vsh"
+vs_wIndex.vsh		RCDATA "vs_wIndex.vsh"
+
+gs.gsh			RCDATA "gs.gsh"
+gs_wIndex.gsh		RCDATA "gs_wIndex.gsh"
+gs_wIndexChange.gsh	RCDATA "gs_wIndexChange.gsh"

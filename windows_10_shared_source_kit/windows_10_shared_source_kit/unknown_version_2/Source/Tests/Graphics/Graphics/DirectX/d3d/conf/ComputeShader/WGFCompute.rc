@@ -1,0 +1,16 @@
+#include <WGFConsoleShell.rc>
+
+MemoryBarrier.fx RCDATA "MemoryBarrier.fx"
+RC_UAV_BUFFER_RW_FX	RCDATA	"UAVBufferRW.fx"
+RC_UAV_BUFFER_SRC_FX	RCDATA	"UAVBufferSrc.fx"
+RC_UAV_BUFFER_TYPED_FX	RCDATA	"UAVBufferTyped.fx"
+RC_UAV_TYPED_FX		RCDATA	"UAVTyped.fx"
+AppendStructured.fx RCDATA "AppendStructured.fx"
+ConsumeStructured.fx RCDATA "ConsumeStructured.fx"
+AppendStructuredPS.fx RCDATA "AppendStructuredPS.fx"
+ConsumeStructuredPS.fx RCDATA "ConsumeStructuredPS.fx"
+RC_COUNTERUAV_FX RCDATA "CounterUAV.fx"
+ACVertexShaderPassThrough.fx RCDATA "ACVertexShaderPassThrough.fx"
+RC_MEMORY_BARRIER_PS_FX RCDATA "MemoryBarrierPS.fx"
+interaction.sh	RCDATA	"interaction.sh"
+breeder.bmp	RCDATA	"breeder.bmp"

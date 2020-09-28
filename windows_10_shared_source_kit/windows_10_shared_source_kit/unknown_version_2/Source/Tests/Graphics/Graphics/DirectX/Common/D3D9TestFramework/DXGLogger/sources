@@ -1,0 +1,10 @@
+!include ..\TestFrame.mk
+
+TARGETNAME=DXG9Logger
+
+SOURCES=DXG9Logger.cpp \
+
+
+LIBS=$(DXG_TST_ROOT)\utility\lib\*\DXGLogger.lib \
+
+

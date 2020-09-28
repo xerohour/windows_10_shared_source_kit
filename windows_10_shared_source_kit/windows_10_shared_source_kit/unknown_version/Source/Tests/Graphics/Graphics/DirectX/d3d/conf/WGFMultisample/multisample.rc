@@ -1,0 +1,11 @@
+#include <WGFConsoleShell.rc>
+vs.vsh			RCDATA "vs.vsh"
+ps.psh			RCDATA "ps.psh"
+ps_centroid_on.psh	RCDATA "ps_centroid_on.psh"
+ps_centroid_off.psh	RCDATA "ps_centroid_off.psh"
+ps_odepth.psh		RCDATA "ps_odepth.psh"
+ps_coverage.psh		RCDATA "ps_coverage.psh"
+ps_input_coverage.psh	RCDATA "ps_input_coverage.psh"
+white.dds		RCDATA "white.dds"
+present.psh		RCDATA "present.psh"
+gs_Array.gsh		RCDATA "gs_Array.gsh"

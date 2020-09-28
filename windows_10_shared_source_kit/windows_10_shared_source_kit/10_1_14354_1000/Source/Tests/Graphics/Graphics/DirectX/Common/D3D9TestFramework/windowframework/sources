@@ -1,0 +1,22 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CD3DWindowFramework
+
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(WINDOWS_TST_ROOT)\Common\SimpleLog; \
+	$(WINDOWS_TST_ROOT)\Common\SimpleLog\DXGLog; \
+	$(WINDOWS_TST_ROOT)\Graphics\Common\DWMController; \
+
+
+SOURCES=\
+	CD3DWindowFramework.cpp \
+	WinMain.cpp
+
+
+PRECOMPILED_INCLUDE=WindowFrameworkPCH.h
+PRECOMPILED_CXX=1
+
+

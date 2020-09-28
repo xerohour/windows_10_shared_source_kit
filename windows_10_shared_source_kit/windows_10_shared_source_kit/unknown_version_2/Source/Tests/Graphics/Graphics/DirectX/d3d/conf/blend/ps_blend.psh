@@ -1,0 +1,59 @@
+struct PSIn
+{
+	float4 pos : SV_Position;
+	float4 col0 : color0;
+	float4 col1 : color1;
+};
+
+struct PSOut
+{
+	float4 color[8] : SV_Target;
+};
+
+struct PSOut_ds
+{
+	float4 color[2] : SV_Target;
+};
+
+cbuffer cb0 : register(b0)
+{
+	float4 inverseViewport;
+};
+
+cbuffer cb1 : register(b1)
+{
+	float4 vertColors[8];
+};
+
+float4 interpolate(float2 pos, int colorNum)
+{
+	float dx = pos.x * inverseViewport.z * 0.5;
+	float dy = pos.y * -inverseViewport.w * 0.5;
+	
+	colorNum *= 4;
+	
+	float4 topVals = vertColors[0 + colorNum] * (1-dx) + vertColors[1 + colorNum] * dx;
+	float4 botVals = vertColors[3 + colorNum] * (1-dx) + vertColors[2 + colorNum] * dx;
+	float4 finalVal = topVals * (1-dy) + botVals * (dy);
+	
+	return finalVal;
+}
+
+PSOut main(PSIn input)
+{
+	PSOut output;
+	[unroll]
+	for (int i = 0; i < 8; ++i)
+	{
+		output.color[i] = i * 0.125 + interpolate(input.pos, 0);
+	}
+	return output;
+}
+
+PSOut_ds main_ds(PSIn input)
+{
+	PSOut_ds output;
+	output.color[0] = interpolate(input.pos, 0);
+	output.color[1] = interpolate(input.pos, 1);
+	return output;
+}

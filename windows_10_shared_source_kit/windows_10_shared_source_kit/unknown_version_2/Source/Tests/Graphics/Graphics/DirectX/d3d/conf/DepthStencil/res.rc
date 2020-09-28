@@ -1,0 +1,17 @@
+#include <WGFConsoleShell.rc>
+
+RC_VIEWS_VSH	RCDATA	"views.vsh"
+RC_VIEWS_GSH	RCDATA	"views.gsh"
+RC_VIEWS_PSH	RCDATA	"views.psh"
+
+depth.vsh	RCDATA	"depth.vsh"
+odepth.vsh	RCDATA	"odepth.vsh"
+
+depth_tri.gsh	RCDATA	"depth_tri.gsh"
+depth_point.gsh	RCDATA	"depth_point.gsh"
+
+depth.psh 	RCDATA	"depth.psh"
+odepth.psh 	RCDATA	"odepth.psh"
+
+stencilvs.vsh	RCDATA	"stencilvs.vsh"
+stencilps.psh	RCDATA	"stencilps.psh"

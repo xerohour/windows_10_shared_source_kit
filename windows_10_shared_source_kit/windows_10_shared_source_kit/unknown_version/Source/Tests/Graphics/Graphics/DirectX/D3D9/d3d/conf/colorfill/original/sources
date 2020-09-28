@@ -1,0 +1,20 @@
+!include ..\..\conf.mk
+
+TARGETNAME=ColorFill
+
+SOURCES= \
+		..\ColorFillTest.rc \
+		..\auxiliary.cpp \
+		..\dxfmt.cpp \
+		..\dxpool.cpp \
+		..\dxusage.cpp \
+		..\dxmultisample.cpp \
+		..\dims.cpp \
+		..\rects.cpp \
+		..\colors.cpp \
+		..\SurfaceTypes.cpp \
+		..\ColorFillTestMain.cpp \
+		..\ColorFillTest.cpp \
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

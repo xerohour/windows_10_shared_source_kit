@@ -1,0 +1,10 @@
+!include ..\Common.mk
+
+
+TARGETNAME=CStateCascade
+
+SOURCES=CStateCascade.cpp
+
+
+
+

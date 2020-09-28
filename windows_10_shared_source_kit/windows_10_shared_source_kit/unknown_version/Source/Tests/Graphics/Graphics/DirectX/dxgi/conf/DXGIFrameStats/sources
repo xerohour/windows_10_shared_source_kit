@@ -1,0 +1,37 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+TARGETNAME=DXGIFrameStats
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+USE_RTTI=1
+
+TARGET_DESTINATION=graphics\d3d\Conf:graphics\d3d\Api
+
+!IF $(FREEBUILD)
+LIBTAG=
+!else
+LIBTAG=d
+!endif
+
+INCLUDES=\
+	$(WINDOWS_INC_PATH);\
+	$(DDK_INC_PATH); \
+	$(INCLUDES)
+	
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\dxgi.lib \
+	$(SDK_LIB_PATH)\d3d10.lib \
+	$(SDK_LIB_PATH)\d3dcompiler.lib \
+	$(SDK_LIB_PATH)\d3dx10_test.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\WGFTestFramework\D3DTest\$O\D3DTest.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\DXGI\Common\source\DCOMPisolation\$O\DCOMPisolation.lib
+
+SOURCES=\
+	DXGIFrameStats.rc \
+	DXGIFrameStats.cpp \
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

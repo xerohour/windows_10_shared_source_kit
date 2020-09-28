@@ -1,0 +1,10 @@
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D test framework"
+#define VER_INTERNALNAME_STR        "D3DFramework"
+#define VER_ORIGINALFILENAME_STR    "D3DFRAMEWORK.LIB"
+
+#include <common.ver>

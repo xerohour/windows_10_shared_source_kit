@@ -1,0 +1,30 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\d3d\conf\conf11.mk
+
+TARGETNAME=DXGIMultiPresent
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN7)
+
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FormatHelper; \
+	$(WINDOWS_TST_ROOT)\Common\etw; \
+	$(WINDOWS_TST_ROOT)\Common\etwconsumers\inc; \
+	$(WINDOWS_TST_ROOT)\Common\etwconsumers\DxgKernel\inc; \
+	$(WINDOWS_TST_ROOT)\Common\etwconsumers\TFramework\inc; \
+	$(INCLUDES);
+    
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\tdh.lib \
+	$(WINDOWS_TST_COMMON)\etw\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etw.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\common\ETWConsumers\DxgKernel\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etwdxgkernelConsumer.lib \
+	$(WINDOWS_TST_OBJ_ROOT)\common\ETWConsumers\TFramework\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etwTFrameworkConsumer.lib \
+
+SOURCES=\
+	DXGIMultiPresent.cpp \
+	DXGIMultiPresent.rc 
+
+SOURCES=$(SOURCES) kitContent.kml

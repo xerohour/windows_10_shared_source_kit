@@ -1,0 +1,30 @@
+!include ..\Conf11.mk
+
+TARGETNAME=MeasureHPC
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+INCLUDES=\
+	$(INCLUDES); \
+        $(WINDOWS_TST_ROOT)\common\etwPostProcessing\XperfHelper\inc; \
+        $(WINDOWS_TST_ROOT)\common\etwPostProcessing\DxEtwHelper\inc; \
+	$(SDKTOOLS_INC_PATH)\WexTest\Tools; \
+
+TARGETLIBS = $(TARGETLIBS) \
+        $(WINDOWS_TST_COMMON)\etwPostProcessing\XperfHelper\lib\$O\XperfHelper.lib \
+        $(WINDOWS_TST_COMMON)\etwPostProcessing\DxEtwHelper\lib\$O\DxEtwHelper.lib \
+	$(WINDOWS_LIB_PATH)\unicode\etw.lib \
+	$(SDKTOOLS_LIB_PATH)\WexTest\Tools\EtwProcessor.lib \
+
+SOURCES= \
+	TimingData.cpp \
+	Frequency.cpp \
+	Draw.cpp \
+	Teapots.cpp \
+	TimingData.rc \
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

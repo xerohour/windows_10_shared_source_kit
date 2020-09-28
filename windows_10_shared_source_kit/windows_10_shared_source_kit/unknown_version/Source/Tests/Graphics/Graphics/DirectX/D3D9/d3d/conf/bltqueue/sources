@@ -1,0 +1,11 @@
+!include ..\conf.mk
+
+TARGETNAME=BltQueue
+
+SOURCES= \
+        BltQueue.rc  \
+        BltQueue.cpp  \
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

@@ -1,0 +1,31 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=NonPowTwo
+SOURCES= \
+	..\AddTestCases.cpp\
+	..\AlphaBlendTestVariable.cpp\
+	..\DisplacementTestMatrix.cpp\
+	..\Globals.cpp\
+	..\FilterTestVariable.cpp\
+	..\MipMapLODBias.cpp\
+	..\NonPowTwoConfTest.cpp\
+	..\NonPowTwoStressTest.cpp\
+	..\NonPowTwoTest.cpp\
+	..\RenderTargetTest.cpp\
+	..\SphereTree.cpp\
+	..\TextureAddressingMode.cpp\
+	..\TextureOpTestVariable.cpp\
+	..\TextureSizeTestVariable.cpp\
+	..\TextureFunctions.cpp \
+	..\VShaderTestVariable.cpp\
+	..\WrapTestVariable.cpp\
+	..\NonPowTwo.rc
+
+
+
+PASS_INDEPENDENT_BINPLACE=\
+    ..\tests.txt \
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

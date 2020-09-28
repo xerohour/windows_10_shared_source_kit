@@ -1,0 +1,7 @@
++ fRoundOffset);
+        break;
+
+    case FMT_A4R4G4B4:
+        iA = (int)((FLOAT)A * 15. + fRoundOffset);
+        iR = (int)((FLOAT)Rg * 15. + fRoundOffset);
+        iG = (int)((FLOAT)Gg * 

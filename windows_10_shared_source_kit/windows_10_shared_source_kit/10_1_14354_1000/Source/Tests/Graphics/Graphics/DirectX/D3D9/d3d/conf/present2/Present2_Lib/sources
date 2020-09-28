@@ -1,0 +1,10 @@
+!include ..\sources.inc
+
+TARGETNAME=Present2
+TARGETTYPE=LIBRARY
+
+SOURCES=$(SOURCES)\
+	PresentII.cpp  \
+
+
+TARGETLIBS=\

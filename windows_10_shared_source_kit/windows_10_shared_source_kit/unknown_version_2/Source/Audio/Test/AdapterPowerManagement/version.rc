@@ -1,0 +1,15 @@
+// Copyright (C) Microsoft. All rights reserved.
+// Adding standardized versioning to WLK applications
+#include <winver.h>
+#include <ntverp.h>
+
+//
+// Version
+//
+#define VER_FILETYPE                 VFT_DLL
+#define VER_FILESUBTYPE              VFT2_UNKNOWN
+#define VER_FILEDESCRIPTION_STR      "Adapter Power Management Test"
+#define VER_INTERNALNAME_STR         "AdapterPowerManagement.dll"
+
+#include <common.ver>
+

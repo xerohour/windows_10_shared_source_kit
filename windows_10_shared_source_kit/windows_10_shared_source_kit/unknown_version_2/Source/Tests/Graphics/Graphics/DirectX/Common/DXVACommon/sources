@@ -1,0 +1,13 @@
+!include ..\Common.mk
+
+
+TARGETNAME=DXVACommon
+
+SOURCES= \
+	DXVACommon.cpp \
+
+
+
+
+
+TARGETLIBS=\

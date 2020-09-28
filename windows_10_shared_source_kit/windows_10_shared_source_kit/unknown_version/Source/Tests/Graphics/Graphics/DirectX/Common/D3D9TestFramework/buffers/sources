@@ -1,0 +1,20 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CBuffers
+
+SOURCES= \
+        CVertexBuffer.cpp \
+        CVertexBuffer6.cpp \
+        CVertexBuffer7.cpp \
+        CVertexBuffer8.cpp \
+        CVertexBuffer9.cpp \
+        CIndexBuffer.cpp \
+        CIndexBuffer8.cpp \
+        CIndexBuffer9.cpp \
+        CnVertexBuffer.cpp \
+        CnIndexBuffer.cpp \
+
+
+PRECOMPILED_INCLUDE=BuffersPCH.h
+PRECOMPILED_CXX=1

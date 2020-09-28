@@ -1,0 +1,7 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CD3DX
+
+SOURCES= \
+        CD3DX.cpp

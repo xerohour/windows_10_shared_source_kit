@@ -1,0 +1,12 @@
+RBITER_TRACE_LEVEL,
+              "      Is bridge FDO, parent bus %x, secondary bus %x\n",
+              parentBusNumber,
+              secondaryBusNumber
+              );
+    }
+
+    return HalGetInterruptTranslator(parentInterface,
+                                     parentBusNumber,
+                                     PCIBus,
+                                     sizeof(TRANSLATOR_INTERFACE),
+                                     PCI_TRANSLATO

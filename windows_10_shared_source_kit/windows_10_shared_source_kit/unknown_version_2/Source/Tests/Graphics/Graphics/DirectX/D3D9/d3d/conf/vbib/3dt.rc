@@ -1,0 +1,13 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "VBIB Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "VBIB.exe"
+#define VER_ORIGINALFILENAME_STR    "VBIB.exe"
+
+HAPPY RCDATA "happy.bmp"
+
+#include <common.ver>

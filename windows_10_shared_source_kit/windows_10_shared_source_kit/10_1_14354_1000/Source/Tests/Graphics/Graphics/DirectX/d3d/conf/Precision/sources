@@ -1,0 +1,30 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_Core.mk
+
+TARGETNAME=WGF11Precision
+
+USE_STATIC_ATL = 1
+ATL_VER = 70
+
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FormatHelper; \
+	$(INCLUDES)
+
+SOURCES= \
+	Precision.rc \
+	Precision.cpp \
+	Input.cpp \
+	Arithmetic.cpp \
+	Mov.cpp \
+	Swap.cpp \
+	Convert.cpp \
+	Resource.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

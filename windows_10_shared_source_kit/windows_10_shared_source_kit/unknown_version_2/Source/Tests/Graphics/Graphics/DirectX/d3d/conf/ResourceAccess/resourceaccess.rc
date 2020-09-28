@@ -1,0 +1,6 @@
+#include <WGFConsoleShell.rc>
+
+RC_RESOURCEACCESS_VSH RCDATA	"ResourceAccess.vsh"
+RC_RESOURCEACCESS_GSH RCDATA	"ResourceAccess.gsh"
+RC_RESOURCEACCESS_PSH RCDATA	"ResourceAccess.psh"
+

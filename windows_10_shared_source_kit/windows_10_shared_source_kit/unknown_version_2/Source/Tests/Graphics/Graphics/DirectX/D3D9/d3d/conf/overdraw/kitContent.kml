@@ -1,0 +1,11 @@
+			resource = _T("RWBuffer<uint>");
+						resource_type = _T("1");
+						bytesNeeded = memory_factor * numGroups * numThreads * m_TargetUAVElementByteStride;
+					}
+					//dimensions = _T("1");
+					max_elements_x = (0x1 << D3D10_REQ_BUFFER_RESOURCE_TEXEL_COUNT_2_TO_EXP) / m_TargetUAVElementByteStride;
+					break;
+				case D3D11_UAV_DIMENSION_TEXTURE1D:
+					resource = _T("RWTexture1D<uint>");
+					resource_type = _T("4");
+					//dimensions 

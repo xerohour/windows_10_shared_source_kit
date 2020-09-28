@@ -1,0 +1,1 @@
+#include <TestsHCK\MiracastHCKTests.h>

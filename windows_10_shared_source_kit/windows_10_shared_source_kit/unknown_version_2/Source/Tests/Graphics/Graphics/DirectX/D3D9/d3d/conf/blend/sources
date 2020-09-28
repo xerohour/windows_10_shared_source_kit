@@ -1,0 +1,21 @@
+!include ..\conf.mk
+
+
+TARGETNAME=Blend
+
+SOURCES= \
+        Add.cpp \
+        Blend.rc \
+        Blend.cpp \
+        Decal.cpp \
+        Default.cpp \
+        Draw.cpp \
+        Modulate.cpp 
+
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

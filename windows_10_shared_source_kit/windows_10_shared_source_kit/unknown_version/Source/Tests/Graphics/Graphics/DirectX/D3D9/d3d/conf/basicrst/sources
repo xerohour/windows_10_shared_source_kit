@@ -1,0 +1,25 @@
+!include ..\conf.mk
+
+
+TARGETNAME=BasicRst
+
+SOURCES= \
+        BasicRst.rc \
+        BasicRst.cpp \
+        ColorWrite.cpp \
+        Culling.cpp \
+        Dither.cpp \
+        Fill.cpp \
+        MeshD3D.cpp \
+        MeshL.cpp \
+        MeshTL.cpp \
+        NoDiffuse.cpp \
+        Shading.cpp \
+        ZWrite.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

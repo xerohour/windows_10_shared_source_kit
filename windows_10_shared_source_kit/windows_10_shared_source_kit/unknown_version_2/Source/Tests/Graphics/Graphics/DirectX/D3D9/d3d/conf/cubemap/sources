@@ -1,0 +1,20 @@
+!include ..\conf.mk
+
+
+TARGETNAME=Cubemap
+
+SOURCES= \
+	Blend.cpp \
+        CubeMap.rc \
+        CubeMap.cpp \
+        Draw.cpp \
+	Filter.cpp \
+        Mipmap.cpp \
+        TexGen.cpp \
+        Texture.cpp
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

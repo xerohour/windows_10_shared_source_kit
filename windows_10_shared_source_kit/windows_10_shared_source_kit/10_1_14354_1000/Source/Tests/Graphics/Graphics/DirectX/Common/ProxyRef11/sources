@@ -1,0 +1,27 @@
+!include ..\common.mk
+
+TARGETNAME=ProxyRef11
+TARGETTYPE=LIBRARY
+
+!IF $(FREEBUILD)
+LIBTAG=
+!else
+LIBTAG=d
+!endif
+
+# This is needed for the longhorn ddi includes
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_VISTA)
+
+TARGETLIBS=\
+
+
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\tools\D3D11ProxyDriver; \
+	$(INCLUDES); \
+    $(DDK_INC_PATH);\
+    $(D3D10_DDK_INC_PATH); \
+    $(D3D11_DDK_INC_PATH)
+
+SOURCES=\
+	ProxyRef11.cpp \

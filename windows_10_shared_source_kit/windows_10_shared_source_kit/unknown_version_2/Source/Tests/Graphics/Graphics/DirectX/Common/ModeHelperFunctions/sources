@@ -1,0 +1,16 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+TARGETNAME=ModeHelperFunctions
+TARGETTYPE=LIBRARY
+
+USE_ATL=1
+ATL_VER=70
+
+C_DEFINES=$(C_DEFINES) -DWINVER=0x0600
+
+SOURCES= \
+	Common1.cpp \
+	Common2.cpp \
+
+
+TARGETLIBS=\

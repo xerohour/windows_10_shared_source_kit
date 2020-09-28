@@ -1,0 +1,5 @@
+[base_tests]
+test1=NonPowTwo.exe -WHQL -StressTest
+
+
+

@@ -1,0 +1,15 @@
+,
+                                                         Child->Slot);
+
+        InitializeListHead(&Child->Children);
+
+        //
+        // Set the bridge's bus numbers, recurse underneath, and then restore them.
+        //
+
+        PciWriteBusNumsRaw(PciIF,
+                           Child->Primary,
+                           Child->Slot,
+                           Child->Primary,
+                           Child->Secondary,
+                 

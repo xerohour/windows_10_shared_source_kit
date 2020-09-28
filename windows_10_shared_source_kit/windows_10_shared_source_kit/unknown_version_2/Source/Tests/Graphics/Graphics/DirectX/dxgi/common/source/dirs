@@ -1,0 +1,18 @@
+DIRS = \
+	BasicD3D10 \
+	CreateSWAdapter \
+	D3D10RefUtil \
+	D3D10SwapChain \
+	DeviceWrapper \
+	DXGIBBFMT \
+	DXGIFMT \
+	DXGIScanoutFormats \
+	DXGISurfUtils \
+	DXGISwapChainFlag \
+	DXGISwapEffects \
+        DXGIPresentFlagRecord \
+	DXGIWndClass \
+	EnumModesGDI \
+	GetDeviceInfo \
+	ModeSet \
+	DCOMPIsolation

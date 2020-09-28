@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<WrapperGeneratorConfig DLLName="D3D10.DLL">
+	<SourceHeaders>
+		<Header Name="%OBJECT_ROOT%\windows\published\d3d11\obj%_BuildType%\%ArchDir%\d3d11.h"></Header>
+		<Header Name="%OBJECT_ROOT%\windows\published\d3d11\obj%_BuildType%\%ArchDir%\d3d11sdklayers.h"></Header>
+		<Header Name="%OBJECT_ROOT%\windows\published\dxgi\obj%_BuildType%\%ArchDir%\d3dcommon.h"></Header>
+		<OutputDir Name="%SDXROOT%\testsrc\windowstest\graphics\DirectX\Common\WGFTestFramework\D3DTest"></OutputDir>
+	</SourceHeaders>
+</WrapperGeneratorConfig>

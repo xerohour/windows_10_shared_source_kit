@@ -1,0 +1,10 @@
+!include ..\..\conf.mk
+
+TARGETNAME=lightmap
+
+SOURCES=..\lightmap.rc \
+        ..\lightmap.cpp
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

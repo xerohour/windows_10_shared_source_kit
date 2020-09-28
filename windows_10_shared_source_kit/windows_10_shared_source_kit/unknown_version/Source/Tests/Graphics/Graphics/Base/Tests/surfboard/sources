@@ -1,0 +1,30 @@
+# this line brings in 3dsg.lib.
+WANT_GRAPHICS_TESTCOMPONENTS_3DSG_LIBS = 1
+!include ..\unicodetests.mk
+
+TARGETNAME=surfboard
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WIN7)
+
+UMTYPE=console
+UMENTRY=main
+
+INCLUDES = $(INCLUDES); \
+           $(PUBLIC_ROOT)\internal\windows\test\inc; \
+           $(BASE_VID_TST_ROOT)\common\Modules\inc; \
+           $(WINDOWS_TST_OBJ_ROOT)\Common\etw\manifest\$O; \
+
+TARGETLIBS=$(TARGETLIBS) \
+    $(PUBLIC_ROOT)\internal\windows\lib\*\$(ANSI_UNICODE_BUILD_TYPE)\etwDxgKernelStatistics.lib \
+    $(PUBLIC_ROOT)\internal\windows\lib\*\$(ANSI_UNICODE_BUILD_TYPE)\etwDxgKernelConsumer.lib \
+    $(WINDOWS_TST_COMMON)\etwStatistics\base\lib\$(ANSI_UNICODE_BUILD_TYPE)\$O\etwBaseStatistics.lib \
+    $(BASE_VID_TST_OBJ_ROOT)\common\Modules\lib\unicode\$O\TestModules.lib \
+    
+
+SOURCES=\
+    surfboardcomponent.cpp \
+    main.cpp \
+    Main.rc \
+
+SOURCES=$(SOURCES) kitContent.kml
+

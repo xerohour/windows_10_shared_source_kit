@@ -1,0 +1,29 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_core.mk
+
+TARGETNAME=WGF11Viewports
+
+INCLUDES=\
+	$(INCLUDES)
+
+SOURCES= \
+	Viewports.cpp \
+	MultiView.cpp \
+	Overlapping.cpp \
+	SplitStrip.cpp \
+	BadIndex.cpp \
+	NoIndex.cpp \
+	ScaleView.cpp \
+	MultiScissor.cpp \
+	ScaleScissor.cpp \
+	ScissorPosition.cpp \
+	SubScissor.cpp \
+	Viewports.rc \
+	
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

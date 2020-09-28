@@ -1,0 +1,23 @@
+!include $(GRAPHICS_TST_ROOT)\directx\directx.mk
+
+USE_MSVCRT=1
+USE_NATIVE_EH=1
+USE_STL=1
+USE_RTTI=1
+
+TARGETNAME=DXGITest 
+TARGETTYPE=LIBRARY
+
+#OBJLIBFILES = $(DIRECTX_TST_OBJ_ROOT)\common\FormatHelper\$O\FormatHelper.lib
+
+INCLUDES=\
+	$(DIRECTX_TST_ROOT)\Common\Include; \
+	$(DIRECTX_TST_ROOT)\Common\WGFTestFramework\Core\Include; \
+	$(DIRECTX_TST_ROOT)\Common\WGFTestFramework\GraphicsTest; \
+	$(DIRECTX_TST_ROOT)\Common\WGFTestFramework\HResultHelp; \
+	$(INCLUDES)
+
+
+SOURCES= \
+    DXGITest.cpp   \
+    DXGITestFramework.cpp \

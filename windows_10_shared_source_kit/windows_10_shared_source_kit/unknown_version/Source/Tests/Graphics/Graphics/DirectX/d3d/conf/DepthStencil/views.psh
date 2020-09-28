@@ -1,0 +1,29 @@
+// DepthStencil Pixel Shader
+
+struct PSIn
+{
+	float4 vPos	: SV_Position;
+	float2 vTexCoords : texCoord;
+};
+
+struct PSOut
+{
+	float4 vColor : SV_Target;
+};
+
+cbuffer cb0 : register( b0 )
+{	
+	float4x4	mxTrans;
+	float		fWidth;
+	float		fHeight;
+	float		fDepth;
+};
+
+PSOut PShaderMain( PSIn input )
+{
+	PSOut output;
+	
+	output.vColor = float4( 1.f, 1.f, 1.f, 1.f );
+	
+	return output;
+}

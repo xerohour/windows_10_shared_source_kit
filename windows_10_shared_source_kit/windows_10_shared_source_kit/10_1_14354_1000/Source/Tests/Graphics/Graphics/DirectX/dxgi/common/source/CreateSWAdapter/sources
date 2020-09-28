@@ -1,0 +1,17 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\DXGI\DXGI.mk
+
+TARGETNAME=CreateSWAdapter
+TARGETTYPE=LIBRARY
+UMTYPE=windows
+UMENTRY=winmain
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\WGFTestFramework\DXGITest; \
+
+
+SOURCES=\
+	CreateSWAdapter.cpp \
+
+
+TARGETLIBS=\

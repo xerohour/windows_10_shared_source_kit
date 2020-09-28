@@ -1,0 +1,20 @@
+eTypes[ CurrentSwapChainSlot ] )
+	{
+		case SCENE_TYPE_SWATCH_TRANSPARENT:
+		{
+			// Set the clear color to transparent.
+			BackgroundColor.r = 0.f;
+			BackgroundColor.g = 0.f;
+			BackgroundColor.b = 0.f;
+			BackgroundColor.a = 0.f;
+		} break;
+
+
+		case SCENE_TYPE_SWATCH_FIXEDCOLOR:
+		{
+			// Set the clear color to azure.
+			BackgroundColor.r = 0.f;
+			BackgroundColor.g = 0.5f;
+			BackgroundColor.b = 1.f;
+			BackgroundColor.a = 1.f;
+		} b

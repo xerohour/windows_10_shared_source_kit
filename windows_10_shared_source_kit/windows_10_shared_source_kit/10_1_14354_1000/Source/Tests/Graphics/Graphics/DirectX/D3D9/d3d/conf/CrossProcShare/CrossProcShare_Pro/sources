@@ -1,0 +1,7 @@
+!include ..\sources.inc
+
+TARGETNAME=CrossProcShare_Pro
+
+SOURCES=$(SOURCES)\
+    EXEEntryPoint.cpp \
+    ProtectedProcess.cpp \

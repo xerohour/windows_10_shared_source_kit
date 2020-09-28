@@ -1,0 +1,47 @@
+!include $(GRAPHICS_TST_ROOT)\directx\directxDM.mk
+
+TARGETNAME=D3D11TestDM
+TARGETTYPE=LIBRARY
+
+
+USE_MSVCRT=1
+
+USE_NATIVE_EH=1
+
+USE_RTTI=1
+
+USE_STL=1
+STL_VER=100
+
+
+C_DEFINES=$(C_DEFINES) /DD3D11DLLNAME=\"d3d11$(DX_BETA_NAMING).dll\" /DD3D10_1DLLNAME=\"d3d10_1$(DX_BETA_NAMING).dll\" /bigobj
+
+
+OBJLIBFILES = \
+	$(DIRECTX_TST_OBJ_ROOT)\common\FormatHelper\$O\FormatHelper.lib \
+
+INCLUDES=\
+	$(WINDOWS_TST_ROOT)\Graphics\Common\D3DStrings; \
+	$(GRAPHICS_TST_ROOT)\Common\DeviceManager; \
+	$(DIRECTX_TST_ROOT)\Common\Include; \
+	$(DIRECTX_TST_ROOT)\Common\ResourceViewer; \
+	$(DIRECTX_TST_ROOT)\Common\WGFTestFramework\Core\Include; \
+	$(DIRECTX_TST_ROOT)\Common\WGFTestFramework\GraphicsTestDM; \
+	$(INCLUDES)
+
+
+SOURCES= \
+	d3d11test.cpp \
+	d3dtesthelpers.cpp \
+	d3dx10strings.cpp \
+	d3dresourceflagsvalueset.cpp \
+	dxgiBufferCompare.cpp \
+	dxgifloattypes.cpp \
+	infoqueuehelper.cpp \
+	presenthelper.cpp \
+	nresult.cpp \
+	d3dsamplelocation.cpp \
+	d3ddepthhelper.cpp \
+	d3dmshelper.cpp \
+
+

@@ -1,0 +1,41 @@
+!include ..\conf.mk
+
+TARGETNAME=reschk
+
+
+INCLUDES=\
+    $(INCLUDES) \
+	$(GRAPHICS_TST_ROOT)\DirectX\D3D9\Common\CPControl; \
+	$(DS_INC_PATH)\crypto; \
+
+	
+SOURCES= \
+    reschk.rc \
+    Main.cpp \
+    reschk_vb.cpp \
+    reschk_ib.cpp \
+    reschk_texture.cpp \
+    reschk_cube.cpp \
+    reschk_volume.cpp \
+    reschk_surface.cpp \
+    reschk.cpp \
+
+
+TARGETLIBS=\
+    $(TARGETLIBS) \
+    $(SDK_LIB_PATH)\d3d9.lib \
+	$(SDK_LIB_PATH)\winmm.lib \
+	$(SDK_LIB_PATH)\ntdll.lib \
+	$(SDK_LIB_PATH)\crypt32.lib \
+	$(SDK_LIB_PATH)\ncrypt.lib \
+	$(SDK_LIB_PATH)\bcrypt.lib \
+	$(DS_LIB_PATH)\rsa32.lib \
+	$(DS_LIB_PATH)\mincrypu.lib \
+	$(DS_LIB_PATH)\mincrypt.lib \
+	$(DS_LIB_PATH)\hashlib.lib \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\D3D9\Common\CPControl\$O\CPControl.lib \
+
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_VISTA)
+SOURCES=$(SOURCES) kitContent.kml
+

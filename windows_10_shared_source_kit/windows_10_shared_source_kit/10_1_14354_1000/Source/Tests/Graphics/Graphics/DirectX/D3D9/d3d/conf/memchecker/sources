@@ -1,0 +1,14 @@
+!include ..\conf.mk
+
+TARGETNAME=MemChecker
+
+INCLUDES=$(INCLUDES); \
+	 $(INTERNAL_SDK_INC_PATH);\
+	 $(SDK_INC_PATH);
+
+SOURCES= \
+	resource.rc \
+	MemChecker.cpp  \
+
+SOURCES=$(SOURCES) kitContent.kml
+

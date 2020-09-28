@@ -1,0 +1,7 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CImageCompare
+
+SOURCES= \
+        CImageCompare.cpp

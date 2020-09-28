@@ -1,0 +1,14 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<Content xmlns="http://microsoft.com/schemas/Windows/Kits/Manifest">
+  <ContentGroup
+      BuildArchitecture="each"
+      Destination="$(_BuildArch)"
+      >
+    <FeatureReference Name="Device.Graphics"/>
+    <BinaryFile
+        Destination="nttest\windowstest\graphics\d3d\conf"
+        Name="D3DCrossProcShare.exe"
+        Source="$(OBJ_PATH)\$(O)"
+        />
+  </ContentGroup>
+</Content>

@@ -1,0 +1,10 @@
+!include ..\..\conf.mk
+
+TARGETNAME=WLPTextureSizes
+
+SOURCES=sizes.rc \
+        sizes.cpp
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

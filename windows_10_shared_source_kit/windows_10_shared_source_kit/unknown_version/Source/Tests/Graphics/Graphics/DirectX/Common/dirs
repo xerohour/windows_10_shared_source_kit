@@ -1,0 +1,21 @@
+DIRS =\
+    3DMath{!cs_xbox} \
+    CContentGenerator{!cs_xbox} \
+    CommonD3DTestBase{!cs_xbox} \
+    CreateDevice \
+    D3D9TestFramework{!cs_xbox} \
+    D3DConvert{!cs_xbox} \
+    D3DFormatConverter \
+    D3DTiff \
+    D3DXShim \
+    DXVACommon{!cs_xbox} \
+    FormatHelper \
+    ModeHelperFunctions{!cs_xbox} \
+    ProxyRef10{!cs_xbox} \
+    ProxyRef11{!cs_xbox} \
+    ResourceViewer{!cs_xbox} \
+    ResourceViewerNoShell{!cs_xbox} \
+    Shader{!cs_xbox} \
+    ShapeLib{!cs_xbox} \
+    TiledResourceHelper{!cs_xbox} \
+    WGFTestFramework \

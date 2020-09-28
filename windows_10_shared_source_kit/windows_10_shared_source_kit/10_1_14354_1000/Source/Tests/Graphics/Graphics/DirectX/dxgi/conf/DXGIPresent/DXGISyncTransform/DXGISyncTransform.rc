@@ -1,0 +1,9 @@
+#include <WGFTestUI.rc>
+
+TestTex00.dds   RCDATA "TestTex00.dds"
+TestTex01.dds   RCDATA "TestTex01.dds"
+TestTex02.dds   RCDATA "TestTex02.dds"
+TestTex1x1_00.dds   RCDATA "TestTex1x1_00.dds"
+TestTex1x1_01.dds   RCDATA "TestTex1x1_01.dds"
+TestTex1x1_02.dds   RCDATA "TestTex1x1_02.dds"
+TestTex1x1_03.dds   RCDATA "TestTex1x1_03.dds"

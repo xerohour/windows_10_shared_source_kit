@@ -1,0 +1,77 @@
+// Copyright (C) Microsoft. All rights reserved.
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+#include "winver.h"
+#include "windows.h"
+
+/////////////////////////////////////////////////////////////////////////////
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+APPICON     ICON    DISCARDABLE     "drmtest.ico"
+
+#ifndef BUILD_TAEF
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DRMSETTINGS DIALOG DISCARDABLE  0, 0, 214, 274
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Drm Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "CopyProtect",IDC_SCMSCOPYRIGHTED,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,21,81,10
+    CONTROL         "Reserved",IDC_SCMSORIGINAL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,13,37,81,10
+    CONTROL         "DigitalOutputDisable",IDC_DIGITALOUTPUTDISABLE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,53,81,10
+    EDITTEXT        IDC_FORMATCHANNELS,157,21,32,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    EDITTEXT        IDC_FORMATSAMPLERATE,157,37,32,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    EDITTEXT        IDC_FORMATBITS,157,53,32,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "ParseCatalog",IDC_AUTHPARSECATALOGFILE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,93,81,10
+    CONTROL         "SignedCatalog",IDC_AUTHREQUIRESIGNEDCATALOG,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,109,81,10
+    CONTROL         "CheckDriverImage",IDC_AUTHCHECKDRIVERIMAGES,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,125,81,10
+    LTEXT           "MinDRMLevel",IDC_STATIC,13,161,44,8
+    EDITTEXT        IDC_AUTHMINDRMLEVEL,61,160,32,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "DoAuthentication",IDC_DOAUTHENTICATION,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,110,93,81,10
+    CONTROL         "DoEncryption",IDC_DOENCRYPTION,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,110,109,81,10
+    CONTROL         "DoZeroStreamId",IDC_DOZEROSTREAMID,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,110,125,81,10
+    GROUPBOX        "DRMRIGHTS",IDC_STATIC,7,7,92,66
+    GROUPBOX        "AUTHENTICATION",IDC_STATIC,7,80,92,98
+    GROUPBOX        "DRMSRC",IDC_STATIC,105,80,92,98
+    GROUPBOX        "Wave Format",IDC_STATIC,105,7,92,66
+    LTEXT           "Channels",IDC_STATIC,113,22,39,8
+    LTEXT           "Bits",IDC_STATIC,113,55,39,8
+    LTEXT           "SampleRate",IDC_STATIC,113,39,39,8
+    CONTROL         "AllowTestCertificate",IDC_AUTHALLOWTESTCERTIFICATE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,141,81,10
+    GROUPBOX        "This OS build",IDC_STATIC,7,185,189,55
+    CONTROL         "Drivers are Real-signed",IDC_DRIVERSREALSIGNED,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,199,146,10
+    DEFPUSHBUTTON   "OK",IDOK,24,251,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,138,251,50,14
+    PUSHBUTTON      "Apply",IDAPPLY,81,251,50,14
+END
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+#include <shell98.rc>
+#include "version.rc"
+
+#endif
+

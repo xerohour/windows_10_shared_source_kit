@@ -1,0 +1,42 @@
+!include ..\unicodetests.mk
+
+TARGETNAME=crossproc
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_VISTA)
+
+UMTYPE=windows
+UMENTRY=winmain
+TARGET_DESTINATION=Graphics\wddm\bin
+
+
+SOURCES=\
+    IncludeFUSFramework.idl \
+    $O\IncludeFUSFramework_i.c \
+    utils.cpp \
+    Main.rc \
+    main.cpp \
+    user.cpp \
+    AdapterDisplayInfo.cpp \
+    owner.cpp \
+    FusHelper.cpp \
+
+
+
+INCLUDES=\
+    $(INCLUDES) \
+
+USE_MSVCRT=1
+USE_VCCOM=1
+MIDTL_TLBDIR=$O
+
+
+TARGETLIBS=\
+    $(TARGETLIBS) \
+
+
+USE_STL=1
+PASS_INDEPENDENT_BINPLACE=\
+    crossproc.ini \
+    CrossProcSwizzlingRangeContention.ini \
+
+SOURCES=$(SOURCES) kitContent.kml

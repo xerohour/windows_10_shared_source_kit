@@ -1,0 +1,53 @@
+//
+// Shaders for A2C and SV_Coverage testing
+//
+
+Texture2D<uint> CoverageTex;
+
+struct PSIn
+{
+	float4 pos : SV_Position;
+	float2 tex : tex;
+};
+
+struct PSOutMask
+{
+	float4 Color : SV_Target;
+	uint Mask : SV_Coverage;
+};
+
+struct PSInSample
+{
+	float4 pos : SV_Position;
+	float2 tex : tex;
+	uint sample : SV_SampleIndex;
+};
+
+cbuffer cb0 : register(b0)
+{
+	float4 inverseViewport;
+	float alpha;
+	float depth;
+};
+
+PSOutMask MainPixelMask(PSIn input)
+{
+	PSOutMask output;
+
+	output.Color = float4( 1.0, 1.0, 1.0, alpha );
+	output.Mask = CoverageTex.Load( uint3( input.pos.xy, 0 ) );
+	
+	return output;
+}
+
+PSOutMask MainSampleMask(PSInSample input)
+{
+	PSOutMask output;
+
+	uint uSampleCount = GetRenderTargetSampleCount();
+	uint uTexCoordX = ((uint)input.pos.x)*uSampleCount + input.sample;
+	output.Color = float4( 1.0, 1.0, 1.0, alpha );
+	output.Mask = CoverageTex.Load( uint3( uTexCoordX, input.pos.y, 0 ) );
+	
+	return output;
+}

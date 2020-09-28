@@ -1,0 +1,20 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=Perspective
+
+SOURCES= \
+        ..\Color.cpp \
+        ..\DrawMesh.cpp \
+        ..\Perspective.rc \
+        ..\Perspective.cpp \
+        ..\Texture.cpp 
+
+
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

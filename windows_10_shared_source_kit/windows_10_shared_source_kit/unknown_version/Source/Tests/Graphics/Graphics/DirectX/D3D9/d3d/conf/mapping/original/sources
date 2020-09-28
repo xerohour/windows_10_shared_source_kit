@@ -1,0 +1,20 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=Mapping
+
+SOURCES= \
+        ..\Drawing.cpp \
+        ..\Linear.cpp \
+        ..\Mapping.rc \
+        ..\Mapping.cpp \
+        ..\Point.cpp 
+
+
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

@@ -1,0 +1,13 @@
+!include ..\..\pnp_tests.mk
+!include ..\..\unicodetests.mk
+
+TARGETNAME=PnPStopVGATest
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_VISTA)
+
+SOURCES=\
+    PnPStopVGA.cpp \
+    main.cpp \
+    Main.rc \
+
+SOURCES=$(SOURCES) kitContent.kml

@@ -1,0 +1,46 @@
+!include $(GRAPHICS_TST_ROOT)\common\adapterutil\adapterutil.mk
+!include $(BASE_VID_TST_ROOT)\common\common.mk
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WIN8)
+
+TARGETNAME                      =   Brightness2
+TARGETTYPE                      =   DYNLINK
+TARGET_DESTINATION              =   Graphics\wddm\bin
+DLLDEF                          =
+
+
+USE_MSVCRT                      =   1
+
+USE_MSVCRT=1
+USE_NATIVE_EH=1 
+
+USE_STL=1
+STL_VER=100
+
+USE_ATL=1
+ATL_VER=30
+
+
+C_DEFINES  = $(C_DEFINES) -DUNICODE -D_UNICODE
+			 
+INCLUDES   = $(INCLUDES);                             \
+             $(SDK_INC_PATH);                         \
+             $(SDKTOOLS_INC_PATH)\WexTest\Cue;        \
+             $(SOFTGPU_ROOT)\inc;                     \
+             $(GRAPHICS_TST_ROOT)\base\common\UtilLib;\
+			 
+SOURCES    = Brightness2.cpp \
+             wmiHelper.cpp  \
+             Brightness2.rc \
+             kitContent.kml \
+			 
+TARGETLIBS = $(TARGETLIBS)                                   \
+             $(SDK_LIB_PATH)\advapi32.lib                    \
+             $(SDK_LIB_PATH)\ole32.lib                       \
+             $(SDK_LIB_PATH)\oleaut32.lib                    \
+             $(SDK_LIB_PATH)\user32.lib                      \
+             $(SDKTOOLS_LIB_PATH)\WexTest\Cue\Wex.Common.lib \
+             $(SDKTOOLS_LIB_PATH)\WexTest\Cue\Wex.Logger.lib \
+             $(SDK_LIB_PATH)\Newdev.lib                      \
+             $(SDK_LIB_PATH)\Wbemuuid.lib                    \
+             $(SDK_LIB_PATH)\wmip.lib                        \

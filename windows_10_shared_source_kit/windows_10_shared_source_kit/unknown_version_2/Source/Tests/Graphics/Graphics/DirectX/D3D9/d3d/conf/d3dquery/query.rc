@@ -1,0 +1,17 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D CONF test"
+#define VER_INTERNALNAME_STR        "D3DQuery.exe"
+#define VER_ORIGINALFILENAME_STR    "D3DQuery.EXE"
+
+#include <common.ver>
+
+#include <resource.h>
+
+IDB_BITMAP1             BITMAP  DISCARDABLE     "speech.bmp"
+IDB_BITMAP2             BITMAP  DISCARDABLE     "Windows8bit.bmp"
+IDB_BITMAP3             BITMAP  DISCARDABLE     "Windows_logo.bmp"

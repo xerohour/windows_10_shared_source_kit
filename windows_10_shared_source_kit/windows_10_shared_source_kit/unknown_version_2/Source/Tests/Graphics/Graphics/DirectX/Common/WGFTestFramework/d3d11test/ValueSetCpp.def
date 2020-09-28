@@ -1,0 +1,21 @@
+//////////////////////////////////////////////////////////////////////////
+// Implementation of CENUMNAMEValueSet
+//////////////////////////////////////////////////////////////////////////
+
+CENUMNAMEValueSet::CENUMNAMEValueSet( CFilterHandleCommonSource< ENUMDECL > filter )
+{
+	ENUMDECL ENUMNAME;
+	
+	if( filter.IsValid() )
+		filter->SetSource( &ENUMNAME );
+	
+	int count = CENUMNAMEInfoMap::GetENUMNAMEInfoTableSize();
+
+	for( int i = 0; i < count; i++ )
+	{
+		ENUMNAME = CENUMNAMEInfoMap::GetENUMNAMEInfo( i ).ENUMNAME;
+		
+		if( !filter.IsValid() || filter->Match() )
+			AddValue( ENUMNAME );
+	}
+}

@@ -1,0 +1,29 @@
+!include ..\unicodetests.mk
+
+TARGETNAME=sched_basic
+TARGETTYPE=PROGRAM
+UMTYPE=windows
+UMENTRY=winmain
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WIN7)
+
+SOURCES=sched_bvt.rc \
+        sched_bvt.cpp \
+        dxutil.cpp \
+        d3dutil.cpp \
+        d3dsettings.cpp \
+        d3dfont.cpp \
+        d3denumeration.cpp \
+        d3dapp.cpp \
+
+INCLUDES=$(INCLUDES);\
+         $(BASE_VID_TST_ROOT)\common\CrossProcSharing\inc; \
+         $(BASE_VID_TST_ROOT)\common\Modules\inc;
+
+TARGETLIBS=$(TARGETLIBS) \
+           $(SDK_LIB_PATH)\d3d9.lib\
+           $(PUBLIC_ROOT)\internal\windows\lib\*\unicode\etwBaseStatistics.lib \
+           $(PUBLIC_ROOT)\internal\windows\lib\*\unicode\etwDxgkernelStatistics.lib \
+           $(BASE_VID_TST_OBJ_ROOT)\common\CrossProcSharing\lib\unicode\$O\CrossProcSharing.lib \
+           $(BASE_VID_TST_OBJ_ROOT)\common\Modules\lib\unicode\$O\TestModules.lib \
+

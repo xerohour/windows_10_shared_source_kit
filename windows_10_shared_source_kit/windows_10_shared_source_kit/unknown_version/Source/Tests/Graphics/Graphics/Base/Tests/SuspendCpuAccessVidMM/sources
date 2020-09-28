@@ -1,0 +1,13 @@
+!include ..\unicodetests.mk
+
+TARGETTYPE=PROGRAM
+TARGETNAME=SuspendCpuAccess
+
+UMTYPE=console
+UMENTRY=main
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_WIN7)
+
+SOURCES=\
+    Main.rc \
+    main.cpp \

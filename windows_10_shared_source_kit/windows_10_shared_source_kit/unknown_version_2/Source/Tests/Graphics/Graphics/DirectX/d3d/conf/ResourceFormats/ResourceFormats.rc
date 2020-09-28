@@ -1,0 +1,6 @@
+#include <WGFConsoleShell.rc>
+
+
+RC_RESOURCEFORMATS_VSH RCDATA	"ResourceFormats.vsh"
+RC_RESOURCEFORMATS_GSH RCDATA	"ResourceFormats.gsh"
+RC_RESOURCEFORMATS_PSH RCDATA	"ResourceFormats.psh"

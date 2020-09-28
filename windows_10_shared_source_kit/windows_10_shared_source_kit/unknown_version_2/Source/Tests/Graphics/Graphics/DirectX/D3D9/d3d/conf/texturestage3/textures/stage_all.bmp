@@ -1,0 +1,1029 @@
+il(sqrt((float)index));
+		float length = 2.f / NumPerRow;
+		for (UINT sliceIndex = 0; sliceIndex < index; sliceIndex++)
+		{
+			FLOAT w = (FLOAT)sliceIndex/index + 1.0f/(2.0f*index);
+			DWORD x = sliceIndex % NumPerRow;
+			DWORD y = sliceIndex / NumPerRow;
+			float u1 = 0.f, u2 = 0.99f, v2 = 0.99f;
+			if (index == texDepth)
+			{
+				u1 = 0.5; 
+			}
+			g_V[offset+sliceIndex*4+0] = VOLVERTEX(D3DXVECTOR3( 1.f-(x+0)*length, 1.f-(y+1)*length, 0.5f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3(u1,  v2, w)); 
+			g_V[offset+sliceIndex*4+1] = VOLVERTEX(D3DXVECTOR3( 1.f-(x+1)*length, 1.f-(y+1)*length, 0.5f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3(u2,  v2, w)); 
+			g_V[offset+sliceIndex*4+2] = VOLVERTEX(D3DXVECTOR3( 1.f-(x+0)*length, 1.f-(y+0)*length, 0.5f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3(u1,  u1, w)); 
+			g_V[offset+sliceIndex*4+3] = VOLVERTEX(D3DXVECTOR3( 1.f-(x+1)*length, 1.f-(y+0)*length, 0.5f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3(u2,  u1, w)); 
+
+/*			g_V[offset+sliceIndex*4]    = VOLVERTEX(D3DXVECTOR3(  0.f, -1.f, 0.5f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3(0.00f,  0.99f, w)); 
+			g_V[offset+sliceIndex*4+1]  = VOLVERTEX(D3DXVECTOR3(  0.f,  0.f, 0.5f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3(0.00f,  0.00f, w)); 
+			g_V[offset+sliceIndex*4+2]  = VOLVERTEX(D3DXVECTOR3( -1.f, -1.f, 0.5f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3(0.99f,  0.99f, w)); 
+			g_V[offset+sliceIndex*4+3]  = VOLVERTEX(D3DXVECTOR3( -1.f,  0.f, 0.5f), D3DXVECTOR3( 0.f, 0.f, 1.f), D3DXVECTOR3(0.99f,  0.00f, w)); */
+		}
+		offset += 4*index;
+	}
+
+	if ( !CreateVertexBuffer( 4*NumberOfSlices*sizeof(VOLVERTEX), 0, FVF_VOLVERTEX, POOL_MANAGED, &m_pVertexBuffer ) )
+	{
+		Fail();
+		WriteToLog("GenerateVolVertexBuffer: failed to create vertex buffer with result %s.\n", m_pD3D->HResultToString(GetLastError()));
+		return false;
+	}
+
+	VOID* pV;
+	if ( !m_pVertexBuffer->Lock( 0, 4*NumberOfSlices*sizeof(VOLVERTEX), (BYTE**)&pV, 0) )
+	{
+		Fail();
+		WriteToLog( "GenerateVolVertexBuffer: failed to lock buffer with result %s.\n", m_pD3D->HResultToString(GetLastError()) );
+		RELEASE(m_pVertexBuffer);
+		return false;
+	}
+
+	memcpy( pV, g_V, 4*NumberOfSlices*sizeof(VOLVERTEX));
+
+	if ( !m_pVertexBuffer->Unlock() )
+	{
+		
+		WriteToLog( "GenerateVolVertexBuffer: failed to unlock buffer with result %s.\n", m_pD3D->HResultToString(GetLastError()) );
+		RELEASE(m_pVertexBuffer);
+		return false;
+	}
+
+	SetStreamSource(0, m_pVertexBuffer, sizeof(VOLVERTEX));
+	SetVertexShader(FVF_VOLVERTEX);
+	delete [] g_V;
+
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
+//  clamp.cpp
+//  created:	2006/11/10
+//
+//  purpose:    conformance for depth clamp in the viewport struct
+//////////////////////////////////////////////////////////////////////////
+
+#include "clamp.h"
+
+// string converstions for custom types
+tstring __stdcall ToString( DEPTH_VALUE value );
+bool __stdcall FromString( DEPTH_VALUE *value, const tstring &str );
+
+// data for value sets
+// use partition equivalent and boundary value methodologies
+float MinMaxDepth[][2] = 
+{
+	{ 0.0f, 1.0f },		// default
+	
+	{ 0.25f, 0.75f },	// various valid values
+
+	{ 0.0f, 0.0f },		// same values
+	{ 1.0f, 1.0f },     // same value
+};
+
+DEPTH_VALUE DepthValues[] =
+{
+	MIN_DEPTH,
+	MAX_DEPTH,
+	MID_DEPTH,
+	NEAR_MIN_DEPTH,
+	NEAR_MAX_DEPTH,
+	PAST_MIN_DEPTH,
+	PAST_MAX_DEPTH
+};
+
+CClampTest::CClampTest()
+: CDepthTest()
+{
+
+}
+
+void CClampTest::InitTestParameters()
+{
+	//
+	// Min and Max Depth 
+	//
+	CTestCaseParameter<FLOAT> *pMinDepthParam = AddParameter( _T( "MinDepth" ), &m_VP.MinDepth );
+	CTestCaseParameter<FLOAT> *pMaxDepthParam = AddParameter( _T( "MaxDepth" ), &m_VP.MaxDepth );
+	CUserValueSet<FLOAT> *pMinDepthSet = new CUserValueSet<FLOAT>();
+	CUserValueSet<FLOAT> *pMaxDepthSet = new CUserValueSet<FLOAT>();
+	for (UINT i = 0; i < ARRAY_SIZE(MinMaxDepth); ++i)
+	{
+		pMinDepthSet->AddValue(MinMaxDepth[i][0]);
+		pMaxDepthSet->AddValue(MinMaxDepth[i][1]);
+	}
+	testfactor::RFactor rfMinDepth = AddParameterValueSet( pMinDepthParam, pMinDepthSet );
+	testfactor::RFactor rfMaxDepth = AddParameterValueSet( pMaxDepthParam, pMaxDepthSet );
+
+	//
+	// Depth test values
+	//
+	CTestCaseParameter<DEPTH_VALUE> *pDepthParam = AddParameter( _T( "DepthValue" ), &m_DepthValue );
+	CTableValueSet<DEPTH_VALUE> *pDepthSet = new CTableValueSet< DEPTH_VALUE >( DepthValues, sizeof(DEPTH_VALUE), ARRAY_SIZE( DepthValues ) );
+	testfactor::RFactor rfDepthValue = AddParameterValueSet( pDepthParam, pDepthSet );
+
+	InitDepthTestParameters();
+	SetRootTestFactor(m_rfAll * (rfMinDepth % rfMaxDepth) * rfDepthValue);
+
+	AddPriorityPatternFilter(FilterEqual<D3D11_DSV_DIMENSION>(_T("Dimension"), D3D11_DSV_DIMENSION_TEXTURE2D), WeightFactorLarge);
+	AddPriorityPatternFilter(FilterEqual<UINT>(_T("Width"), 128), WeightFactorLarge);
+	AddPriorityPatternFilter(FilterEqual<UINT>(_T("Height"), 256), WeightFactorLarge);
+
+	DeclarePriorityLevelByPriorityValue( 1, 2.25f );
+	DeclarePriorityLevelByPriorityValue( 2, 1.5f );
+}
+
+TEST_RESULT CClampTest::Setup()
+{
+	TEST_RESULT tRes = RESULT_PASS;
+
+	try
+	{
+		SetupCommon();
+	}
+	catch(TRException &exc)
+	{
+		tRes = exc.GetResult();
+		exc.Prepend("[CClampTest::Setup()] ");
+		if (tRes != RESULT_PASS)
+			WriteToLog( exc.GetError().c_str() );
+	}
+	return tRes;
+}
+
+TEST_RESULT CClampTest::SetupTestCase()
+{
+	TEST_RESULT tRes = RESULT_PASS;
+	try
+	{
+		SetupTestCaseCommon();
+
+		//
+		// Setup the default viewport
+		//
+		m_VP.Height = (float) m_uSubResHeight;
+		m_VP.Width = (float) m_uSubResWidth;
+		m_VP.TopLeftX = 0;
+		m_VP.TopLeftY = 0;
+		GetEffectiveContext()->RSSetViewports( 1, &m_VP );
+
+		HRESULT hr;
+		if( FAILED( hr = ExecuteEffectiveContext() ) )
+		{
+			WriteToLog( _T("Failed to execute deferred context.") );
+			return RESULT_FAIL;
+		}
+
+	}
+	catch(TRException &exc)
+	{
+		tRes = exc.GetResult();
+		exc.Prepend("[CClampTest::SetupTestCase()] ");
+		if (tRes != RESULT_PASS)
+			WriteToLog( exc.GetError().c_str() );
+	}
+	return tRes;
+}
+
+TEST_RESULT CClampTest::ExecuteTestCase()
+{
+	TEST_RESULT tRes = RESULT_PASS;
+	try
+	{
+		//
+		// Init Depth Texture
+		//
+
+		// determine input depth value
+		float fDepthIn;
+		switch (m_DepthValue)
+		{
+			case MIN_DEPTH: fDepthIn = m_VP.MinDepth; break;
+			case MAX_DEPTH: fDepthIn = m_VP.MaxDepth; break;
+			case MID_DEPTH: fDepthIn = 0.5f*(m_VP.MaxDepth*m_VP.MinDepth); break;
+			case NEAR_MIN_DEPTH: fDepthIn = m_VP.MinDepth + 0.00001f; break;
+			case NEAR_MAX_DEPTH: fDepthIn = m_VP.MaxDepth - 0.00001f; break;
+			case PAST_MIN_DEPTH: fDepthIn = m_VP.MinDepth - 0.00001f; break;
+			case PAST_MAX_DEPTH: fDepthIn = m_VP.MaxDepth + 0.00001f; break;
+		}
+		
+		// create depth buffer
+		UINT uSize = m_uSubResWidth*m_uSubResHeight;
+		std::vector<float> vDepthIn(uSize, fDepthIn);
+		FillVB(vDepthIn);
+
+		//
+		// Render
+		//
+		float fClear = 0.25f;
+		GetEffectiveContext()->OMSetDepthStencilState( m_pDSS, 0 );
+		GetEffectiveContext()->OMSetRenderTargets( 1, &m_pRTV, m_pDSV );
+		GetEffectiveContext()->ClearDepthStencilView( m_pDSV, D3D11_CLEAR_DEPTH, fClear, 0 );
+		GetEffectiveContext()->Draw( uSize*3, 0 );
+
+		HRESULT hr;
+		if( FAILED( hr = ExecuteEffectiveContext() ) )
+		{
+			WriteToLog( _T("Failed to execute deferred context.") );
+			return RESULT_FAIL;
+		}
+
+		//
+		// Verify
+		//
+		
+		// get depth
+		std::vector<float> vDepthOut(uSize);
+		GetDepth(vDepthOut);
+
+		// compute expected result
+		//  -cull pixel if out of range  
+		//	-viewport scale
+		//  -viewport clamp
+		float fExpected = fDepthIn;
+		if (m_PSType != ODEPTH)
+			fExpected = m_VP.MinDepth + fExpected*(m_VP.MaxDepth - m_VP.MinDepth);
+		fExpected = min(m_VP.MaxDepth, max(m_VP.MinDepth, fExpected));
+		if ((m_PSType != ODEPTH) && ((fDepthIn < 0) || (fDepthIn > 1)) )
+			fExpected = fClear;
+
+		// compare
+		const DXGIFormatInfo* pTexFormatInfo = CFormatInfoMap::Find(m_DSTex2DDesc.Format);
+		for (UINT i = 0; i < vDepthIn.size(); ++i)
+		{
+			float fUlpDiff;
+			if(!MinMaxRange::TestFloatsSame(fExpected, vDepthOut[0], pTexFormatInfo, 0, 1.f, &fUlpDiff) )
+			{
+				WriteToLog("Failure Info:");
+				WriteToLog("Pixel x: %d, y: %d", i%m_uSubResWidth, i/m_uSubResWidth);
+				WriteToLog("Input Depth: \t%f", fDepthIn);
+				WriteToLog("Expected value: \t%f", fExpected);
+				WriteToLog("Actual value: \t%f", vDepthOut[i]);
+
+				if (fUlpDiff < 50) // spew ulpdiff only if it appears to be a precision issue
+					WriteToLog("Ulp difference: \t%+ f", fUlpDiff);
+				throw TRException("Depth buffer contains invalid results.");
+			}
+		}
+	}
+	catch(TRException &exc)
+	{
+		tRes = exc.GetResult();
+		exc.Prepend("[CClampTest::ExecuteTestCase()] ");
+		if (tRes != RESULT_PASS)
+			WriteToLog( exc.GetError().c_str() );
+	}
+	return tRes;
+}
+
+void CClampTest::CleanupTestCase()
+{
+	CleanupTestCaseCommon();
+}
+
+void CClampTest::Cleanup()
+{
+	CleanupCommon();
+}
+
+tstring __stdcall ToString( DEPTH_VALUE value )
+{
+	switch( value )
+	{
+		case MIN_DEPTH:
+			return tstring( _T( "MIN_DEPTH" ) );
+			break;
+		case MAX_DEPTH:
+			return tstring( _T( "MAX_DEPTH" ) );
+			break;
+		case MID_DEPTH:
+			return tstring( _T( "MID_DEPTH" ) );
+			break;
+		case NEAR_MIN_DEPTH:
+			return tstring( _T( "NEAR_MIN_DEPTH" ) );
+			break;
+		case NEAR_MAX_DEPTH:
+			return tstring( _T( "NEAR_MAX_DEPTH" ) );
+			break;
+		case PAST_MIN_DEPTH:
+			return tstring( _T( "PAST_MIN_DEPTH" ) );
+			break;
+		case PAST_MAX_DEPTH:
+			return tstring( _T( "PAST_MAX_DEPTH" ) );
+			break;
+		default:
+			return tstring( _T( "" ) );
+			break;
+	}
+}
+
+bool __stdcall FromString( DEPTH_VALUE *value, const tstring &str )
+{
+	if( tcistring( str ) == _T( "MIN_DEPTH" ) )
+	{
+		*value = MIN_DEPTH;
+		return true;
+	}
+	if( tcistring( str ) == _T( "MAX_DEPTH" ) )
+	{
+		*value = MAX_DEPTH;
+		return true;
+	}
+	if( tcistring( str ) == _T( "MID_DEPTH" ) )
+	{
+		*value = MID_DEPTH;
+		return true;
+	}
+	if( tcistring( str ) == _T( "NEAR_MIN_DEPTH" ) )
+	{
+		*value = NEAR_MIN_DEPTH;
+		return true;
+	}
+	if( tcistring( str ) == _T( "NEAR_MAX_DEPTH" ) )
+	{
+		*value = NEAR_MAX_DEPTH;
+		return true;
+	}
+	if( tcistring( str ) == _T( "PAST_MIN_DEPTH" ) )
+	{
+		*value = PAST_MIN_DEPTH;
+		return true;
+	}
+	if( tcistring( str ) == _T( "PAST_MAX_DEPTH" ) )
+	{
+		*value = PAST_MAX_DEPTH;
+		return true;
+	}
+	return false;
+}
+//////////////////////////////////////////////////////////////////////
+// Blend.cpp: implementation of the CCubeBlend class.
+//////////////////////////////////////////////////////////////////////
+
+#define D3D_OVERLOADS
+#include <d3d8.h>
+#include <d3dx8.h>
+#include "Cubemap.h"
+
+#ifdef FAST_TEST
+const int MAX_ANGLES = 3;
+const int MAX_MATERIALS = 3;
+const int BLEND_MODES = 5;
+#else
+const int MAX_ANGLES    = 6;
+const int MAX_MATERIALS = 3;
+const int BLEND_MODES   = 5;
+#endif
+
+CCubeBlendTest::CCubeBlendTest()
+{
+	m_szTestName = "Cube Blend";
+	m_szCommandKey = "Blend";
+
+ 	// Set degree increase per test
+	fDegInc = 135.0f; 
+}
+
+bool CCubeBlendTest::SetDefaultRenderStates(void)
+{
+	SetRenderState(D3DRS_AMBIENT,(DWORD)0xFFFFFFFF);
+
+	// Set the appropriate alpha blending renderstates
+	SetRenderState(D3DRS_ALPHABLENDENABLE, (DWORD)TRUE);
+	SetRenderState(D3DRS_SRCBLEND, (DWORD)D3DBLEND_SRCALPHA);
+	SetRenderState(D3DRS_DESTBLEND, (DWORD)D3DBLEND_INVSRCALPHA);
+
+    return true;
+}
+
+UINT CCubeBlendTest::TestInitialize(void)
+{
+    // Setup the Test range
+	SetTestRange(1, MAX_ANGLES * MAX_MATERIALS * BLEND_MODES);
+
+	// Make sure we are on at lease DX7
+	if (m_dwVersion <= 0x0600)
+	{
+		WriteToLog("This test requires at least Dx7.\n");
+		return D3DTESTINIT_SKIPALL;
+	}
+
+	// Check the caps we are interested in
+	DWORD dwTextureCaps = m_pSrcDevice->GetCaps()->dwTextureCaps;
+
+	if (!(dwTextureCaps & D3DPTEXTURECAPS_CUBEMAP))
+	{
+		if (m_uCommonCubeFormats != 0) 
+		{
+  			WriteToLog("Device capability inconsistency: Found cube texture formats with Texture CubeMap not set.");
+			return D3DTESTINIT_ABORT;
+		}
+
+		WriteToLog("Device capability not supported: Texture Cubemap.\n");
+		return D3DTESTINIT_SKIPALL;
+	}
+
+    // Check if any cube formats were available
+	if (m_uCommonCubeFormats == 0) 
+    {
+		WriteToLog("No cube texture formats found.\n");
+		return D3DTESTINIT_ABORT;
+    }
+
+	// Reset some image compare variables to defaults
+    m_pFramework->GetImageCmp()->SetTolPerPixelChannel(0.15f);
+    m_pFramework->GetImageCmp()->SetTolPerPixel(0.10f);
+    m_pFramework->GetImageCmp()->SetImgDeltaWght(1.00f);
+
+    // Setup some variables 
+	int i;
+	D3DCOLOR Stripes[8];
+	D3DCOLOR AlphaStripes[8];
+    TCHAR szBuffer[80];
+	bool bResult = true;
+    UINT nImageLength = 64;
+
+	// Setup the colors for the Stripes array
+	Stripes[0] = RGBA_MAKE(255,255,255,255);	// White
+	Stripes[1] = RGBA_MAKE(255,0,0,255);		// Red
+	Stripes[2] = RGBA_MAKE(0,255,0,255);		// Green
+	Stripes[3] = RGBA_MAKE(0,0,255,255);		// Blue
+	Stripes[4] = RGBA_MAKE(255,255,0,255);		// Yellow
+	Stripes[5] = RGBA_MAKE(255,0,255,255);		// Magenta
+	Stripes[6] = RGBA_MAKE(0,255,255,255);		// Cyan
+	Stripes[7] = RGBA_MAKE(128,128,128,255);	// Grey
+
+	// Allocate/Load the CImages
+	for (i=0; i<6; i++)
+	{
+		pImage[i] = new CImage();
+		if (NULL == pImage[i])
+		{
+			WriteToLog("TestInitialize() - Out of memory.\n");
+			return D3DTESTINIT_ABORT;
+		}
+
+		pImage[i]->LoadStripes(nImageLength,nImageLength,8,Stripes,false);
+	}
+
+    // Setup the colors for the AlphaStripes array
+	AlphaStripes[0] = RGBA_MAKE(255,255,255,0);		// White
+	AlphaStripes[1] = RGBA_MAKE(255,0,0,32);		// Red
+	AlphaStripes[2] = RGBA_MAKE(0,255,0,64);		// Green
+	AlphaStripes[3] = RGBA_MAKE(0,0,255,127);		// Blue
+	AlphaStripes[4] = RGBA_MAKE(255,255,0,128);		// Yellow
+	AlphaStripes[5] = RGBA_MAKE(255,0,255,176);		// Magenta
+	AlphaStripes[6] = RGBA_MAKE(0,255,255,224);		// Cyan
+	AlphaStripes[7] = RGBA_MAKE(128,128,128,255);	// Grey
+
+	// Allocate/Load the CImages
+	for (i=0; i<6; i++)
+	{
+		pAlphaImage[i] = new CImage();
+		if (NULL == pAlphaImage[i])
+		{
+			WriteToLog("TestInitialize() - Out of memory.\n");
+			return D3DTESTINIT_ABORT;
+		}
+
+		pAlphaImage[i]->LoadStripes(nImageLength,nImageLength,8,AlphaStripes,false);
+	}
+
+	// Get the current cube format.
+    FmtToString(FORMAT_TEXTURE,&m_pCommonCubeFormats[m_pCurrentMode->nCubeFormat],szBuffer);
+
+	// Create the cube map texture
+	bResult = CreateCubeTexture(nImageLength, 1, 0, m_pCommonCubeFormats[m_pCurrentMode->nCubeFormat], FMWK_DEFAULT, &pCubeTexture);
+
+	// Tell log about CreateCubeTexture failure
+    if (!bResult || NULL == pCubeTexture) 
+	{
+		HRESULT hr = GetLastError();
+		WriteToLog("CreateCubeTexture(%s) failed with HResult = %s.\n",szBuffer,m_pD3D->HResultToString(hr));
+
+		// In Dx7 there was no CubeTexture list, so consider E_NOTIMPL a skip
+		if ((m_dwVersion == 0x0700) && (hr == E_NOTIMPL))
+			return D3DTESTINIT_SKIPALL;
+		else
+			return D3DTESTINIT_ABORT;
+	}
+
+	// Set the palette if needed
+	if (pCubeTexture->IsPalettized())
+		pCubeTexture->SetPalette(NULL);
+
+    // Load sphere vertices
+	LoadSphere();					
+
+	return D3DTESTINIT_RUN;
+}
+
+bool CCubeBlendTest::ExecuteTest(UINT uTestNum)
+{
+ 	// Initialize some variables
+	int nTest = uTestNum - 1;
+    int nAngle = nTest % MAX_ANGLES;
+	int nMaterial = nTest / MAX_ANGLES;
+	int nBlendMode = nMaterial / MAX_MATERIALS;
+	float fAngle = fDegInc * (float)nAngle;				// Get angle for current test
+	while (fAngle>=360.0f) { fAngle-=360.0f; }
+    D3DXMATRIX Matrix, RotMatrix, TransMatrix;
+	msgString[0] = '\0';
+	szStatus[0] = '\0';
+
+	// Tweak the angle a touch to avoid not drawing anything for 1 bit alpha textures
+	if ((fAngle == 315.0f) && (m_pCommonCubeFormats[m_pCurrentMode->nCubeFormat].d3dfFormat == FMT_A1R5G5B5 || 
+							   m_pCommonCubeFormats[m_pCurrentMode->nCubeFormat].d3dfFormat == FMT_DXT1))
+		fAngle = 300.f;
+
+    if (!SetupBlendMode(nBlendMode))
+    {
+		SkipTests(MAX_ANGLES * MAX_MATERIALS);
+        return false;
+    }
+
+    if (!ApplyMaterial((nMaterial % MAX_MATERIALS), (nBlendMode == 4)))
+    {
+  		TestFinish(D3DTESTFINISH_ABORT);
+        return false;
+    }
+
+    sprintf(msgString,"%s%.2f degrees",msgString,fAngle);
+
+    // Tell the log that we are starting
+	BeginTestCase(msgString,uTestNum);
+
+    // Determine which image data to use and load
+    if ((nMaterial % MAX_MATERIALS) == 0)
+	{
+		// Load the alpha images
+		if (!pCubeTexture->LoadImage(1, pAlphaImage))
+		{
+			WriteToLog("LoadImage(pAlphaImage) failed with HResult = %s.\n",m_pD3D->HResultToString(GetLastError()));
+			Fail();
+			return false;
+		}
+	}
+	else
+	{
+		// Load the images
+		if (!pCubeTexture->LoadImage(1, pImage))
+		{
+			WriteToLog("LoadImage(pImage) failed with HResult = %s.\n",m_pD3D->HResultToString(GetLastError()));
+			Fail();
+			return false;
+		}
+	}
+	
+    // Inidicate how the texture was loaded
+    switch (m_pSrcDevice->GetTexLoad())
+    {    
+        case TEXLOAD_UPDATETEXTURE:
+        	WriteToLog("TexLoad: UpdateTex\n");
+        	sprintf(szStatus, "%s$aUpdateTex",szStatus);
+            break;
+        case TEXLOAD_COPYRECTS:
+        	WriteToLog("TexLoad: CopyRects\n");
+        	sprintf(szStatus, "%s$aCopyRects",szStatus);
+            break;
+        case TEXLOAD_LOCKCOPY:
+        	WriteToLog("TexLoad: LockCopy\n");
+        	sprintf(szStatus, "%s$aLockCopy",szStatus);
+            break;
+        case TEXLOAD_UPDATESURFACE:
+        	WriteToLog("TexLoad: UpdateSurf\n");
+        	sprintf(szStatus, "%s$aUpdateSurf",szStatus);
+            break;
+        default:
+		    WriteToLog("Error: Unknown texture load option (%x).\n",m_pSrcDevice->GetTexLoad());
+        	sprintf(szStatus, "%s$rUnknown (%x)",szStatus,m_pSrcDevice->GetTexLoad());
+            Fail();
+		    return false;
+    }
+
+    // Set the valid texture
+	if (!SetTexture(0,pCubeTexture))
+	{
+		WriteToLog("SetTexture() failed with HResult = %s.\n",m_pD3D->HResultToString(GetLastError()));
+        Fail();
+		return false;
+	}
+
+    // Setup the world matrix for the translating/rotating sphere
+    D3DXMatrixIdentity(&Matrix);
+    D3DXMatrixTranslation(&TransMatrix, 0.0f, 0.0f, fZDepthMin);
+    D3DXMatrixMultiply(&Matrix, &TransMatrix, &Matrix);
+    D3DXMatrixRotationX(&RotMatrix, fAngle*pi/180);
+    D3DXMatrixMultiply(&Matrix, &RotMatrix, &Matrix);
+    if (!SetTransform(D3DTS_WORLD, (D3DMATRIX *) &Matrix))
+	{
+		WriteToLog("SetTransform(WorldMatrix) failed with HResult = %s.\n",m_pD3D->HResultToString(GetLastError()));
+        Fail();
+		return false;
+	}
+
+	return true;
+}
+
+bool CCubeBlendTest::TestTerminate()
+{
+    CCubeTest::TestTerminate();
+
+	// Cleanup image data
+    for (int i=0; i<6 ;i++)
+	{
+		SAFEDELETE(pImage[i]);
+		SAFEDELETE(pAlphaImage[i]);
+	}
+
+	return true;
+}
+
+bool CCubeBlendTest::ApplyMaterial(int nMaterial, bool bBlack)
+{
+    // Release previous material
+    SAFEDELETE(pMaterial);
+
+	// Init the material
+    pMaterial = new MATERIAL;
+	memset(pMaterial, NULL, sizeof(MATERIAL));
+
+    switch (nMaterial)
+    {
+        case 0:
+            {   // Black with alpha
+                if (bBlack)
+                {
+                    pMaterial->Diffuse.a = 0.5f;
+	                pMaterial->Ambient.r = 0.0f;
+	                pMaterial->Ambient.g = 0.0f;
+	                pMaterial->Ambient.b = 0.0f;
+            	    sprintf(msgString,"%sBlack (alpha=0.5), ",msgString);
+                }
+                else // White with alpha
+                {
+                    pMaterial->Diffuse.a = 0.5f;
+	                pMaterial->Ambient.r = 1.0f;
+	                pMaterial->Ambient.g = 1.0f;
+	                pMaterial->Ambient.b = 1.0f;
+            	    sprintf(msgString,"%sWhite (alpha=0.5), ",msgString);
+                }
+            }
+            break;
+        case 1:
+            {   // Black with no alpha
+                if (bBlack)
+                {
+                    pMaterial->Diffuse.a = 1.0f;
+	                pMaterial->Ambient.r = 0.0f;
+	                pMaterial->Ambient.g = 0.0f;
+	                pMaterial->Ambient.b = 0.0f;
+            	    sprintf(msgString,"%sBlack (alpha=1.0), ",msgString);
+                }
+                else // White with no alpha
+                {
+                    pMaterial->Diffuse.a = 1.0f;
+	                pMaterial->Ambient.r = 1.0f;
+	                pMaterial->Ambient.g = 1.0f;
+	                pMaterial->Ambient.b = 1.0f;
+            	    sprintf(msgString,"%sWhite (alpha=1.0), ",msgString);
+                }
+            }
+            break;
+        case 2:
+            {   // Red with no alpha
+                pMaterial->Diffuse.a = 1.0f;
+	            pMaterial->Ambient.r = 1.0f;
+	            pMaterial->Ambient.g = 0.0f;
+	            pMaterial->Ambient.b = 0.0f;
+            	sprintf(msgString,"%sRed (alpha=1.0), ",msgString);
+            }
+            break;
+    }
+
+	// Set the appropriate material
+	SetMaterial(pMaterial);
+
+    return true;
+}
+
+bool CCubeBlendTest::SetupBlendMode(int nMode)
+{
+    DWORD dwPasses = 0;
+
+    switch (nMode)
+    {
+        case 0:
+           	sprintf(msgString,"%sDecal, ",msgString);
+
+            SetTextureStageState(0,D3DTSS_COLORARG1, (DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_COLOROP, (DWORD)D3DTOP_SELECTARG1);
+            SetTextureStageState(0,D3DTSS_ALPHAARG1, (DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_ALPHAOP, (DWORD)D3DTOP_SELECTARG1);
+
+		    if (!ValidateDevice(&dwPasses))
+			{
+				SetTextureStageState(0,D3DTSS_COLORARG2,(DWORD)D3DTA_TEXTURE);
+				SetTextureStageState(0,D3DTSS_COLOROP,(DWORD)D3DTOP_SELECTARG2);
+
+			    if (!ValidateDevice(&dwPasses))
+				{
+	    		    WriteToLog("ValidateDevice() failed: ColorOp Texture, AlphaOp Texture, HResult = %s.\n",m_pD3D->HResultToString(GetLastError()));
+					return false;
+				}
+			}
+
+            break;
+        case 1:
+           	sprintf(msgString,"%sModulate, ",msgString);
+
+            SetTextureStageState(0,D3DTSS_COLORARG1,(DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_COLORARG2,(DWORD)D3DTA_CURRENT);
+            SetTextureStageState(0,D3DTSS_COLOROP,(DWORD)D3DTOP_MODULATE);
+            SetTextureStageState(0,D3DTSS_ALPHAARG1,(DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_ALPHAOP,(DWORD)D3DTOP_SELECTARG1);
+
+		    if (!ValidateDevice(&dwPasses))
+			{
+				SetTextureStageState(0,D3DTSS_COLORARG2,(DWORD)D3DTA_TEXTURE);
+				SetTextureStageState(0,D3DTSS_COLORARG1,(DWORD)D3DTA_CURRENT);
+				SetTextureStageState(0,D3DTSS_COLOROP,  (DWORD)D3DTOP_MODULATE);
+
+				if (!ValidateDevice(&dwPasses))
+				{
+	    		    WriteToLog("ValidateDevice() failed: ColorOp Modulate, AlphaOp Texture, HResult = %s.\n",m_pD3D->HResultToString(GetLastError()));
+					return false;
+				}
+			}
+
+            break;
+        case 2:
+           	sprintf(msgString,"%sDecalAlpha, ",msgString);
+
+            SetTextureStageState(0,D3DTSS_COLORARG1,(DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_COLORARG2,(DWORD)D3DTA_CURRENT);
+            SetTextureStageState(0,D3DTSS_COLOROP,  (DWORD)D3DTOP_BLENDTEXTUREALPHA);
+            SetTextureStageState(0,D3DTSS_ALPHAARG1,(DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_ALPHAARG2,(DWORD)D3DTA_CURRENT);
+            SetTextureStageState(0,D3DTSS_ALPHAOP,  (DWORD)D3DTOP_SELECTARG2);
+
+		    if (!ValidateDevice(&dwPasses))
+			{
+	    		WriteToLog("ValidateDevice() failed: ColorOp BlendTextureAlpha, AlphaOp Current = %s.\n",m_pD3D->HResultToString(GetLastError()));
+				return false;
+			}
+
+            break;
+        case 3:
+           	sprintf(msgString,"%sModulateAlpha, ",msgString);
+
+            SetTextureStageState(0,D3DTSS_COLORARG1,(DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_COLORARG2,(DWORD)D3DTA_CURRENT);
+            SetTextureStageState(0,D3DTSS_COLOROP,  (DWORD)D3DTOP_MODULATE);
+            SetTextureStageState(0,D3DTSS_ALPHAARG1,(DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_ALPHAARG2,(DWORD)D3DTA_CURRENT);
+            SetTextureStageState(0,D3DTSS_ALPHAOP,  (DWORD)D3DTOP_MODULATE);
+
+		    if (!ValidateDevice(&dwPasses))
+			{
+				SetTextureStageState(0,D3DTSS_COLORARG2,(DWORD)D3DTA_TEXTURE);
+				SetTextureStageState(0,D3DTSS_COLORARG1,(DWORD)D3DTA_CURRENT);
+				SetTextureStageState(0,D3DTSS_COLOROP,  (DWORD)D3DTOP_MODULATE);
+				SetTextureStageState(0,D3DTSS_ALPHAARG2,(DWORD)D3DTA_TEXTURE);
+				SetTextureStageState(0,D3DTSS_ALPHAARG1,(DWORD)D3DTA_CURRENT);
+				SetTextureStageState(0,D3DTSS_ALPHAOP,  (DWORD)D3DTOP_MODULATE);
+
+				if (!ValidateDevice(&dwPasses))
+				{
+	    		    WriteToLog("ValidateDevice() failed: ColorOp Modulate, AlphaOp Modulate, HResult = %s.\n",m_pD3D->HResultToString(GetLastError()));
+					return false;
+				}
+			}
+
+            break;
+        case 4:
+           	sprintf(msgString,"%sAdd, ",msgString);
+
+            SetTextureStageState(0,D3DTSS_COLORARG1,(DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_COLORARG2,(DWORD)D3DTA_CURRENT);
+            SetTextureStageState(0,D3DTSS_COLOROP,  (DWORD)D3DTOP_ADD);
+            SetTextureStageState(0,D3DTSS_ALPHAARG1,(DWORD)D3DTA_TEXTURE);
+            SetTextureStageState(0,D3DTSS_ALPHAARG2,(DWORD)D3DTA_CURRENT);
+            SetTextureStageState(0,D3DTSS_ALPHAOP,  (DWORD)D3DTOP_SELECTARG2);
+
+		    if (!ValidateDevice(&dwPasses))
+			{
+				SetTextureStageState(0,D3DTSS_COLORARG2,(DWORD)D3DTA_TEXTURE);
+				SetTextureStageState(0,D3DTSS_COLORARG1,(DWORD)D3DTA_CURRENT);
+				SetTextureStageState(0,D3DTSS_COLOROP,  (DWORD)D3DTOP_ADD);
+
+				if (!ValidateDevice(&dwPasses))
+				{
+	    		    WriteToLog("ValidateDevice() failed: ColorOp Add, AlphaOp Current, HResult = %s.\n",m_pD3D->HResultToString(GetLastError()));
+					return false;
+				}
+			}
+
+            break;
+		default:
+			WriteToLog("Unknown blend mode (%d).\n",nMode);
+			return false;
+    }
+
+    return true;
+}// Copyright(C) Microsoft. All rights reserved.
+
+#pragma once
+#pragma warning(disable : 4995)
+
+
+DWORD Tc_APOMatrixCreate();
+DWORD Tc_APOMatrixInitialize();
+DWORD Tc_APOMatrixSetMatrixCoeffns();
+DWORD Tc_APOMatrixGetMatrixCoeffns();
+DWORD Tc_APOMatrixProcess();
+#ifdef TEST_LEAP_MATRIX
+DWORD Tc_LEAPMatrixProcess();
+#endif
+
+class CCheck
+{
+public:
+    CCheck(){};
+    virtual ~CCheck() {};
+    static BOOL InRange(double Value1, double Value2, double LowerBound, double UpperBound)
+    {
+        _ASSERT(LowerBound <= UpperBound);
+        Value1 = fabs(Value1);
+        Value2 = fabs(Value2);
+        return (Value1 >= (LowerBound * Value2)) && (Value1 <= (UpperBound * Value2));
+    };
+    static BOOL InRange(double Value1, double Value2, double Tolerance)
+    {       
+        Value1 = fabs(Value1);
+        Value2 = fabs(Value2);
+        return (Value1 >= (Value2 - Tolerance)) && (Value1 <= (Value2 + Tolerance));
+    }; 
+};
+
+
+class CAPOMatrixTest : public CComBase
+{
+public:
+    CAPOMatrixTest()
+    {
+        HRESULT hr = S_OK;
+        SLOG(eInfo1, "Creating Matrix Object");
+        hr = m_pMatrix.CreateInstance(__uuidof(AudioMatrix));
+        if(FAILED(hr))
+        {
+            SLOG(eError, "ERROR: Creating Matrix Object, 0x%X", hr);
+            return;
+        }
+        SLOG(eInfo1, "Creating APO Object");
+        hr = m_pMatrix.QueryInterface(__uuidof(IAudioProcessingObjectConfiguration), &m_pBaseAPO);
+        if(FAILED(hr))
+        {
+            SLOG(eError, "ERROR: Creating APO Object, 0x%X", hr);
+        }
+
+        m_pAPO = NULL;
+        SLOG(eInfo1, "Creating APO Object");
+        hr = m_pMatrix.QueryInterface(__uuidof(IAudioProcessingObject), &m_pAPO);
+        if(FAILED(hr))
+        {
+            SLOG(eError, "ERROR: Creating APO Object, 0x%X", hr);            
+        }
+
+		// common fields in the apo init
+		apoParams.APOInit.cbSize = sizeof( apoParams );
+		apoParams.APOInit.clsid  = __uuidof( AudioMatrix );
+
+    };
+    virtual ~CAPOMatrixTest()
+    {    
+        m_pBaseAPO = NULL;
+        m_pMatrix = NULL;
+    };     
+    
+    // Basic Object creation
+    DWORD APOMatrixCreate();
+    // IAudioVolume methods 
+    DWORD APOSetMatrixCoeffns();
+    DWORD APOGetMatrixCoeffns();
+    DWORD APOInitialize(); 
+    HRESULT Initialize();
+    DWORD APOTestMatrix();
+#ifdef TEST_LEAP_MATRIX
+    DWORD LEAPTestMatrix();
+#endif
+    
+private:    
+    IAudioMatrixPtr                         m_pMatrix;
+    IAudioProcessingObjectConfigurationPtr  m_pBaseAPO;
+    IAudioProcessingObjectPtr				m_pAPO;
+
+	APO_MATRIX_PARAMS						apoParams;
+  
+	HRESULT CreateObjects();
+
+	HRESULT LockAPO( UINT32 u32InChannels = 1
+                     ,UINT32 u32OutChannels = 2
+                     ,FLOAT32 f32FrameRate = 48000.00
+                     ,FLOAT32* pfMatrixCoeffns = NULL
+                     ,MFTIME* pMftime = NULL
+                     ,AUDIO_CURVE_TYPE = AUDIO_CURVE_TYPE_NONE
+                     ,MFTIME* pCurveDuration = NULL
+                     ,PLOCK_PARAMS pLockParams = NULL
+                     );
+
+	HRESULT TestFunctional( UINT32 u32InChannels
+                            ,UINT32 u32OutChannels                            
+                            ,FLOAT32* pfMatrixCoeffns
+                            ,UINT32 u32NumInConn
+                            ,APO_CONNECTION_PROPERTY* pInConn
+                            ,UINT32 u32NumOutConn
+                            ,APO_CONNECTION_PROPERTY* pOutConn
+                            );
+};
+!include ..\..\conf.mk
+
+TARGETNAME=Multisample
+
+SOURCES=..\multisample.rc  \
+        ..\multisample.cpp \
+        ..\samples.cpp     \
+        ..\mask.cpp	\
+        ..\toggle.cpp	\
+        ..\centroid.cpp	\
+	..\points.cpp	\
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+
+TARGETLIBS=$(TARGETLIBS) \
+	$(SDK_LIB_PATH)\dwmapi.lib \
+
+// Copyright(C) Microsoft.All rights reserved.
+
+class CNodeReq: private CKSTopoDevLoop
+{
+public:
+    DWORD WINAPI CheckNodesIOCount(CDevice *pDevice)
+        {
+            return (LoopFilters(pDevice,
+                &CNodeReq::CheckNodesIOCountHelper, static_cast<void*>(this)));                 
+        }
+    DWORD WINAPI CheckNodeProperties(CDevice *pDevice, GUID guidNodeType)
+        {
+            m_guidNodeType = guidNodeType;
+            return (LoopFiltersNodes(pDevice, 
+                &CNodeReq::CheckNodePropertiesHelper, static_cast<void*>(this)));                 
+        }
+    DWORD WINAPI CheckOrphanedNodes(CDevice *pDevice)
+        {
+            return (LoopFilters(pDevice,
+                &CNodeReq::CheckOrphanedNodesHelper, static_cast<void*>(this)));                 
+        }
+
+private:
+    // Constants and Enums
+    enum  NODE_PROP_REQ { ALL, AT_LEAST_ONE, SPECIAL_COMBINATION, OPTIONAL_ALL };
+
+    // When a connection is read, it contains a pair of 
+    // ((FromNode, FromPin), (ToNode, ToPin))
+    // When the connection starts/ends at a Pin and not a node,
+    // the FromNode/ToNode is set to (UINT)(-1)
+    static const UINT PIN_CONN = (UINT)(-1);
+
+    // Variables stored to be used between functions
+    GUID m_guidNodeType;
+
+    // Table to keep track of Node Requirements
+    // Same for all instances
+    static const struct _NodeReqList
+    {
+        GUID                        m_guidNodeType;
+        KSPROPERTY_AUDIO            *m_AudioFilterPropList;
+        UINT                        m_iAudioFilterPropListSize;
+        KSPROPERTY_AUDIO            *m_AudioPinPropList;
+        UINT                        m_iAudioPinPropListSize;
+        KSPROPERTY_AUDIOENGINE      *m_AudioEngineFilterPropList;
+        UINT                        m_iAudioEngineFilterPropListSize;
+        KSPROPERTY_AUDIOENGINE      *m_AudioEnginePinPropList;
+        UINT                        m_iAudioEnginePinPropListSize;
+        NODE_PROP_REQ               m_iRequired;
+        bool                        (*m_pfnSpecialCheck)(int,CNode*);
+    } m_NodeReqList[]; 
+
+    // Functions
+    static bool CheckNodesIOCountHelper(void *);
+    static bool CheckNodePropertiesHelper(void *);
+    bool DoesNodeSupportAudioFilterProperties(int);
+    bool DoesNodeSupportAEFilterProperties(int);
+    bool DoesNodeSupportAudioPinProperties(int);
+    bool DoesNodeSupportAEPinProperties(int);
+    bool DoesNodeSupportProperties( const GUID*, bool, int, UINT*, UINT);
+    static bool DoesPeakMeterNodeSupportProperties(int,CNode*);
+    static bool CheckOrphanedNodesHelper(void *);
+};
+BM6À      6   (   €   €          À                  ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ       ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €½½Þðð÷ÿÿÿÿÿÿÙÙì||½  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ½½    ½½ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ       ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €ééôøøû½½Þhh´  €½½ÞŒŒÆ  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ éé ||    §§    || éé ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€ñññééé€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ                      ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €  €ááð  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ       ÐÐ ÿÿ ÐÐ       ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€æææõõõ€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ                      ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €hh´ÿÿÿ  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ       ÿÿ ÿÿ ÿÿ       ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ûûû€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ §§ ÙÙ ÿÿ ÿÿ       ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €  €  €  €ééôÿÿÿ  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ       ÿÿ ÿÿ ÐÐ       ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ   €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€óóóæææ€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ || ðð ÿÿ       ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ      €  €  €  €  €  €  €||½²²Ùðð÷ÿÿÿÙÙì  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €  €    ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ MM    ÿÿ ÐÐ    || éé ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ ÿÿ 

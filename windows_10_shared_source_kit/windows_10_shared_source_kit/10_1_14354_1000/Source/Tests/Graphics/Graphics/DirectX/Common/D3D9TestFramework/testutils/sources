@@ -1,0 +1,17 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=TestUtils 
+
+SOURCES= \
+        TestUtils.cpp \
+        LegacyTestUtils.cpp \
+	CTestCaseResourceManager.cpp
+                           
+LIBS=$(DXG_TST_ROOT)\utility\lib\*\HelperFunctions.lib \
+
+PRECOMPILED_INCLUDE=TestUtilsPCH.h
+PRECOMPILED_CXX=1
+
+
+

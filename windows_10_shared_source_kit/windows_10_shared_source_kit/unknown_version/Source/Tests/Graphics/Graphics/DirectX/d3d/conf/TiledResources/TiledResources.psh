@@ -1,0 +1,40 @@
+// Pixel shader source for WGF11TiledResources
+
+Texture2D<float4> sourceTexture;
+
+float4 CopyTexPS(float4 position : SV_POSITION) : SV_Target
+{
+	return sourceTexture.Load(int3(position.xyz));
+}
+
+float RenderDepthPS(float4 position : SV_POSITION) : SV_Depth
+{
+	float depth;
+	float a = 3.14159 * (position.x + position.y) / 100.0;
+	float b = 3.14159 * (position.x - position.y) / 100.0;
+	depth = (sin(a) + 1.0) / 4.0;
+	depth = depth + (cos(b) + 1.0) / 4.0;
+	return depth;
+}
+
+struct COLOR_USING_DEPTH_OUT
+{
+	float4 color	: SV_Target;
+	float depth		: SV_Depth;
+};
+
+COLOR_USING_DEPTH_OUT RenderColorUsingDepthPS(float4 position : SV_POSITION)
+{
+	COLOR_USING_DEPTH_OUT output;
+	float depth;
+	int x = uint(position.x) % 512;
+	int y = uint(position.y) % 512;
+	output.color = sourceTexture.Load(int3(x, y, 0));
+	float a = 3.14159 * (position.x + position.y) / 50.0;
+	float b = 3.14159 * (position.x - position.y) / 50.0;
+	depth = (sin(a) + 1.0) / 4.0;
+	depth = depth + (cos(b) + 1.0) / 4.0;
+	output.depth = depth;
+	return output;
+}
+

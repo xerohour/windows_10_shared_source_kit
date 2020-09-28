@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="DXGIHybridPresentModern"
+      Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
+      Version="1.0.0.0"
+      ResourceId="neutral"/>
+  <Properties>
+    <DisplayName>DXGIHybridPresentModern</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>StoreLogo.png</Logo>
+  </Properties>
+  <Resources>
+    <Resource Language="en-us"/>
+  </Resources>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Applications>
+      <Application Id="App"
+          Executable="DXGIHybridPresentModern.exe"
+          EntryPoint="DXGIHybridPresentModern.App">
+          <VisualElements
+              DisplayName="DXGIHybridPresentModern"
+              Logo="Logo.png"
+              SmallLogo="SmallLogo.png"
+              Description="DXGIHybridPresentModern"
+              ForegroundText="light"
+              BackgroundColor="#464646">
+              <DefaultTile ShowName="allLogos"/>
+              <SplashScreen Image="SplashScreen.png"/>
+          </VisualElements>
+    </Application>
+  </Applications>
+</Package>

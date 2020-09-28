@@ -1,0 +1,13 @@
+!include ..\..\conf.mk
+
+TARGETNAME=DynamicResources
+
+SOURCES= \
+		..\DynamicResources.rc \
+		..\EntryPoint.cpp \
+		..\DynamicVB.cpp \
+		..\StaticDynamicVB.cpp \
+		..\DynamicTexture.cpp \
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

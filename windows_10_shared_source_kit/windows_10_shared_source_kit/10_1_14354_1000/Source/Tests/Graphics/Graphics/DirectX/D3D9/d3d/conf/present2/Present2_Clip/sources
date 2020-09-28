@@ -1,0 +1,8 @@
+!include ..\sources.inc
+
+TARGETNAME=Present2_Clip
+
+SOURCES=$(SOURCES)\
+	EXEEntryPoint.cpp \
+	DeviceClip.cpp \
+        DeviceClipFlipEx.cpp \

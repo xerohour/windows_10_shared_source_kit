@@ -1,0 +1,10 @@
+t FDO\n");
+
+    } else {
+
+        parentInterface = PCIBus;
+        secondaryBusNumber = bus->SecondaryBusNumber;
+
+        parentBusNumber = bus->ParentBus->SecondaryBusNumber;
+
+        TRACE(A

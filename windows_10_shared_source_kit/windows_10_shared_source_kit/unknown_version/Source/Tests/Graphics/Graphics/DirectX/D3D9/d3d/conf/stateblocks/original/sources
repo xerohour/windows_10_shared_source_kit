@@ -1,0 +1,16 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=StateBlocks
+
+SOURCES= \
+        ..\StateBeast.rc \
+        ..\StateBeast.cpp \
+        ..\Main.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

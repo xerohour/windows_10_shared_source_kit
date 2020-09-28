@@ -1,0 +1,328 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include <windows.h>
+#include <ntverp.h>
+
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+
+#ifndef VER_FILEDESCRIPTION_STR
+#define VER_FILEDESCRIPTION_STR     "WGF Test Framework Conformance Test"
+#endif // VER_FILEDESCRIPTION_STR
+
+#ifndef VER_INTERNALNAME_STR
+#define VER_INTERNALNAME_STR        ""
+#endif // VER_INTERNALNAME_STR
+
+#ifndef VER_ORIGINALFILENAME_STR
+#define VER_ORIGINALFILENAME_STR    ""
+#endif // VER_ORIGINALFILENAME_STR
+
+#include <common.ver>
+
+
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#include "winres.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "ntverp.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#include ""winres.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""ntverp.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+ID_TOOLBAR              BITMAP                  "toolbar.bmp"
+IDB_SPLITTER            BITMAP                  "splitter.bmp"
+IDB_GROUPS_ICONS        BITMAP                  "bitmap1.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAIN_MENU MENUEX 
+BEGIN
+    POPUP "&File",                          65535,MFT_STRING,MFS_ENABLED
+    BEGIN
+        MENUITEM "E&xit\tAlt+F4",               40004,MFT_STRING | MFT_RIGHTJUSTIFY,MFS_ENABLED
+    END
+    POPUP "&Execution",                     65535,MFT_STRING,MFS_ENABLED
+    BEGIN
+        MENUITEM "&Play\tG",                    40005,MFT_STRING,MFS_ENABLED
+        MENUITEM "P&ause",                      40006,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Replay Current\tR",          40025,MFT_STRING,MFS_ENABLED
+        MENUITEM "Step &Forward\tS",            40007,MFT_STRING,MFS_ENABLED
+        MENUITEM "Step &Back\tShift+S",         40008,MFT_STRING,MFS_ENABLED
+        MENUITEM "Skip To &Next Test Group\tPgDn", 40013,MFT_STRING,MFS_ENABLED
+        MENUITEM "Skip To Pre&v Test Group\tPgUp", 40014,MFT_STRING,MFS_ENABLED
+        MENUITEM MFT_SEPARATOR
+        MENUITEM MFT_SEPARATOR
+        MENUITEM "&Go To Test Case...",         40011,MFT_STRING,MFS_ENABLED
+    END
+    POPUP "&View",                          65535,MFT_STRING,MFS_ENABLED
+    BEGIN
+        MENUITEM "Toggle &Render Windows",      40020,MFT_STRING,MFS_ENABLED
+        MENUITEM "Toggle &Compare Window",      40021,MFT_STRING,MFS_ENABLED
+    END
+    POPUP "&Options",                       65535,MFT_STRING,MFS_ENABLED
+    BEGIN
+        MENUITEM "&Filters...\tF3",             120,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Option Variables...\tF4",    124,MFT_STRING,MFS_ENABLED
+        MENUITEM "&Parameter Values...\tF2",    40040,MFT_STRING,MFS_ENABLED
+    END
+    POPUP "&Help",                          65535,MFT_STRING,MFS_ENABLED
+    BEGIN
+        MENUITEM "&General",                    40039,MFT_STRING,MFS_ENABLED
+    END
+END
+
+IDR_MENU_GROUPS MENU 
+BEGIN
+    POPUP "Test Groups"
+    BEGIN
+        MENUITEM "Execute Test/Branch",         40036
+    END
+END
+
+IDR_MENU_TESTCASES MENU 
+BEGIN
+    POPUP "Test Cases"
+    BEGIN
+        MENUITEM "Execute Test Cases",          40037
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATORS ACCELERATORS 
+BEGIN
+    "G",            ID_EXECUTION_GOTOTESTCASE, VIRTKEY, CONTROL, NOINVERT
+    VK_NEXT,        ID_EXECUTION_NEXTGROUP, VIRTKEY, NOINVERT
+    "G",            ID_EXECUTION_PLAY,      VIRTKEY, NOINVERT
+    VK_PRIOR,       ID_EXECUTION_PREVGROUP, VIRTKEY, NOINVERT
+    "R",            ID_EXECUTION_REPLAY,    VIRTKEY, NOINVERT
+    "S",            ID_EXECUTION_STEPBACK,  VIRTKEY, SHIFT, NOINVERT
+    "S",            ID_EXECUTION_STEPFORWARD, VIRTKEY, NOINVERT
+    VK_F3,          ID_OPTIONS_FILTERS,     VIRTKEY, NOINVERT
+    VK_F4,          ID_OPTIONS_OPTIONVARS,  VIRTKEY, NOINVERT
+    VK_F2,          ID_OPTIONS_PARAMETERS,  VIRTKEY, NOINVERT
+
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+ID_HSPLITTER            CURSOR                  "cursor1.cur"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_GOTOTESTCASE DIALOGEX 0, 0, 300, 90
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Go To Test Case"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Test Case Number",IDC_STATIC,7,7,60,8
+    EDITTEXT        IDC_EDIT_CASENUMBER,7,17,286,14,ES_AUTOHSCROLL
+    LTEXT           "Test Group Path",IDC_STATIC,7,38,53,8
+    COMBOBOX        IDC_COMBO_TESTPATH,7,47,286,99,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,7,69,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,61,69,50,14
+END
+
+IDD_FILTERS DIALOGEX 0, 0, 381, 169
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Filters"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_FILTERS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_ALIGNLEFT | WS_TABSTOP,7,7,367,135,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "&New...",IDC_FILTER_NEW,7,148,50,14
+    PUSHBUTTON      "&Edit...",IDC_FILTER_EDIT,61,148,50,14,WS_DISABLED
+    PUSHBUTTON      "&Delete",IDC_FILTER_DELETE,115,148,50,14,WS_DISABLED
+    PUSHBUTTON      "Delete &All",IDC_FILTER_DELETE_ALL,169,148,50,14
+    DEFPUSHBUTTON   "OK",IDOK,267,148,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,324,148,50,14
+END
+
+IDD_OPTIONVARS DIALOGEX 0, 0, 381, 169
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Option Variables"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_OPTIONS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_ALIGNLEFT | WS_TABSTOP,7,7,367,135,WS_EX_CLIENTEDGE
+    DEFPUSHBUTTON   "OK",IDOK,267,148,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,324,148,50,14
+END
+
+IDD_HELP DIALOGEX 0, 0, 400, 406
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Help"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_HELPTEXT,"RichEdit20A",ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL,7,123,386,276,WS_EX_CLIENTEDGE
+    CONTROL         "",IDC_HELPTREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | WS_BORDER | WS_TABSTOP,7,7,386,114,WS_EX_CLIENTEDGE
+END
+
+IDD_EDIT_FILTER DIALOGEX 0, 0, 288, 84
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Edit Filter Value"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_FILTER_NAME,7,15,274,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_FILTER_VALUE,7,42,274,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,176,63,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,231,63,50,14
+    LTEXT           "Name",IDC_STATIC,7,7,19,8
+    LTEXT           "Expression",IDC_STATIC,7,34,36,8
+END
+
+IDD_DIALOG_MESSAGE DIALOGEX 0, 0, 600, 200
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Message Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT_MESSAGE,8,8,588,131,ES_MULTILINE | ES_READONLY
+    DEFPUSHBUTTON   "OK",IDOK,275,149,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_DIRECTX             ICON                    "directx.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_GOTOTESTCASE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 293
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 83
+    END
+
+    IDD_HELP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 393
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 399
+    END
+
+    IDD_DIALOG_MESSAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 291
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 163
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    ID_EXECUTION_PLAY       "Play"
+    ID_EXECUTION_PAUSE      "Pause"
+    ID_EXECUTION_STEPFORWARD "Step Forward"
+    ID_EXECUTION_STEPBACK   "Step Back"
+    ID_EXECUTION_GOTOTESTCASE "Go To Test Case"
+    ID_EXECUTION_NEXTGROUP  "Next Group"
+    ID_EXECUTION_PREVGROUP  "Previous Group"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EXECUTION_REPLAY     "Replay Current"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

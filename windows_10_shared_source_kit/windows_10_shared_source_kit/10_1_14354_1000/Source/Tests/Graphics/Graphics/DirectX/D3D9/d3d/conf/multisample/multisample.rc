@@ -1,0 +1,261 @@
+#include <windows.h>
+#include <ntverp.h>
+#include "..\include\FrameworkResource.h"
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "multisample"
+#define VER_ORIGINALFILENAME_STR    "Multisample.exe"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU MENU 
+BEGIN
+    POPUP "File"
+    BEGIN
+        MENUITEM "Close",                       IDM_CLOSE
+    END
+    POPUP "Options"
+    BEGIN
+        MENUITEM "Image Compare",               ID_OPTIONS_IMAGECOMPARE
+    END
+    POPUP "Help"
+    BEGIN
+        MENUITEM "Help...",                     IDHELP
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_TOOLBAR             BITMAP                  "bitmap1.bmp"
+Centroid.bmp            BITMAP                  "Centroid.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_D3DICON             ICON                    "d3d.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR ACCELERATORS 
+BEGIN
+    VK_ESCAPE,      IDM_CLOSE,              VIRTKEY, NOINVERT
+    VK_F9,          IDM_CMPIMGMODE,         VIRTKEY, NOINVERT
+    VK_NEXT,        IDM_EXECUTION_NEXT,     VIRTKEY, NOINVERT
+    "R",            IDM_EXECUTION_REPLAY,   VIRTKEY, NOINVERT
+    "g",            IDM_EXECUTION_RUN,      ASCII,  NOINVERT
+    "s",            IDM_EXECUTION_STEP,     ASCII,  NOINVERT
+    VK_F8,          IDM_IMAGECOMPARE,       VIRTKEY, NOINVERT
+    VK_F7,          IDM_SIZETODEVICE,       VIRTKEY, NOINVERT
+    VK_PRIOR,       IDM_EXECUTION_PREVIOUS, VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DEVICEOPTIONS DIALOG  0, 0, 229, 113
+STYLE DS_SETFONT | DS_MODALFRAME | DS_NOFAILCREATE | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION
+CAPTION "Device Options"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,172,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,172,25,50,14
+    COMBOBOX        IDC_SELDEVICE,81,7,83,42,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    COMBOBOX        IDC_SELVP,81,55,83,51,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Vertex Processing",IDC_STATIC,17,59,58,8
+    COMBOBOX        IDC_SELBEHAVIORS,81,71,83,57,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Behaviors",IDC_STATIC,17,75,32,8
+    COMBOBOX        IDC_SELDEVTYPE,81,39,83,50,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Device Type",IDC_STATIC,17,43,42,8
+    COMBOBOX        IDC_SELADAPTER,81,23,83,49,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Adapter",IDC_STATIC,17,27,42,8
+    CONTROL         "PSGP",IDC_PSGP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,60,
+                    95,35,10
+    CONTROL         "Fullscreen",IDC_FULLSCREEN,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,122,95,48,10
+    LTEXT           "Device",IDC_STATIC,17,11,24,8
+END
+
+IDD_COMPAREOPTIONS DIALOGEX 0, 0, 245, 158
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_NOFAILCREATE | WS_POPUP | 
+    WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Image Compare Options"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,188,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,188,24,50,14
+    EDITTEXT        IDC_MINPIXELS,124,71,52,12,ES_AUTOHSCROLL | ES_NUMBER,
+                    WS_EX_RIGHT
+    LTEXT           "Minimum Pixels Required",IDC_STATIC,14,73,79,8
+    LTEXT           "Maximum Pixels Allowed",IDC_STATIC,14,87,77,8
+    EDITTEXT        IDC_MAXPIXELS,124,85,52,12,ES_AUTOHSCROLL | ES_NUMBER,
+                    WS_EX_RIGHT
+    LTEXT           "Conformance Required",IDC_STATIC,14,17,74,8
+    LTEXT           "Tolerance Per Pixel Per Channel",IDC_STATIC,14,31,101,8
+    EDITTEXT        IDC_CONFREQ,124,15,52,12,ES_AUTOHSCROLL,WS_EX_RIGHT
+    EDITTEXT        IDC_TOLPERPIXELCHANNEL,124,29,52,12,ES_AUTOHSCROLL,
+                    WS_EX_RIGHT
+    LTEXT           "Tolerance Per Pixel",IDC_STATIC,14,45,90,8
+    EDITTEXT        IDC_TOLPERPIXEL,124,43,52,12,ES_AUTOHSCROLL,WS_EX_RIGHT
+    LTEXT           "Deduction weight for image delta",IDC_STATIC,14,59,107,
+                    8
+    EDITTEXT        IDC_TOLPERCHANNEL,124,57,52,12,ES_AUTOHSCROLL,
+                    WS_EX_RIGHT
+    EDITTEXT        IDC_GAIN,124,111,52,12,ES_AUTOHSCROLL | ES_NUMBER,
+                    WS_EX_RIGHT
+    CONTROL         "Auto Gain",IDC_ADAPTIVEGAIN,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,14,113,63,8
+    DEFPUSHBUTTON   "Apply",IDAPPLY,188,42,50,14
+    GROUPBOX        "Compare Options",IDC_STATIC,7,7,173,94
+    CONTROL         "Show failing pixels only",IDC_FAILONLY,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,14,124,89,10
+    GROUPBOX        "Results Image",IDC_STATIC,7,101,173,49
+    LTEXT           "Compare Mode",IDC_STATIC,25,136,49,8
+    COMBOBOX        IDC_CMPIMGMODE,124,134,52,40,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+END
+
+IDD_HELP DIALOG  0, 0, 355, 227
+STYLE DS_SETFONT | DS_MODALFRAME | DS_NOFAILCREATE | WS_POPUP | WS_VISIBLE | 
+    WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU
+CAPTION "Command Line and Hotkey Help"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,161,208,33,14
+    CONTROL         "",IDC_HELPEDIT,"RICHEDIT20A",ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | 
+                    WS_BORDER | WS_VSCROLL | WS_TABSTOP,7,7,341,199
+END
+
+IDD_TESTFAILURE DIALOG  0, 0, 163, 57
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Test Failure"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,56,33,50,14
+    LTEXT           "Please enter description of failure:",IDC_STATIC,7,7,
+                    107,8
+    EDITTEXT        IDC_FAILUREDESC,7,17,149,12,ES_AUTOHSCROLL
+END
+
+IDD_EDIT_DECL DIALOGEX 0, 0, 325, 242
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "Vertex Declaration Editor"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,268,221,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,209,221,50,14
+    CONTROL         "List2",IDC_L_VELEMENTS,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | 
+                    WS_BORDER | WS_TABSTOP,7,7,311,92
+    PUSHBUTTON      "up",IDC_B_MOVE_UP,29,102,23,13
+    PUSHBUTTON      "down",IDC_B_MOVE_DOWN,53,102,23,13
+    LTEXT           "Move:",IDC_STATIC,7,104,21,8
+    PUSHBUTTON      "Delete Selected Element",IDC_B_VE_DELETE,225,102,93,13
+    GROUPBOX        "Edit Vertex Element",IDC_STATIC,7,120,311,64
+    EDITTEXT        IDC_E_VE_STREAM,41,131,18,12,ES_AUTOHSCROLL
+    LTEXT           "Stream:",IDC_STATIC,13,133,25,8
+    CONTROL         "Spin1",IDC_SP_VE_STREAM,"msctls_updown32",UDS_ARROWKEYS,
+                    59,131,10,13
+    LTEXT           "Type:",IDC_STATIC,79,133,19,8
+    COMBOBOX        IDC_C_VE_TYPE,101,131,69,30,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Method:",IDC_STATIC,183,133,27,8
+    COMBOBOX        IDC_C_VE_METHOD,213,130,97,30,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Usage:",IDC_STATIC,13,151,24,8
+    COMBOBOX        IDC_C_VE_USAGE,41,148,94,30,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Usage Index:",IDC_STATIC,148,151,43,8
+    EDITTEXT        IDC_E_VE_USAGEINDEX,195,149,18,12,ES_AUTOHSCROLL
+    CONTROL         "Spin1",IDC_SP_VE_USAGEINDEX,"msctls_updown32",
+                    UDS_ARROWKEYS,213,149,10,13
+    PUSHBUTTON      "Insert Element",IDC_B_VE_INSERT,115,102,72,13
+    PUSHBUTTON      "View Decl Code ...",IDC_B_VIEWDECL,7,221,81,14
+    PUSHBUTTON      "Apply Changes",IDC_B_VE_APPLY,242,148,68,14
+    LTEXT           "Extra Space Before Element:",IDC_STATIC,13,168,92,8
+    EDITTEXT        IDC_E_VE_SPACE,109,166,18,12,ES_AUTOHSCROLL
+    CONTROL         "Spin1",IDC_SP_VE_SPACE,"msctls_updown32",UDS_ARROWKEYS,
+                    127,166,11,13
+    LTEXT           "bytes",IDC_STATIC,142,168,18,8
+    PUSHBUTTON      "Initialize From FVF ...",IDC_B_CREATEFROMFVF,97,221,85,
+                    14
+    GROUPBOX        "Declaration Information",IDC_STATIC,7,186,311,31
+    LTEXT           "Num decl elements:",IDC_STATIC,13,199,63,8
+    CONTROL         "00",IDC_S_INFO_DECLELEMENTS,"Static",SS_LEFTNOWORDWRAP | 
+                    SS_SUNKEN | WS_GROUP,78,199,10,9
+    LTEXT           "Min vertex size:",IDC_STATIC,105,199,50,8
+    LTEXT           "000",IDC_S_INFO_MINVERTEXSIZE,156,199,14,9,SS_SUNKEN
+    LTEXT           "bytes",IDC_STATIC,171,199,18,8
+    EDITTEXT        IDC_E_DECL_STRIDE,281,197,18,12,ES_AUTOHSCROLL
+    CONTROL         "Spin1",IDC_SP_DECL_STRIDE,"msctls_updown32",
+                    UDS_ARROWKEYS,299,197,11,13
+    CONTROL         "Manual Stride:",IDC_CH_DECL_STRIDE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,220,198,59,10
+END
+
+IDD_CONFIGURE DIALOGEX 0, 0, 218, 116
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Configure D3D Test"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,56,95,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,112,95,50,14
+    LISTBOX         IDC_CFG_INTERFACE,59,7,28,46,LBS_MULTIPLESEL | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "DX Interface(s)",IDC_STATIC,7,9,50,8
+    COMBOBOX        IDC_CFG_DEVTYPE,158,7,48,49,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_CFG_VP,158,21,48,48,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Vertex Processing",IDC_STATIC,98,23,58,8
+    LTEXT           "Device Type",IDC_STATIC,98,9,40,8
+    LTEXT           "Behaviors",IDC_STATIC,98,37,32,8
+    LTEXT           "Adapter ID",IDC_STATIC,98,52,36,8
+    COMBOBOX        IDC_CFG_BEHAVIORS,158,35,48,56,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Display Mode",IDC_STATIC,7,80,43,8
+    COMBOBOX        IDC_CFG_DESKTOP,152,78,54,48,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_CFG_ADAPTERID,158,49,48,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    EDITTEXT        IDC_DISPWIDTH,65,78,32,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_DISPHEIGHT,109,78,32,12,ES_AUTOHSCROLL
+    LTEXT           "W",IDC_STATIC,57,80,8,8
+    LTEXT           "H",IDC_STATIC,101,80,8,8
+    LTEXT           "F",IDC_STATIC,144,80,8,8
+    LTEXT           "Window Mode",IDC_STATIC,98,65,46,8
+    COMBOBOX        IDC_CFG_WINMODE,158,63,48,56,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+END
+
+#include <common.ver>
+
+
+

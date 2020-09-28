@@ -1,0 +1,43 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\conf11_core.mk
+TARGETNAME=WGF11TimingData
+
+INCLUDES=\
+        $(INCLUDES); \
+        $(WINDOWS_TST_ROOT)\DirectX\Common\FormatHelper; \
+        $(WINDOWS_TST_ROOT)\common\etwPostProcessing\XperfHelper\inc; \
+        $(WINDOWS_TST_ROOT)\common\etwPostProcessing\DxEtwHelper\inc; \
+        $(SDKTOOLS_INC_PATH)\wextest\cue;\
+        $(SDKTOOLS_INC_PATH)\WexTest\Tools; \
+
+TARGETLIBS=\
+        $(WINDOWS_TST_COMMON)\etwPostProcessing\XperfHelper\lib\$O\XperfHelper.lib \
+        $(WINDOWS_TST_COMMON)\etwPostProcessing\DxEtwHelper\lib\$O\DxEtwHelper.lib \
+        $(PUBLIC_ROOT)\internal\windows\lib\*\ansi\etw.lib \
+        $(SDKTOOLS_LIB_PATH)\wextest\cue\wex.common.lib \
+        $(SDKTOOLS_LIB_PATH)\wextest\cue\wex.logger.lib \
+        $(SDKTOOLS_LIB_PATH)\WexTest\Cue\Te.Common.lib \
+        $(SDKTOOLS_LIB_PATH)\WexTest\Tools\EtwProcessor.lib \
+        $(SDK_LIB_PATH)\windowscodecs.lib                       \
+        $(TARGETLIBS) \
+
+
+SOURCES= \
+        TimingData.cpp \
+        EndOfPipeline.cpp \
+        MarkerValidation.cpp \
+        PState.cpp \
+        MultipleEngine.cpp \
+        Frequency.cpp \
+        Teapots.cpp \
+        CustomEvent.cpp \
+        RedBlue.cpp \
+        TimingData.rc \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

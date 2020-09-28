@@ -1,0 +1,16 @@
+    status = NDIS_STATUS_SUCCESS;
+    USHORT                          uActionFrameLength = 0;
+    PBYTE                           pActionFrame = NULL;
+
+    TraceActEntry();
+
+    status = Initialize (pAdapter, NdisPortNumber);
+    if (status != NDIS_STATUS_SUCCESS)
+    {
+        WFCActErrorStatus("InitializeCommon failed <%d>", status);
+        goto Exit;
+    }
+
+    switch (ActionType)
+    {
+        case (DOT11_PUBLIC_ACTION_FRAME_TYPE_

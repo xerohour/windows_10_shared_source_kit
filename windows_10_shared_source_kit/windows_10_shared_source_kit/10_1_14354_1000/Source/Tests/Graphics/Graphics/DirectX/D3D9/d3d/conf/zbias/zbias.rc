@@ -1,0 +1,13 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "zbias"
+#define VER_ORIGINALFILENAME_STR    "ZBIAS.EXE"
+
+ZBIAS.FX RCDATA "zbias.fx"
+
+#include <common.ver>

@@ -1,0 +1,11 @@
+!include ..\sources.inc
+
+TARGETNAME=Present2_LH
+
+SOURCES=$(SOURCES)\
+	..\Present2_LH_EXEEntryPoint.cpp \
+	..\PresentEx.cpp \
+	..\PresentRotate.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+

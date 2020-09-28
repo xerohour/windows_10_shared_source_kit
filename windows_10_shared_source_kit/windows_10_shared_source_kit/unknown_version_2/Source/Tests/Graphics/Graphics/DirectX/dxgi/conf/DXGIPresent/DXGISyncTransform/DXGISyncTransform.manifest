@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+  <assemblyIdentity
+      version=SXS_ASSEMBLY_VERSION
+      processorArchitecture=SXS_PROCESSOR_ARCHITECTURE
+      name=SXS_ASSEMBLY_NAME
+      type="win32"
+  />
+  <description>DXGISyncTransform</description>
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+      <windowsSettings>
+          <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">per monitor</dpiAware>
+      </windowsSettings>
+  </application>
+</assembly>

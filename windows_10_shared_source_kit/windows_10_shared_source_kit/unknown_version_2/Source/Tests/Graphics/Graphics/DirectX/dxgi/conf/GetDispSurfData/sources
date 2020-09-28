@@ -1,0 +1,101 @@
+
+        }
+    }
+
+    return idx;
+}   
+
+
+void Msg(TCHAR *szFormat, ...)
+{
+    TCHAR szBuffer[1024];  // Large buffer for long filenames or URLs
+    const size_t NUMCHARS = sizeof(szBuffer) / sizeof(szBuffer[0]);
+    const int LASTCHAR = NUMCHARS - 1;
+
+    // Format the input string
+    va_list pArgs;
+    va_start(pArgs, szFormat);
+
+    // Use a bounded buffer size to prevent buffer overruns.  Limit count to
+    // character size minus one to allow for a NULL terminating character.
+    (void)StringCchVPrintf(szBuffer, NUMCHARS - 1, szFormat, pArgs);
+    va_end(pArgs);
+
+    // Ensure that the formatted string is NULL-terminated
+    szBuffer[LASTCHAR] = TEXT('\0');
+
+    // Display a message box with the formatted string
+    MessageBox(NULL, szBuffer, TEXT("OPM Manual Tool"), MB_OK);
+}
+
+
+IDirect3D9 *CreateD3D9
+(
+    UINT uSDKVersion
+)
+{
+    const WCHAR szD3D9[] = L"D3D9.DLL";
+    const CHAR szDirect3DCreate[] = "Direct3DCreate9";
+
+    typedef IDirect3D9* (WINAPI* LPDIRECT3DCREATE9)(UINT SDKVersion);
+
+    static HINSTANCE hlibD3D9 = NULL;
+    static LPDIRECT3DCREATE9 lpfnDirect3DCreate9 = NULL;
+
+    if (lpfnDirect3DCreate9 == NULL) 
+    {
+        if (hlibD3D9 == NULL) 
+        {
+            // BUGBUG [SEdmison]:  This library reference is leaked, but I'm
+            // not sure what the ramifications would be if I were to add a
+            // FreeLibrary call within this function, so I'm leaving it alone
+            // for the time being.
+            hlibD3D9 = LoadLibraryExW(szD3D9, NULL, 0);
+            if (hlibD3D9 == NULL) 
+            {
+                return NULL;
+            }
+        }
+ 
+        lpfnDirect3DCreate9 = (LPDIRECT3DCREATE9)GetProcAddress(hlibD3D9, szDirect3DCreate);
+        if (lpfnDirect3DCreate9 == NULL) 
+        {
+            return NULL;
+        }
+    }
+
+    return (*lpfnDirect3DCreate9)(uSDKVersion);
+}   //  CreateD3D9
+
+
+HRESULT
+CreateD3D9Device
+(
+    IDirect3D9*             pD3D9,
+    const UINT              nIndex,
+    HWND                    hDeviceWnd,
+    const BOOL              bWindowed,
+    IDirect3DDevice9**      ppD3D9Device
+)
+{
+    HRESULT                 hr = S_OK;
+    D3DPRESENT_PARAMETERS   PresentParams = {0};
+
+    do
+    {
+        //  verify params
+        if (NULL == pD3D9)
+        {
+            hr = E_INVALIDARG;
+            break;
+        }
+        if (NULL == ppD3D9Device)
+        {
+            hr = E_POINTER;
+            break;
+        }
+
+        //  check device type
+        hr = pD3D9->CheckDeviceType(nIndex, D3DDEVTYPE_HAL, D3DFMT_X8R8G8B8,
+                                    D3DFMT_X8R8G8B8, bWindowed);
+        

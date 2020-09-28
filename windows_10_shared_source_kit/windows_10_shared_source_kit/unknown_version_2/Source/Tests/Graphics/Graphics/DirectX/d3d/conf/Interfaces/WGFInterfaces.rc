@@ -1,0 +1,8 @@
+#include <WGFConsoleShell.rc>
+
+ResourceIndexing.fx RCDATA "ResourceIndexing.fx"
+TextureIndexing.fx RCDATA "TextureIndexing.fx"
+SamplerIndexing.fx RCDATA "SamplerIndexing.fx"
+ConstantBufferIndexing.fx RCDATA "ConstantBufferIndexing.fx"
+CSInterfaceFlowControl.fx RCDATA "CSInterfaceFlowControl.fx"
+FCVertexShaderPassThrough.fx RCDATA "FCVertexShaderPassThrough.fx"

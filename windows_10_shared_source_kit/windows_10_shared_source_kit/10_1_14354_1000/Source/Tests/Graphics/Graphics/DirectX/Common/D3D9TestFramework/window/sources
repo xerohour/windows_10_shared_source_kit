@@ -1,0 +1,15 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CWindow 
+
+SOURCES= CWindow.cpp \
+	 CLogWindow.cpp \
+	 CTabWindow.cpp \
+	 CRebarWindow.cpp
+
+PRECOMPILED_INCLUDE=WindowPCH.h
+PRECOMPILED_CXX=1
+
+
+

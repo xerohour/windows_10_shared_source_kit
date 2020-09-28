@@ -1,0 +1,16 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=FillMode
+
+
+SOURCES= \
+        ..\FillMode.rc \
+        ..\FillMode.cpp \
+	..\Line.cpp \
+	..\Path.cpp \
+	..\Point.cpp \
+	..\Solid.cpp
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

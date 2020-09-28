@@ -1,0 +1,10 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CCommandLine
+
+SOURCES=CCommandLine.cpp
+
+
+
+

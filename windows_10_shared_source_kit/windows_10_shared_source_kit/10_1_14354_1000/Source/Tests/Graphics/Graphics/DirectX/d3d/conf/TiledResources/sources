@@ -1,0 +1,58 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\Conf11_core.mk
+
+TARGETNAME=WGF11TiledResources
+
+INCLUDES=\
+	$(INCLUDES); \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FormatHelper; \
+    	$(OBJ_PATH)\$(O)\ # needed for shader files build using fxc (see makefile.inc)
+
+SOURCES= \
+	Filter.cpp \
+	ZeroMapping.cpp \
+	LargeAddress.cpp \
+	TiledResources.cpp \
+	TiledResources.rc \
+	RawStructured.cpp \
+	Views.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+NTTARGETFILE0= \
+	$(OBJ_PATH)\$(O)\CopyTexCSTiled.hpp \
+	$(OBJ_PATH)\$(O)\CopyTexCSTiledTex3D.hpp \
+	$(OBJ_PATH)\$(O)\CopyTexCSNormal.hpp \
+	$(OBJ_PATH)\$(O)\CopyTexCSNormalTex3D.hpp \
+	$(OBJ_PATH)\$(O)\ProcessRawBufferTiled.hpp \
+	$(OBJ_PATH)\$(O)\ProcessRawBufferTiledTex3D.hpp \
+	$(OBJ_PATH)\$(O)\ProcessStructuredBufferTiled.hpp \
+	$(OBJ_PATH)\$(O)\ProcessStructuredBufferTiledTex3D.hpp \
+	$(OBJ_PATH)\$(O)\ProcessRawBufferNormal.hpp \
+	$(OBJ_PATH)\$(O)\ProcessRawBufferNormalTex3D.hpp \
+	$(OBJ_PATH)\$(O)\ProcessStructuredBufferNormal.hpp \
+	$(OBJ_PATH)\$(O)\ProcessStructuredBufferNormalTex3D.hpp \
+	$(OBJ_PATH)\$(O)\CopyTexTier1PS.hpp \
+	$(OBJ_PATH)\$(O)\CopyTexTier2PS.hpp \
+    $(OBJ_PATH)\$(O)\CopyTexTier2PSTex3D.hpp \
+	$(OBJ_PATH)\$(O)\RenderDepthPS.hpp \
+	$(OBJ_PATH)\$(O)\RenderColorUsingDepthPS.hpp \
+	$(OBJ_PATH)\$(O)\CopyTexVS.hpp \
+    $(OBJ_PATH)\$(O)\CopyTexVSTex3D.hpp \
+	$(OBJ_PATH)\$(O)\CopyTexGSTex3D.hpp \
+	$(OBJ_PATH)\$(O)\FilterNormalTier1PS.hpp \
+	$(OBJ_PATH)\$(O)\FilterTiledTier1PS.hpp \
+	$(OBJ_PATH)\$(O)\FilterNormalTier2PS.hpp \
+	$(OBJ_PATH)\$(O)\FilterTiledTier2PS.hpp \
+    $(OBJ_PATH)\$(O)\FilterNormalTier2PSTex3D.hpp \
+	$(OBJ_PATH)\$(O)\FilterTiledTier2PSTex3D.hpp \
+	$(OBJ_PATH)\$(O)\GatherNormalTier1PS.hpp \
+	$(OBJ_PATH)\$(O)\GatherTiledTier1PS.hpp \
+	$(OBJ_PATH)\$(O)\GatherNormalTier2PS.hpp \
+	$(OBJ_PATH)\$(O)\GatherTiledTier2PS.hpp \
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

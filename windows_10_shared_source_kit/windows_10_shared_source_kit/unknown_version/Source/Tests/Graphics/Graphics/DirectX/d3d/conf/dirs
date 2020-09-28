@@ -1,0 +1,35 @@
+DIRS =	AsyncConf \
+	Blend \
+	Clipping \
+	ComputeShader \
+	D3DWDDM \
+	DepthStencil \
+	Filter \
+	GeometryShader \
+	HybridPerf \
+	InputAssembler \
+	Interfaces \
+# 	Jpeg \
+	L9NativeStaging \
+	MapDefault \
+	MapDefaultTexture \
+	PixelShader \
+	Precision \
+	RenderTargets \
+	ResourceAccess \
+	ResourceFormats \
+	shader5x \
+	SharedResources \
+	StreamOut \
+	SystemCheck \
+	Tessellation \
+	TiledResources \
+	TimingData \
+	Viewports \
+	WGFMultisample \
+	WGFRasterizer \
+
+
+	# WARP10Interpolation is in the middle of being converting to D3D11.
+	# It is still a D3D10 test.
+

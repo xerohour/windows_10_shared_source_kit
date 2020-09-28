@@ -1,0 +1,23 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=MRT
+
+SOURCES= \
+	..\Blend.cpp \
+        ..\ColorWrite.cpp \
+        ..\Describe.cpp \
+        ..\Draw.cpp \
+	..\Fog.cpp \
+	..\Invalid.cpp \
+	..\METex.cpp \
+        ..\MRT.rc \
+        ..\MRT.cpp \
+        ..\Texture.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

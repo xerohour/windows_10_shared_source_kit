@@ -1,0 +1,15 @@
+//////////////////////////////////////////////////////////////////////////
+// ValueSets and filters related to ENUMDECL
+//////////////////////////////////////////////////////////////////////////
+
+// CENUMNAMEValueSet - defines a ENUMDECL ValueSet.
+class CENUMNAMEValueSet : public CUserValueSet< ENUMDECL >
+{
+public:
+	CENUMNAMEValueSet( CFilterHandleCommonSource< ENUMDECL > filter = NULL );
+};
+
+inline CENUMNAMEValueSet *ENUMNAMEValueSet( CFilterHandleCommonSource< ENUMDECL > filter )
+{
+	return new CENUMNAMEValueSet( filter );
+}

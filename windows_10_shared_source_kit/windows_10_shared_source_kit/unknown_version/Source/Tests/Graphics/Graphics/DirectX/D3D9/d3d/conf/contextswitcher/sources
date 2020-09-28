@@ -1,0 +1,7 @@
+!include ..\conf.mk
+
+TARGETNAME=ContextSwitcher
+
+SOURCES=ContextSwitcher.rc \
+        ContextSwitcher.cpp
+

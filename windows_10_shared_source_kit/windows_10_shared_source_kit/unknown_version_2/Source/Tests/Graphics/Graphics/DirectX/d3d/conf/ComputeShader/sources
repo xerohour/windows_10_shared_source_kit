@@ -1,0 +1,46 @@
+UNIVERSAL_WGF_TEST=1
+
+!include ..\conf11_core.mk
+
+TARGETNAME=WGF11Compute
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+		$(WINDOWS_LIB_PATH)\d3dx11.lib \
+ 
+INCLUDES=\
+	.\; \
+	$(GRAPHICS_TST_ROOT)\DirectX\Common\FormatHelper; \
+	$(PROJECT_PRIVATE_INC_PATH)\dxgi; \
+	$(INCLUDES)
+
+SOURCES= \
+	WGFCompute.rc \
+	WGFCompute.cpp \
+	Atomicity.cpp \
+	AppendConsume.cpp \
+	MemoryBarrierSync.cpp \
+	GroupSharedMemory.cpp \
+	UAV.cpp \
+	UAVBuffer.cpp \
+	UAVBufferSrc.cpp \
+	UAVBufferSrcCS.cpp \
+	UAVBufferSrcPS.cpp \
+	UAVBufferTyped.cpp \
+	UAVBufferTypedCS.cpp \
+	UAVBufferTypedPS.cpp \
+	UAVBufferRW.cpp \
+	UAVBufferRWCS.cpp \
+	UAVBufferRWPS.cpp \
+	UAVTyped.cpp \
+	Dispatch.cpp \
+	interaction.cpp \
+	interaction_private.cpp \
+	CounterUAV.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);OBJ_PATH=$(OBJ_PATH)
+VARIABLE_OVERRIDES=$(VARIABLE_OVERRIDES);TARGETNAME=$(TARGETNAME)
+SPKG_SOURCES=..\sources.pkg.xml
+SPKG_TARGET_DESTINATION=$(SPKG_DEFAULT_TARGET_DESTINATION)\D3DTest

@@ -1,0 +1,24 @@
+//
+// ps.psh
+// Copyright (c) 2004 Microsoft Corporation. All rights reserved.
+//
+
+struct PSIn
+{
+	float4 pos : SV_Position;
+	float4 col : col;
+};
+
+struct PSOut
+{
+	float4 Color : SV_Target;
+};
+
+PSOut main(PSIn input)
+{
+	PSOut output;
+		
+	output.Color = input.col;
+	
+	return output;
+}

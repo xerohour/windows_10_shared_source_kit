@@ -1,0 +1,32 @@
+TEST_CODE=1
+
+TARGETNAME=D3DFramework
+TARGETTYPE=LIBRARY
+
+OBJLIBFILES=\
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Buffers\$O\CBuffers.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\CommandLine\$O\CCommandLine.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\D3D\$O\CD3D.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\D3DTest\$O\CD3DTest.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Device\$O\CDevice.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\DXGLogger\$O\DXG9Logger.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Effect\$O\CEffect.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Handle\$O\CHandle.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\HLUtils\$O\HLUtils.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Image\$O\CImage.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\ImageCompare\$O\CImageCompare.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Object\$O\CObject.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Query\$O\CQuery.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Resource\$O\CResource.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Surface\$O\CSurface.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\SwapChain\$O\CSwapChain.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\TestManager\$O\CTestManager.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\TestUtils\$O\TestUtils.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Textures\$O\CTextures.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\Window\$O\CWindow.lib \
+     $(GRAPHICS_TST_OBJ_ROOT)\DirectX\Common\D3D9TestFramework\WindowFramework\$O\CD3DWindowFramework.lib \
+
+
+SOURCES=D3DFramework.rc
+
+#LINK_LIB_IGNORE=4006

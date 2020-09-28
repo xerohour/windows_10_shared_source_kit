@@ -1,0 +1,15 @@
+!include ..\unicodetests.mk
+
+TARGETTYPE=PROGRAM
+TARGETNAME=unmappedaperture
+
+_NT_TARGET_VERSION = $(_NT_TARGET_VERSION_VISTA)
+
+UMTYPE=console
+UMENTRY=main
+
+SOURCES=\
+    Main.rc \
+    main.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml

@@ -1,0 +1,19 @@
+!include ..\conf.mk
+
+
+TARGETNAME=HOSurf
+
+SOURCES= \
+        HOSurf.rc \
+        HOSurf.cpp \
+	NPatch.cpp \
+        RectSurf.cpp \
+        TriSurf.cpp \
+        Main.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

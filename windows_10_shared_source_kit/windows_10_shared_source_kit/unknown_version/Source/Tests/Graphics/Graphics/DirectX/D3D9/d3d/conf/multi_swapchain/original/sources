@@ -1,0 +1,13 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=multi_swapchain
+
+SOURCES= \
+        ..\multi_swapchain.cpp \
+	..\CBase3dObject.cpp \
+	..\multi_swapchain.rc
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

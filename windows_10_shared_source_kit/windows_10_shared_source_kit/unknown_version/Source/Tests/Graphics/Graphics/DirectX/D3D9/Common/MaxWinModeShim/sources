@@ -1,0 +1,8 @@
+!include $(GRAPHICS_TST_ROOT)\DirectX\D3D9\Common\Common.mk
+
+TARGETNAME=MaxWinModeShim 
+TARGETTYPE=LIBRARY
+
+USE_MSVCRT=1
+
+SOURCES=MaxWinModeShim.cpp

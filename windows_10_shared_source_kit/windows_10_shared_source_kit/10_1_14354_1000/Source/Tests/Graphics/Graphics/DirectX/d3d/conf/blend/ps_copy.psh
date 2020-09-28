@@ -1,0 +1,32 @@
+Texture2D myTex2D;
+sampler samp;
+
+struct PSIn
+{
+	float4 pos : SV_Position;
+	float4 tex : color0;
+	float4 dummy : color1;
+};
+
+struct PSOut
+{
+	float4 color : SV_Target;
+};
+
+PSOut main(PSIn input)
+{
+	PSOut output;
+	float4 newCoord = input.tex;
+	newCoord.x = input.tex.x * 2.0;
+	if (newCoord.x < 1.0)
+	{
+		output.color = myTex2D.Sample(samp, newCoord);
+	}
+	else
+	{
+		newCoord.x -= 1.0;
+		output.color.rgb = myTex2D.Sample(samp, newCoord).aaa;
+	}
+	output.color.a = 1.0;
+	return output;
+}

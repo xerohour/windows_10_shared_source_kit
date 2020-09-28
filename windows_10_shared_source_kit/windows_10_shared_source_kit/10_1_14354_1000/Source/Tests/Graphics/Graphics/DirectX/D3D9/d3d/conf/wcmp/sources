@@ -1,0 +1,20 @@
+!include ..\conf.mk
+
+
+TARGETNAME=WCmp
+
+SOURCES= \
+        Always.cpp \
+        Combo.cpp \
+        Equal.cpp \
+        Greater.cpp \
+        Less.cpp \
+        WCmp.rc \
+        WCmp.cpp
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

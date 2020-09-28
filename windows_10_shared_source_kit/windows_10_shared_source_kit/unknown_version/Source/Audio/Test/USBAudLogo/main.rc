@@ -1,0 +1,22 @@
+//=============================================================================
+//
+// @module      main.rc
+//
+// @created     2-June-2003
+//
+// @abstract    Contains resource information.
+//
+// @copyright   Copyright (C) Microsoft. All rights reserved.
+//
+//=============================================================================
+#include <windows.h>
+#include <ntverp.h>
+
+#define VER_FILETYPE             VFT_DLL
+#define VER_FILESUBTYPE          VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR  "USB Logo Test"
+#define VER_INTERNALNAME_STR     ""
+#define VER_LEGALCOPYRIGHT_YEARS "1996-2008"
+#define VER_ORIGINALFILENAME_STR "USBLOGOTEST.DLL"
+
+#include <common.ver>

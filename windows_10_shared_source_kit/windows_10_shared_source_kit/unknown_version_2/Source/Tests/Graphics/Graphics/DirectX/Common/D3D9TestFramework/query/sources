@@ -1,0 +1,15 @@
+!include ..\TestFrame.mk
+
+
+TARGETNAME=CQuery
+
+SOURCES= \
+        CQuery.cpp \
+        CnQuery.cpp \
+        CQuery6.cpp \
+        CQuery7.cpp \
+        CQuery8.cpp \
+        CQuery9.cpp \
+
+PRECOMPILED_INCLUDE=QueryPCH.h
+PRECOMPILED_CXX=1

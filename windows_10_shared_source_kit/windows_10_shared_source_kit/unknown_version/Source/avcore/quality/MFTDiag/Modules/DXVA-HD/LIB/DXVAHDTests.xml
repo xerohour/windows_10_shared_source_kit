@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestSuite>
+      <TEST testId="1">
+        <Category>VisVal</Category>
+        <Name>XVP Extended Range Visual Validation Test #1</Name>
+        <Description>XVP Extended Range Visual Validation Test #1</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_NV12.avi</InputFile>
+        <Config>-numMultipleInstances 2 -vv { -render DUMP -fcc ARGB32 -dxva -generateraw -thres 40.0 -keepfiles -timeout 0 } { -render DUMP -fcc ARGB32 -soft -generateraw -thres 40.0 -keepfiles -timeout 0 }</Config>
+    </TEST>
+
+    <TEST testId="2">
+        <Category>VisVal</Category>
+        <Name>XVP Extended Range Visual Validation Test #2</Name>
+        <Description>XVP Extended Range Visual Validation Test #2</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MJPEG_176x144_15fps.avi</InputFile>
+        <Config>-numMultipleInstances 2 -vv { -render DUMP -comp -decfcc NV12 -fcc ARGB32 -dxva -generateraw -comp -thres 38.0 -keepfiles -timeout 0 } { -render DUMP -comp -decfcc NV12 -fcc ARGB32 -soft -generateraw -comp -thres 38.0 -keepfiles -timeout 0 }</Config>
+    </TEST>
+
+    <TEST testId="3">
+        <Category>VisVal</Category>
+        <Name>XVP Extended Range Visual Validation Test #3</Name>
+        <Description>XVP Extended Range Visual Validation Test #3</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MJPEG_320x240_30fps.avi</InputFile>
+        <Config>-numMultipleInstances 2 -vv { -render DUMP -comp -decfcc YUY2 -fcc ARGB32 -dxva -generateraw -comp -thres 40.0 -keepfiles -timeout 0 } { -render DUMP -comp -decfcc YUY2 -fcc ARGB32 -soft -generateraw -comp -thres 40.0 -keepfiles -timeout 0 }</Config>
+    </TEST>
+
+    <TEST testId="4">
+        <Category>VisVal</Category>
+        <Name>XVP Extended Range Visual Validation Test #4</Name>
+        <Description>XVP Extended Range Visual Validation Test #4</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MJPEG_640x360_30fps.avi</InputFile>
+        <Config>-numMultipleInstances 2 -vv { -render DUMP -comp -decfcc YUY2 -fcc ARGB32 -dxva -generateraw -comp -thres 40.0 -keepfiles -timeout 0 } { -render DUMP -comp -decfcc YUY2 -fcc ARGB32 -soft -generateraw -comp -thres 40.0 -keepfiles -timeout 0 }</Config>
+    </TEST>
+
+    <TEST testId="5">
+        <Category>VisVal</Category>
+        <Name>XVP Extended Range Visual Validation Test #5</Name>
+        <Description>XVP Extended Range Visual Validation Test #5</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MJPEG_1280x720_30fps.avi</InputFile>
+        <Config>-numMultipleInstances 2 -vv { -render DUMP -comp -decfcc YUY2 -fcc ARGB32 -dxva -generateraw -comp -thres 40.0 -keepfiles -timeout 0 } { -render DUMP -comp -decfcc YUY2 -fcc ARGB32 -soft -generateraw -comp -thres 40.0 -keepfiles -timeout 0 }</Config>
+    </TEST>
+
+    <TEST testId="6">
+        <Category>VisVal</Category>
+        <Name>XVP Extended Range Visual Validation Test #6</Name>
+        <Description>XVP Extended Range Visual Validation Test #6</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MSHDRef_Difficult_Edge_02_720x480p30f_NV12.avi</InputFile>
+        <Config>-numMultipleInstances 2 -vv { -render DUMP -fcc NV12 -extended -dxva -generateraw -thres 40.0 -keepfiles -timeout 0 } { -render DUMP -fcc NV12 -extended -soft -generateraw -thres 40.0 -keepfiles -timeout 0 }</Config>
+    </TEST>
+
+    <TEST testId="10">
+        <Category>VisVal</Category>
+        <Name>XVP Extended Range Visual Validation Test #10</Name>
+        <Description>XVP Extended Range Visual Validation Test #10</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MJPEG_640x360_30fps.avi</InputFile>
+        <Config>-numMultipleInstances 2 -vv { -render DUMP -comp -decfcc YUY2 -fcc NV12 -studio -dxva -generateraw -comp -thres 35.0 -keepfiles -timeout 0 } { -render DUMP -comp -decfcc YUY2 -fcc NV12 -studio -soft -generateraw -comp -thres 35.0 -keepfiles -timeout 0 -hqrefmodeoff }</Config>
+    </TEST>
+
+    <TEST testId="11">
+        <Category>VisVal</Category>
+        <Name>XVP Extended Range Visual Validation Test #11</Name>
+        <Description>XVP Extended Range Visual Validation Test #11</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>MJPEG_1280x720_30fps.avi</InputFile>
+        <Config>-numMultipleInstances 2 -vv { -render DUMP -comp -decfcc YUY2 -fcc NV12 -studio -dxva -generateraw -comp -thres 35.0 -keepfiles -timeout 0 } { -render DUMP -comp -decfcc YUY2 -fcc NV12 -studio -soft -generateraw -comp -thres 35.0 -keepfiles -timeout 0 -hqrefmodeoff }</Config>
+    </TEST>
+
+    <TEST testId="92">
+        <Category>VisVal</Category>
+        <Name>XVP Visual Validation Scaling Test #92</Name>
+        <Description>XVP Visual Validation Test #92</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>Highway720x480p.wmv</InputFile>
+        <Config>-render DUMP -comp -decfcc NV12 -outwidth 4 -outheight 4 -dxva -generateraw -keepfiles -timeout 0</Config>
+    </TEST>
+
+    <TEST testId="109">
+        <Category>VisVal</Category>
+        <Name>XVP Visual Validation Scaling Test #109</Name>
+        <Description>XVP Visual Validation Test #109</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>Boats1280x720p.wmv</InputFile>
+        <Config>-render DUMP -comp -decfcc NV12 -outwidth 4096 -outheight 2160 -dxva -keepfiles -timeout 0</Config>
+    </TEST>
+
+    <TEST testId="110">
+        <Category>VisVal</Category>
+        <Name>XVP Visual Validation Scaling Test #110</Name>
+        <Description>XVP Visual Validation Test #110</Description>
+        <TimeoutSec>0</TimeoutSec> 
+        <InputFile>Boats1280x720p.wmv</InputFile>
+        <Config>-render DUMP -comp -decfcc NV12 -outwidth 4 -outheight 4 -dxva -generateraw -keepfiles -timeout 0</Config>
+    </TEST>
+
+
+</TestSuite>

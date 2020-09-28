@@ -1,0 +1,19 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=Fog
+
+SOURCES= \
+        ..\Fog.rc \
+        ..\Fog.cpp \
+        ..\Table.cpp \
+        ..\Vertex.cpp \
+        ..\W.cpp
+
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+

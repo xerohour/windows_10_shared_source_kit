@@ -1,0 +1,20 @@
+#include <windows.h>
+#include <ntverp.h>
+#include "resource.h"
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "copyrects"
+#define VER_ORIGINALFILENAME_STR    "CopyRects.exe"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DIBFILETYPE
+//
+
+IDR_DIBFILETYPE1        DIBFILETYPE DISCARDABLE "tex.bmp"
+IDR_DIBFILETYPE2        DIBFILETYPE DISCARDABLE "lake.bmp"
+
+#include <common.ver>

@@ -1,0 +1,4 @@
+DIRS = \
+	CrossProcShare_LIB \
+	CrossProcShare \
+	CrossProcShare_Pro \

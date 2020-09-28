@@ -1,0 +1,52 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "texturestage3"
+#define VER_ORIGINALFILENAME_STR    "TextureStage3.exe"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+//stage_all.bmp          BITMAP  DISCARDABLE     "textures\\stage_all.bmp"
+checker.bmp          BITMAP  DISCARDABLE     "textures\\checker.bmp"
+checker_highfreq.bmp          BITMAP  DISCARDABLE  "textures\\checker_highfreq.bmp"
+colors_blend.bmp          BITMAP  DISCARDABLE     "textures\\colors_blend.bmp"
+decoration.bmp          BITMAP  DISCARDABLE     "textures\\decoration.bmp"
+decoration2.bmp          BITMAP  DISCARDABLE     "textures\\decoration2.bmp"
+dots1.bmp          BITMAP  DISCARDABLE     "textures\\dots1.bmp"
+dxlogo.bmp          BITMAP  DISCARDABLE     "textures\\dxlogo.bmp"
+dxlogo2.bmp          BITMAP  DISCARDABLE     "textures\\dxlogo2.bmp"
+dxlogo3.bmp          BITMAP  DISCARDABLE     "textures\\dxlogo3.bmp"
+dxlogo4.bmp          BITMAP  DISCARDABLE     "textures\\dxlogo4.bmp"
+dxlogo5.bmp          BITMAP  DISCARDABLE     "textures\\dxlogo5.bmp"
+dxlogo_bump.bmp          BITMAP  DISCARDABLE     "textures\\dxlogo_bump.bmp"
+dxlogo_bump2.bmp          BITMAP  DISCARDABLE     "textures\\dxlogo_bump2.bmp"
+newTS.bmp          BITMAP  DISCARDABLE     "textures\\newTS.bmp"
+stage0.bmp          BITMAP  DISCARDABLE     "textures\\stage0.bmp"
+stage1.bmp          BITMAP  DISCARDABLE     "textures\\stage1.bmp"
+stage2.bmp          BITMAP  DISCARDABLE     "textures\\stage2.bmp"
+stage3.bmp          BITMAP  DISCARDABLE     "textures\\stage3.bmp"
+stage4.bmp          BITMAP  DISCARDABLE     "textures\\stage4.bmp"
+stage5.bmp          BITMAP  DISCARDABLE     "textures\\stage5.bmp"
+stage6.bmp          BITMAP  DISCARDABLE     "textures\\stage6.bmp"
+stage7.bmp          BITMAP  DISCARDABLE     "textures\\stage7.bmp"
+stage_all.bmp          BITMAP  DISCARDABLE     "textures\\stage_all.bmp"
+text1.bmp          BITMAP  DISCARDABLE     "textures\\text1.bmp"
+text2.bmp          BITMAP  DISCARDABLE     "textures\\text2.bmp"
+text3.bmp          BITMAP  DISCARDABLE     "textures\\text3.bmp"
+text4.bmp          BITMAP  DISCARDABLE     "textures\\text4.bmp"
+text5.bmp          BITMAP  DISCARDABLE     "textures\\text5.bmp"
+text6.bmp          BITMAP  DISCARDABLE     "textures\\text6.bmp"
+win_logo_bump.bmp          BITMAP  DISCARDABLE     "textures\\win_logo_bump.bmp"
+winlogo.bmp          BITMAP  DISCARDABLE     "textures\\winlogo.bmp"
+winlogo2.bmp          BITMAP  DISCARDABLE     "textures\\winlogo2.bmp"
+winlogo3.bmp          BITMAP  DISCARDABLE     "textures\\winlogo3.bmp"
+test.bmp          BITMAP  DISCARDABLE     "textures\\test.bmp"
+
+#include <common.ver>

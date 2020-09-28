@@ -1,0 +1,18 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D conformance test"
+#define VER_INTERNALNAME_STR        "GammaCorrect"
+#define VER_ORIGINALFILENAME_STR    "GammaCorrect.EXE"
+
+TEX0.BMP BITMAP DISCARDABLE "tex0.bmp"
+TEX1.BMP BITMAP DISCARDABLE "tex1.bmp"
+TEX2.BMP BITMAP DISCARDABLE "tex2.bmp"
+TEX3.BMP BITMAP DISCARDABLE "tex3.bmp"
+
+
+
+#include <common.ver>

@@ -1,0 +1,27 @@
+!include ..\conf.mk
+
+
+TARGETNAME=Tessellation
+
+SOURCES=Tessellation.rc \
+    Tessellation.cpp \
+    default.cpp \
+    NTest.cpp \
+    MinNTest.cpp \
+    TessFNTest.cpp \
+    MinMaxNTest.cpp \
+    RectPatchesTest.cpp \
+    TriPatchesTest.cpp \
+    NPatchesTest.cpp \
+MinimizingRectTest.cpp \
+       MinimizingTriTest.cpp \
+       MaxMinRectTest.cpp \
+       MaxMinTriTest.cpp \
+       DataTypesRectTest.cpp \
+       DataTypesTriTest.cpp \
+       DataTypesNTest.cpp \
+TessFactorRectTest.cpp \
+       TessFactorTriTest.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+

@@ -1,0 +1,16 @@
+!include ..\sources.inc
+
+TARGETNAME=Present2_FullScreen
+
+SOURCES=$(SOURCES)\
+	..\Present2_FullScreen_EXEEntryPoint.cpp \
+	..\PresentDoNotWait.cpp \
+	..\Lock_DoNotWait.cpp \
+	..\PresentInterval.cpp \
+    ..\PresentintervalWindowedFlipEx.cpp \
+    ..\presentintervalWindowedFlipExFlags.cpp \
+	..\FullScreenPresent.cpp \
+	..\MultiheadPresent.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+

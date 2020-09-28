@@ -1,0 +1,18 @@
+!include ..\conf.mk
+
+
+TARGETNAME=CopyRects
+
+SOURCES=\
+        CCopyRects.rc\
+        CCopyRects.cpp\
+		dims.cpp\
+		dx8fmt.cpp\
+		dx8pool.cpp\
+		dx8usage.cpp\
+		rectsets.cpp\
+		dx8multisample.cpp\
+        main.cpp
+
+SOURCES=$(SOURCES) kitContent.kml
+

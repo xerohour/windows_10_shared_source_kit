@@ -1,0 +1,16 @@
+!include ..\..\conf.mk
+
+TARGETNAME=WLPSpecular
+
+
+TARGETLIBS=\
+	$(TARGETLIBS) \
+	$(GRAPHICS_TST_OBJ_ROOT)\DirectX\D3D9\Common\cstatecascade\$O\CStateCascade.lib \
+	
+
+SOURCES=\
+	specular.rc \
+	specular.cpp \
+
+SOURCES=$(SOURCES) kitContent.kml
+

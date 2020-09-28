@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariationCore>
+  <VariationGroup Name="Baz">
+    <PriorityProfile Name="">
+      <Filter Weight="0.5">
+        <Expression CombineWith="" Parameter="Meal" CompareUsing="Equal" CompareTo="Dinner" />
+      </Filter>
+      <PriorityGroup PriorityValue="1" PriorityLevel="1" />
+      <PriorityGroup PriorityValue="0.5" PriorityLevel="2" />
+    </PriorityProfile>
+    <PriorityProfile Name="Bvt">
+      <Filter Weight="0.5">
+        <Expression CombineWith="" Parameter="Meal" CompareUsing="Equal" CompareTo="Breakfast" />
+        <ExpressionGroup>
+          <Expression CombineWith="OR" Parameter="Drink" CompareUsing="RegExp" CompareTo="Wa" />
+          <Expression CombineWith="AND" Parameter="Drink" CompareUsing="RegExp" CompareTo="ter" />
+        </ExpressionGroup>
+        <ExpressionGroup>
+          <Expression CombineWith="OR" Parameter="Meal" CompareUsing="Equal" CompareTo="Dinner" />
+          <Expression CombineWith="AND" Parameter="Food" CompareUsing="Equal" CompareTo="Steak" />
+        </ExpressionGroup>
+        <ExpressionGroup>
+          <Expression CombineWith="OR" Parameter="Drink" CompareUsing="RegExp" CompareTo="Wine" />
+          <Expression CombineWith="AND" Parameter="Meal" CompareUsing="Equal" CompareTo="Lunch" />
+        </ExpressionGroup>
+      </Filter>
+      <PriorityGroup PriorityValue="1" PriorityLevel="1" />
+      <PriorityGroup PriorityValue="0.5" PriorityLevel="2" />
+    </PriorityProfile>
+  </VariationGroup>
+</VariationCore>

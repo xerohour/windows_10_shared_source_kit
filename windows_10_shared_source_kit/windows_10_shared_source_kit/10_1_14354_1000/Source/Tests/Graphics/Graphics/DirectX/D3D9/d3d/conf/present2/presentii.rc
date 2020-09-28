@@ -1,0 +1,25 @@
+#include <windows.h>
+#include <ntverp.h>
+#include <d3dframework.rc>
+
+#define VER_FILETYPE                VFT_APP
+#define VER_FILESUBTYPE             VFT_UNKNOWN
+#define VER_FILEDESCRIPTION_STR     "Direct3D func test"
+#define VER_INTERNALNAME_STR        "Present.exe"
+#define VER_ORIGINALFILENAME_STR    "Present.EXE"
+
+#include "resource.h"
+
+LAKE BITMAP DISCARDABLE lake.bmp
+
+IDD_SETDIALOG1 DIALOG DISCARDABLE  0, 0, 126, 28
+STYLE DS_MODALFRAME | DS_3DLOOK | DS_NOFAILCREATE | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,7,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,69,7,50,14
+END
+
+#include <common.ver>

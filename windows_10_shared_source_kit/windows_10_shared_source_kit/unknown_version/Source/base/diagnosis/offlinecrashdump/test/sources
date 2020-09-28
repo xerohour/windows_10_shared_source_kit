@@ -1,0 +1,73 @@
+TARGETNAME=OffDumpTool
+TARGETTYPE=PROGRAM
+
+USE_MSVCRT=1
+TEST_CODE=1
+USE_NATIVE_EH=1
+USE_ATL=1
+USE_STL=1
+ATL_VER=70
+
+MSC_WARNING_LEVEL = /W4 /WX
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN7)
+
+UMTYPE=console
+UMENTRY=wmain
+C_DEFINES=  $(C_DEFINES) -DUNICODE -D_UNICODE 
+
+INCLUDES=\
+         ..\inc; \
+         $(INCLUDES); \
+         $(INTERNAL_SDK_INC_PATH);\
+         $(SDK_INC_PATH); \
+         $(DDK_INC_PATH); \
+         $(DDK_PATH)\inc; \
+         $(SDKTOOLS_INC_PATH); \
+         $(BASE_INC_PATH); \
+         $(MINWIN_PRIV_SDK_INC_PATH);
+
+
+SOURCES=\
+        OffDumpTool.cpp \
+        VDSUtil.cpp \
+        DiskUtil.cpp \
+        DumpExtract32.cpp \
+        DumpExtract64.cpp \
+        Dumputil.cpp \
+        DbgUtil.cpp  \
+        apreg64.cpp \
+        dbgClient.cpp \
+        kddebug.cpp \
+        version.rc   
+
+
+
+
+
+TARGETLIBS=\
+    $(SDK_LIB_PATH)\ntdll.lib   \
+    $(SDK_LIB_PATH)\gdi32.lib   \
+    $(SDK_LIB_PATH)\shell32.lib \
+    $(SDK_LIB_PATH)\shlwapi.lib \
+    $(SDK_LIB_PATH)\user32.lib \
+    $(BASE_LIB_PATH)\loglib.lib \
+    $(SDK_LIB_PATH)\ole32.lib \
+    $(SDK_LIB_PATH)\kernel32.lib \
+    $(SDK_LIB_PATH)\strsafe.lib \
+    $(SDK_LIB_PATH)\advapi32.lib \
+    $(SDK_LIB_PATH)\dbgeng.lib \
+    $(SDK_LIB_PATH)\Wevtapi.lib \
+    $(SDK_LIB_PATH)\uuid.lib \
+    $(SDK_LIB_PATH)\version.lib\
+    $(SDK_LIB_PATH)\msi.lib \
+
+TARGET_DESTINATION=\
+     dump\offlinedump\offdumptool
+      
+NT_SIGNCODE=1
+
+
+
+
+        

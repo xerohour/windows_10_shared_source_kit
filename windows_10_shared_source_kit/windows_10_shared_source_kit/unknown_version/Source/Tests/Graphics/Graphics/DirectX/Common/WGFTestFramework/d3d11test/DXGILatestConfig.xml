@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<WrapperGeneratorConfig DLLName="DXGI.DLL">
+    <SourceHeaders>
+        <Header Name="%OBJECT_ROOT%\windows\published\dxgi\obj%_BuildType%\%ArchDir%\dxgi.h"></Header>
+        <Header Name="%OBJECT_ROOT%\windows\published\dxgi\obj%_BuildType%\%ArchDir%\dxgitype.h"></Header>
+        <OutputDir Name="%SDXROOT%\testsrc\windowstest\graphics\DirectX\Common\WGFTestFramework\D3D11Test"></OutputDir>
+    </SourceHeaders>
+</WrapperGeneratorConfig>

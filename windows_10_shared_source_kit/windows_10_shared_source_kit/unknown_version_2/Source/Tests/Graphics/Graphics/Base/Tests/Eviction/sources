@@ -1,0 +1,20 @@
+!include ..\Vidmm_tests.mk
+
+TARGETNAME=evict
+
+INCLUDES=\
+    $(INCLUDES); \
+    $(BASE_VID_TST_ROOT)\common\etw; \
+
+UMTYPE=console
+UMENTRY=main
+
+_NT_TARGET_VERSION=$(_NT_TARGET_VERSION_WIN7)
+
+LARGE_ADDRESS_AWARE=1
+
+
+SOURCES=\
+    Main.rc \
+    main.cpp \
+    EvictBlt.cpp \

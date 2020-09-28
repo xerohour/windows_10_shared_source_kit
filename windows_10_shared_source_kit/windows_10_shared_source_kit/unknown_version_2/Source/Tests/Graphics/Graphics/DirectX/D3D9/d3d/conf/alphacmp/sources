@@ -1,0 +1,21 @@
+!include ..\conf.mk
+
+
+TARGETNAME=AlphaCmp
+
+SOURCES= \
+        AlphaCmp.rc \
+        AlphaCmp.cpp \
+        Always.cpp \
+        Draw.cpp \
+        Equal.cpp \
+        Greater.cpp \
+        Less.cpp 
+
+
+
+
+
+
+SOURCES=$(SOURCES) kitContent.kml
+

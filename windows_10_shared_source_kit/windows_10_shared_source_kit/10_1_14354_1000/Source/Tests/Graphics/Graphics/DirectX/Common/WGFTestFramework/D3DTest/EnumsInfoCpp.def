@@ -1,0 +1,86 @@
+//////////////////////////////////////////////////////////////////////////
+// ENUMDECL related definitions
+//////////////////////////////////////////////////////////////////////////
+
+tstring WGFTESTAPI ToString( ENUMDECL ENUMNAME )
+{
+	const ENUMNAMEInfo *pENUMNAMEInfo = CENUMNAMEInfoMap::Find( ENUMNAME );
+	
+	if( pENUMNAMEInfo )
+		return tstring( pENUMNAMEInfo->szName );
+	else
+		return tstring( _T( "(Unknown value)" ) );
+}
+
+//------------------------------------------------------------------------
+
+bool WGFTESTAPI FromString( ENUMDECL *pENUMNAME, const tstring &str )
+{
+	const ENUMNAMEInfo *pENUMNAMEInfo = CENUMNAMEInfoMap::Find( str );
+
+	if( pENUMNAMEInfo )
+	{
+		*pENUMNAME = pENUMNAMEInfo->ENUMNAME;
+		return true;
+	}
+
+	//BUGBUG - elenakr - what to return for other enums ???
+	//*pFormat = D3D_FORMAT_UNKNOWN;
+	pENUMNAME = NULL;
+	return false;
+}
+
+//------------------------------------------------------------------------
+
+const ENUMNAMEInfo CENUMNAMEInfoMap::m_ENUMNAMEInfoTable[] =
+{
+ENUMVALUES
+};
+
+//------------------------------------------------------------------------
+
+// Instantiate the singleton
+CENUMNAMEInfoMap CENUMNAMEInfoMap::m_Map;
+
+//------------------------------------------------------------------------
+
+// Construct the lookup table.
+CENUMNAMEInfoMap::CENUMNAMEInfoMap()
+{
+	size_t count = GetENUMNAMEInfoTableSize();
+
+	for(size_t i = 0; i < count; i++ )
+	{
+		m_ByValue.insert( ByValue::value_type( m_ENUMNAMEInfoTable[i].ENUMNAME, &m_ENUMNAMEInfoTable[i] ) );
+		m_ByDesc.insert( ByDesc::value_type( m_ENUMNAMEInfoTable[i].szName, &m_ENUMNAMEInfoTable[i] ) );
+	}
+}
+
+//------------------------------------------------------------------------
+
+const ENUMNAMEInfo *CENUMNAMEInfoMap::Find( ENUMDECL ENUMNAME )
+{
+	ByValue::const_iterator it = m_Map.m_ByValue.find( ENUMNAME );
+	if( it == m_Map.m_ByValue.end() )
+		return NULL;
+	else
+		return (*it).second;
+}
+
+//------------------------------------------------------------------------
+
+const ENUMNAMEInfo *CENUMNAMEInfoMap::Find( const tstring &Desc )
+{
+	ByDesc::const_iterator it = m_Map.m_ByDesc.find( Desc );
+	if( it == m_Map.m_ByDesc.end() )
+		return NULL;
+	else
+		return (*it).second;
+}
+
+//------------------------------------------------------------------------
+
+const size_t CENUMNAMEInfoMap::GetENUMNAMEInfoTableSize()
+{
+	return sizeof(m_ENUMNAMEInfoTable) / sizeof(m_ENUMNAMEInfoTable[0]);
+}

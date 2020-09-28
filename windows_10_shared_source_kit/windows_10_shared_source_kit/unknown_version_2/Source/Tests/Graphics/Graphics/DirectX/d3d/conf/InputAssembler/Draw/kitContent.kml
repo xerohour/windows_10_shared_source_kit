@@ -1,0 +1,15 @@
+= "vs_2_0 : pow source reg combination oD0, oT0 is NOT allowed";
+string VS_082 = 
+	"vs_2_0 "
+	"pow r0, oD0, oT0 "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_083_Criteria = { false, false, 0x0200, -1, -1, -1, -1, 0, -1, 0.f };
+string VS_083_Desc = "vs_2_0 : pow source reg combination oT0, r0 is NOT allowed";
+string VS_083 = 
+	"vs_2_0 "
+	"mov r0, c0 "
+	"pow r0, oT0, r0 "
+	"mov oPos, c0 ";
+
+VS_CRITERIA VS_084_Criteria = { false, false, 0x0200, -1, -1

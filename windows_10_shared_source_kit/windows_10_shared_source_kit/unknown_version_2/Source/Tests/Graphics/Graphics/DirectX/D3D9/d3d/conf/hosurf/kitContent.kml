@@ -1,0 +1,11 @@
+.
+        //
+        // N.B. The device information fields consumed here are only
+        //      initialized on machines that use PC/AT style drive geometry.
+        //      On other platforms random data is loaded into the parameter
+        //      structure.  This is acceptable since the OS doesn't consume
+        //      these parameters on such platforms.
+        //
+
+        Parameters->DriveSelect = DiskInformation->DriveNumber;
+    

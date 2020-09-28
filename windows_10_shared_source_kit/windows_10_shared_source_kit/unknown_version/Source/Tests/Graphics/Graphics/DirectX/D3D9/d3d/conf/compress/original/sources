@@ -1,0 +1,19 @@
+!include ..\..\conf.mk
+
+
+TARGETNAME=Compress
+
+SOURCES= \
+        ..\Compress.rc \
+        ..\Compress.cpp \
+        ..\DrawGrid.cpp \
+	..\DXTSize.cpp \
+        ..\DXTn.cpp
+
+
+
+
+
+
+SOURCES=$(SOURCES) ..\kitContent.kml
+
